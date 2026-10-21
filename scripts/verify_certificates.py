@@ -22,6 +22,7 @@ Checks, all in exact rational arithmetic:
      full order. Together: no sorted order admits a cycle, so there is no 1D K-cycle (of any period dividing K).
 
     python scripts/verify_certificates.py certificates/*.farkas.gz
+    python scripts/verify_certificates.py --max-k 12 certificates/*.farkas.gz certificates/grid/*.farkas.gz
 """
 import gzip
 import json
@@ -121,7 +122,18 @@ def verify_file(path):
 
 
 if __name__ == "__main__":
-    paths = [p for p in sys.argv[1:] if not p.split("/")[-1].startswith("._")]
+    args = sys.argv[1:]
+    max_k = None
+    if args[:1] == ["--max-k"]:                # check only files whose header K is <= max_k (used by CI)
+        max_k, args = int(args[1]), args[2:]
+    paths = [p for p in args if not p.split("/")[-1].startswith("._")]
+    if max_k is not None:
+        def header_k(p):
+            with gzip.open(p, "rt") as fh:
+                return json.loads(fh.readline())["K"]
+        skipped = [p for p in paths if header_k(p) > max_k]
+        paths = [p for p in paths if p not in skipped]
+        print(f"checking {len(paths)} files with K <= {max_k}; skipping {len(skipped)} larger ones", flush=True)
     results = []
     for p in paths:                     # print each file as soon as it is checked (large files take minutes)
         results.append(verify_file(p))

@@ -30,9 +30,11 @@ CLASSES = [  # (label, color); order = index in the colormap
      r" $K$ found no cycle", "#eb6834"),
     (r"outside $\Omega_{\rm aug}$; mixed condition feasible only at some $10 < K \leq 30$ (numerical): no 1D search",
      "#1baf7a"),
-    ("on a region boundary: exact search unresolved", "#8a8985"),
+    ("undecided: mixed-condition margin within tolerance, or exact search unresolved", "#8a8985"),
+    (r"lag-one convergent ($\Omega_1$, Pasechnyuk-Vilensky Thm A(i))", "#f4f3f0"),
 ]
-IDX = {"omega1": 0, "nocycle": 0, "aug": 1, "fan": 2, "fan_long": 3, "unresolved": 4}
+IDX = {"omega1": 5, "nocycle": 0, "aug": 1, "mixed_feasible": 2, "mixed_feasible_long": 3, "unresolved": 4,
+       "undecided": 4}
 
 
 def main():
@@ -61,6 +63,9 @@ def main():
     for K in (3, 4, 5, 6):
         ax.axvline(1 / K, color=INK2, lw=0.8, ls=(0, (2, 3)))
         ax.text(1 / K, h_edges[-1] + 0.01, f"1/{K}", ha="center", va="bottom", fontsize=9, color=INK2)
+    ax.axhline(1.0, color=INK, lw=1.0)
+    ax.text(r_edges[-1], 1.0, " gap tops (h = 1); above: tongues ", ha="right", va="bottom", fontsize=8.5, color=INK,
+            bbox=dict(boxstyle="round,pad=0.15", fc=SURFACE, ec="none", alpha=0.85), zorder=6)
     for K, lo, hi in ((3, 1 / 4, 1 / 3), (4, 1 / 5, 1 / 4), (5, 1 / 6, 1 / 5)):
         ax.text((lo + hi) / 2, 0.02, f"gap $I_{K}$", ha="center", va="bottom", fontsize=10, color=INK)
     for t, lab in ((PROP13, "Prop. 13"), (CONV_GAP, "conv-gap"), (FAN7, "FAN7"), (FAN9, "FAN9")):
@@ -73,7 +78,7 @@ def main():
     ax.set_ylim(h_edges[0], h_edges[-1])
     ax.set_xlabel(r"rotation number $\rho$ of the tangency on $\partial\Omega_1$", color=INK)
     ax.set_ylabel(r"height $\delta/\delta_{\rm top}(\rho)$ above $\partial\Omega_1$", color=INK)
-    ax.set_title(r"Heavy-ball cycles on one-dimensional functions, first-level gaps, $\kappa = L/\mu = 100$",
+    ax.set_title(r"Heavy-ball cycles on one-dimensional functions: first-level gaps and the tongues above them, $\kappa = L/\mu = 100$",
                  color=INK, fontsize=11, loc="left", pad=22)
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)

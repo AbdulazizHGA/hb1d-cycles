@@ -19,3 +19,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e ".[test]"
       - run: pytest -q
+      - name: Re-check the interval-arithmetic certificates (Omega_aug, mixed condition)
+        run: python scripts/verify_rigorous.py
+      - name: Re-check the exact Farkas certificates with K <= 12 (all files are checked by reproduce.sh)
+        run: python scripts/verify_certificates.py --max-k 12 certificates/*.farkas.gz certificates/grid/*.farkas.gz

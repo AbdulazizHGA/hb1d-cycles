@@ -1,4 +1,5 @@
-"""One-dimensional phase diagram of heavy-ball cycles in the first-level gaps at kappa = 100.
+"""One-dimensional phase diagram of heavy-ball cycles in the first-level gaps at kappa = 100, together with the
+lower part of the tongues just above the gap tops (heights h > 1).
 
 Grid in Pasechnyuk-Vilensky's unrolled coordinates (rho, delta): rho = tangency rotation number on the boundary of
 Omega_1, delta = distance in alpha L beyond that boundary. Each grid tuning is rounded to a rational (denominators
@@ -7,12 +8,18 @@ Omega_1, delta = distance in alpha L beyond that boundary. Each grid tuning is r
   omega1     Lc > 0 on [-1, 1]: converges (Pasechnyuk Thm A(i))                                    [numerical]
   aug        in Omega_aug (some pure mode K <= 40 has A - q cot(pi/K) >= 0); the exact 1D search is run at the
              smallest such K and is expected to find a cycle (Fotopoulos Thm 4.1)       [1D search: exact]
-  fan        outside Omega_aug, mixed condition feasible at some K <= KMIX: a cycle exists in dimension 2r;
-             exact 1D search at every such K <= K1D                                     [1D search: exact]
-  fan_long   as fan, but all mixed-feasible K are in (K1D, KMIX]: 1D not searched
-  nocycle    outside Omega_aug and Omega_1, mixed infeasible for all K <= KMIX: no cycle of length <= KMIX in any
-             dimension                                                                             [numerical]
-  unresolved some exact 1D search had unresolved nodes (cells on a region boundary, degenerate LPs)
+  mixed_feasible       outside Omega_aug, mixed condition feasible (or undecided) at some K <= K1D: exact 1D
+                       search at each such K; Pasechnyuk-Vilensky's fan program is also evaluated at those K
+                       (field pv_fan_program), but the class name does not claim it        [1D search: exact]
+  mixed_feasible_long  outside Omega_aug, mixed condition feasible only at lengths in (K1D, KMIX]: 1D not searched
+  nocycle              outside Omega_aug and Omega_1, mixed condition infeasible for every K <= KMIX: no cycle of
+                       length <= KMIX in any dimension                                             [numerical]
+  undecided            no mixed-feasible K <= KMIX, but some K has an undecided mixed verdict (margin within the
+                       tolerance, or an LP solver failure)
+  unresolved           some exact 1D search had unresolved nodes (cells on a region boundary, degenerate LPs)
+
+Every cell outside Omega_aug stores, for each K <= KMIX, the mixed-condition LP record (verdict, margins sigma and
+tau, solver statuses; hb1d.mixed.mixed_float_record).
   CANDIDATE  a 1D cycle outside Omega_aug (then re-checked with the rigorous omega_aug_report)
 
     python scripts/phase_diagram.py --nrho 48 --ndelta 36 --workers 4
@@ -30,7 +37,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from hb1d.exact import check_cycle, search  # noqa: E402
 from hb1d.geometry import in_omega1, unrolled_to_tuning  # noqa: E402
-from hb1d.mixed import mixed_float  # noqa: E402
+from hb1d.mixed import MIXED_TOL, fan_program_margin, mixed_float_record  # noqa: E402
 from hb1d.regions import omega_aug_report  # noqa: E402
 from hb1d.tunings import Tuning  # noqa: E402
 from scripts.run_exact import write_certs  # noqa: E402
@@ -96,17 +103,20 @@ def classify(args):
                    period=check_cycle(t, cyc[0])["period"] if cyc else None,
                    x=[str(v) for v in cyc[0]] if cyc else None)
         return out
-    verdicts = {K: mixed_float(t, K) for K in range(3, KMIX + 1)}
-    feas = [K for K, v in verdicts.items() if v >= 0]
+    recs = {K: mixed_float_record(t, K) for K in range(3, KMIX + 1)}
+    out["mixed"] = recs
+    feas = [K for K, r in recs.items() if r["v"] == 1]
+    undec = [K for K, r in recs.items() if r["v"] == 0]
     out["mixed_feasible"] = feas
-    out["mixed_boundary"] = [K for K, v in verdicts.items() if v == 0]
+    out["mixed_undecided"] = undec
     if not feas:
-        out["cls"] = "nocycle"
+        out["cls"] = "undecided" if undec else "nocycle"
         return out
-    short = [K for K in feas if K <= K1D]
+    short = sorted(K for K in feas + undec if K <= K1D)
     if not short:
-        out["cls"] = "fan_long"
+        out["cls"] = "mixed_feasible_long"
         return out
+    out["pv_fan_program"] = {K: fan_program_margin(t, K)[0] for K in short}
     res = {}
     for K in short:
         certs = []
@@ -122,7 +132,7 @@ def classify(args):
             res[K]["certificate"] = write_certs(GRID_CERTS, key, t, K, certs,
                                                 dict(nodes=st["nodes"], pruned=st["pruned"], date="grid"))
     ok = all(v["complete"] and v["unresolved"] == 0 for v in res.values())
-    out.update(cls="fan" if ok else "unresolved", exact_1d=res)
+    out.update(cls="mixed_feasible" if ok else "unresolved", exact_1d=res)
     return out
 
 
@@ -160,7 +170,7 @@ def main():
             if n % 100 == 0:
                 print(f"{n}/{len(pts)} cells, {time.time() - t0:.0f}s", flush=True)
     import scipy
-    meta = dict(normalized=args.normalized, H_LEVELS=H_LEVELS if args.normalized else None, kappa=str(KAPPA), KMIX=KMIX, K1D=K1D, KAUG=KAUG, nrho=args.nrho, ndelta=args.ndelta, rho=args.rho,
+    meta = dict(mixed_tol=MIXED_TOL, normalized=args.normalized, H_LEVELS=H_LEVELS if args.normalized else None, kappa=str(KAPPA), KMIX=KMIX, K1D=K1D, KAUG=KAUG, nrho=args.nrho, ndelta=args.ndelta, rho=args.rho,
                 delta=args.delta, seconds=time.time() - t0, scipy=scipy.__version__,
                 date=time.strftime("%Y-%m-%d %H:%M:%S"))
     with open(args.out, "w") as fh:

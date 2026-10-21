@@ -123,6 +123,12 @@ search is faster at the lengths that matter (HiGHS reaches its 60 s limit at K =
 Grid in Pasechnyuk-Vilensky's unrolled coordinates: rho = rotation number of the tangency point on the boundary of
 Omega_1 (where Lc(c_*) = Lc'(c_*) = 0, c_* = cos(2 pi rho)), delta = distance in alpha L beyond that point at
 fixed beta, normalized by the height delta_top(rho) at which the vertical line enters the K- or (K+1)-tongue.
-Each grid tuning is rounded to a rational and classified (Omega_1, Omega_aug, mixed-feasible lengths); the
-exact 1D search runs at the smallest Omega_aug length and at every mixed-feasible length K <= 10. Cell labels are
-[numerical] (floating-point classification); the 1D searches inside each cell are exact.
+Heights h = delta/delta_top run over 25 levels below the gap tops (h < 1) and 4 levels above them
+(h = 1.03 ... 1.15, cells in the neighbouring tongues); h = 1 itself is skipped because it is the tongue boundary.
+Each grid tuning is rounded to a rational and classified (Omega_1, Omega_aug, mixed-condition lengths). For the
+mixed condition, `hb1d.mixed.mixed_float_record` solves both LPs at every K <= 30 (the margin sigma of a feasible
+weight vector and the margin tau of an infeasibility vector) and returns +1 if sigma > 1e-8, -1 if tau > 1e-8, and
+0 (undecided) otherwise or on any solver failure; the record is stored per cell. The exact 1D search runs at the
+smallest Omega_aug length and at every mixed-feasible or undecided length K <= 10. Cell labels are [numerical]
+(floating-point classification; Omega_aug membership is rechecked rigorously in every cell by
+`scripts/export_rigorous.py`); the 1D searches inside each cell are exact.

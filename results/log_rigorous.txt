@@ -15,3 +15,7 @@ ex32: Omega_aug member = True; mixed infeasible at 13 lengths, feasible at 22
 p1: Omega_aug member = False; mixed infeasible at 9 lengths, feasible at 29
 grid: 1740/1740 Omega_aug verdicts verified
 OK
+real 65.65
+user 61.47
+sys 1.09
+EXIT=0

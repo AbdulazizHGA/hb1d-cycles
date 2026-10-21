@@ -75,24 +75,34 @@ certificate (§2.5).
 
 ![1D phase diagram at kappa = 100](figures/phase_diagram_1d_k100.png)
 
-1,740 grid tunings in Pasechnyuk-Vilensky's unrolled coordinates over the gaps I₃, I₄, I₅ (60 columns in the
-rotation number ρ × 29 heights, finer near the tops of the gaps; `scripts/phase_diagram.py`, about 10 minutes
-on 3 cores). Each cell is a rational tuning (denominators ≤ 10⁵):
+1,740 grid tunings in Pasechnyuk-Vilensky's unrolled coordinates over the gaps I₃, I₄, I₅ **and the lower part
+of the tongues just above them**: 60 columns in the rotation number ρ × 29 heights h = δ/δ_top(ρ), of which 25
+lie in the gaps (h < 1, finer near the tops) and 4 lie above the gap tops (h = 1.03, 1.06, 1.10, 1.15, the
+tongue cells drawn above the black line). `scripts/phase_diagram.py`, about 10 minutes on 4 cores. Each cell is
+a rational tuning (denominators ≤ 10⁵):
 
 | cell class | cells | 1D result |
 |---|---|---|
 | in Ω_aug (the K-tongues, K = 3..6, above the gaps; membership rechecked rigorously in every cell) | 240 | a 1D cycle in **every** cell, of exactly the predicted minimal period K [exact] |
-| outside Ω_aug, mixed condition feasible at some K ≤ 10 [numerical] (fan tongues 2/7, 2/9, 3/10, …) | 34 | the exact 1D search found **no cycle** at the lengths that passed the filter (36 searches, K = 7, 9, 10) [exact]; other lengths K ≤ 10 are excluded only by the numerical filter |
-| outside Ω_aug, mixed condition feasible only at some 10 < K ≤ 30 [numerical] (e.g. around Prop. 13, K = 13) | 39 | not searched on the grid |
-| mixed condition infeasible for all K ≤ 30 [numerical] | 1,427 | no cycle of length ≤ 30 in any dimension [numerical] |
+| `mixed_feasible`: outside Ω_aug, mixed condition feasible at some K ≤ 10 [numerical] | 34 | the exact 1D search found **no cycle** at the lengths that passed the filter (36 searches, K = 7, 9, 10) [exact]; other lengths K ≤ 10 are excluded only by the numerical filter |
+| `mixed_feasible_long`: outside Ω_aug, mixed condition feasible only at some 10 < K ≤ 30 [numerical] (e.g. around Prop. 13, K = 13) | 39 | not searched on the grid |
+| `nocycle`: mixed condition infeasible for all K ≤ 30 [numerical] | 1,427 | no cycle of length ≤ 30 in any dimension [numerical] |
+| `undecided`: a mixed-condition margin within the tolerance 10⁻⁸, or an LP solver failure | 0 | — |
 
 So on this grid a 1D cycle was found in every Ω_aug cell (as Fotopoulos et al.'s Thm 4.1 guarantees), and **no
-1D cycle was found outside Ω_aug within the lengths examined**: K ∈ {7, 9, 10} in the 34 fan cells, no 1D search
+1D cycle was found outside Ω_aug within the lengths examined**: K ∈ {7, 9, 10} in the 34 `mixed_feasible` cells, no 1D search
 in the 39 cells whose first mixed-feasible length exceeds 10, and only lengths K ≤ 30 (numerically, in any
 dimension) in the other 1,427 cells. The grid says nothing about longer cycles in those cells. The mixed-condition
 classes are floating-point verdicts: which lengths get an exact 1D search, and the existence of higher-dimensional
-cycles in the fan cells (Fotopoulos et al. Prop. 5.1), rest on that numerical filter and are not certified cell
-by cell (the named tunings FAN7, FAN9 and Prop. 13 do have rigorous mixed-condition certificates, §2.5). Ω_aug
+cycles in the `mixed_feasible` cells (Fotopoulos et al. Prop. 5.1), rest on that numerical filter and are not
+certified cell by cell (the named tunings FAN7, FAN9 and Prop. 13 do have rigorous mixed-condition certificates,
+§2.5). For each cell outside Ω_aug and each K ≤ 30, `results/phase_diagram_k100.json` stores the LP record: the
+verdict, both margins (σ for a feasible weight vector, τ for an infeasibility vector; they agree with LP duality,
+σ = −τ to 4·10⁻¹⁵) and both solver statuses. All 42,000 LPs reported success, and the smallest margin was
+9.6·10⁻⁸, ten times the tolerance, so no verdict was undecided. The class name `mixed_feasible` does not claim
+that a cell is in a fan tongue in Pasechnyuk-Vilensky's sense; his fan program (Thm fan-div(a)) was nevertheless
+evaluated in every such cell (field `pv_fan_program`) and is strictly feasible in all 34 at one of the searched
+lengths [numerical; best margins 5·10⁻⁵ to 9·10⁻³]. Ω_aug
 membership was rechecked rigorously in all 1,740 cells, and the 1D searches inside the cells are exact. The named
 tunings (circles) are separate points with their own results in §2.2; the neighbouring cells are different
 tunings. Pasechnyuk-Vilensky's `dmivilensky/Heavy-Ball` already classifies
@@ -118,7 +128,7 @@ these gaps in unrestricted dimension; the new part here is the one-dimensional c
 | file | what it proves | independent checker |
 |---|---|---|
 | `certificates/<tuning>_K<K>.farkas.gz` (one per exact "none" in §2.2) | no 1D K-cycle at that tuning | `scripts/verify_certificates.py` |
-| `certificates/grid/*.farkas.gz` | no 1D cycle in each fan cell of §2.3 at the searched K | same |
+| `certificates/grid/*.farkas.gz` | no 1D cycle in each `mixed_feasible` cell of §2.3 at the searched K | same |
 | `certificates/mixed_and_omega_aug.json` | the mixed-condition verdicts of §2.2 and Ω_aug membership of the named tunings and of all 1,740 grid cells | `scripts/verify_rigorous.py` |
 | `results/exact_search.jsonl`, `results/phase_diagram_k100.json` (field `x`) | the cycles found (Polyak, Example 3.2, every Ω_aug cell) as exact rationals | `hb1d.exact.check_cycle`, `tests/` |
 
@@ -128,7 +138,8 @@ node's rows, recomputes the Farkas vector exactly on the stored support, checks 
 B^T y = (∗, −1, …, −1) in rational arithmetic, and walks the tree to check that the certified prefixes cover
 every sorted order. `verify_rigorous.py` uses only mpmath interval arithmetic and recomputes the Appendix B
 bound exactly. Neither imports this package or an LP solver. The tests check every stored file with K ≤ 10
-and that tampered files are rejected; the full check of all files is logged in
+and that tampered files are rejected; CI also runs `verify_rigorous.py` and `verify_certificates.py` on every
+file with K ≤ 12. The full check of all files (including K = 13, 14, about an hour) is logged in
 `results/log_verify_certificates.txt`.
 
 ## 3. Method in one paragraph
@@ -188,8 +199,9 @@ The literature check (channels, queries, verdicts) is logged in
 
 ```bash
 python -m venv .venv && .venv/bin/pip install -e ".[test]"
-.venv/bin/python -m pytest -q          # about 2 minutes
-./reproduce.sh                         # fast part; FULL=1 ./reproduce.sh reruns the long searches (hours)
+.venv/bin/python -m pytest -q          # 4 to 6 minutes (Apple M1)
+./reproduce.sh                         # fast part; uses $PYTHON, else .venv/bin/python, else python3
+FULL=1 ./reproduce.sh                  # also reruns the long searches (hours)
 python scripts/verify_certificates.py certificates/*.farkas.gz certificates/grid/*.farkas.gz
 python scripts/verify_rigorous.py      # interval-arithmetic certificates
 ```
@@ -214,10 +226,12 @@ SciPy 1.18.1 on an Apple M1.
   ≤ 14 و≤ 16 على الترتيب.
 * النقطة P₁ عند Fotopoulos (دورة في ℝ⁴): لا دورة في بعد واحد بطول ≤ 13.
 
-**مخطط الطور (التصنيف عددي):** مخطط في بعد واحد لفجوات المستوى الأول عند κ = 100 (1,740 خلية). تصنيف الخلايا
+**مخطط الطور (التصنيف عددي):** مخطط في بعد واحد لفجوات المستوى الأول عند κ = 100 وللجزء الأدنى من الألسنة فوق
+قممها (1,740 خلية). تصنيف الخلايا
 بالشرط المختلط عددي، أما عضوية Ω_aug فأُعيد فحصها بدقة في كل الخلايا، والبحث في بعد واحد داخل الخلايا دقيق.
 وُجدت دورة في بعد واحد في كل خلية من خلايا Ω_aug (240 خلية). خارج Ω_aug لم توجد دورة ضمن الأطوال المفحوصة
-فقط: K ∈ {7, 9, 10} في خلايا المروحة (34 خلية)، ولا بحث في 39 خلية، وفي الباقي استبعاد عددي للأطوال K ≤ 30.
+فقط: K ∈ {7, 9, 10} في الخلايا التي يكون فيها الشرط المختلط ممكناً عند طول ≤ 10 (34 خلية)، ولا بحث في 39 خلية،
+وفي الباقي استبعاد عددي للأطوال K ≤ 30.
 
 **ما لا تثبته هذه النتائج:** لا تثبت الحدسية. هي أدلة محدودة بأطوال ونقاط معينة، ولا تقول شيئاً عن بعدين.
 

@@ -5,7 +5,11 @@
 # certificates/<tuning>_K<K>.farkas.gz.
 set -euo pipefail
 cd "$(dirname "$0")"
-PY="${PYTHON:-python}"
+# Interpreter: $PYTHON if set, else the repo's .venv (see README), else python3.
+if [[ -n "${PYTHON:-}" ]]; then PY="$PYTHON"
+elif [[ -x .venv/bin/python ]]; then PY=.venv/bin/python
+else PY=python3; fi
+echo "reproduce.sh: using $("$PY" -c 'import sys; print(sys.executable, sys.version.split()[0])')"
 "$PY" scripts/find_fan_tunings.py                       # results/fan_tunings.json
 for key in polyak100:3:8 ex32:3:6 convgap:3:11 prop13:3:11 fan7:3:11 fan9:3:11 p1:10:10; do
   IFS=: read -r t a b <<< "$key"
@@ -20,7 +24,7 @@ if [[ "${FULL:-0}" == "1" ]]; then
   "$PY" scripts/phase_diagram.py --nrho 60 --normalized --workers 3   # results/phase_diagram_k100.json
 fi
 "$PY" scripts/export_rigorous.py                        # certificates/mixed_and_omega_aug.json
-"$PY" scripts/verify_certificates.py certificates/*.farkas.gz
+"$PY" scripts/verify_certificates.py certificates/*.farkas.gz certificates/grid/*.farkas.gz
 "$PY" scripts/plot_phase_diagram.py                     # figures/phase_diagram_1d_k100.png
 "$PY" scripts/summarize.py                              # results/summary.{json,md}
 "$PY" -m pytest -q

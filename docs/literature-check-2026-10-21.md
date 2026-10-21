@@ -1,6 +1,42 @@
 # Literature / novelty check, 2026-10-21: 1D heavy-ball cycles outside Omega_aug; 1D realization of fan orbits
 
-Date of check: 2026-10-21. Checked by Claude (a research sub-agent of the Phase 2 session that built this repository); every [read] item was read in primary form by that agent, and items marked [2nd-hand] or [abs] were not read in full.
+**How this log was made.** The searches were run on 2026-10-21 by an AI research assistant (Claude, Anthropic)
+working for the repository author, using web search, direct page fetches, the Semantic Scholar and OpenAlex APIs
+and the GitHub API; the author reviewed the result. A second, shorter check was run the same day just before
+publication (end of this file). Every [read] item was read in primary form; items marked [2nd-hand] or [abs]
+were not read in full.
+
+**Limits.** A search that finds nothing does not show that no prior work exists. Google Scholar could not be
+queried and the arXiv API was rate-limited on 2026-10-21 (arXiv listing pages were used instead); indexes lag
+behind arXiv by days to weeks; unpublished work (e.g. the concurrent work by Dieuleveut et al. mentioned in
+Fotopoulos et al.'s acknowledgments) cannot be found this way.
+
+## Direct links and queries (to re-run the check)
+
+| what | link |
+|---|---|
+| Fotopoulos, Helcig, Deck, Alsbach, arXiv 2610.25104 | https://arxiv.org/abs/2610.25104 |
+| Pasechnyuk-Vilensky, arXiv 2610.09912 | https://arxiv.org/abs/2610.09912 |
+| Liu, Wu, Sun, Chen, Li, Qu, arXiv 2610.10369 | https://arxiv.org/abs/2610.10369 |
+| Goujaud, Taylor, Dieuleveut, arXiv 2307.11291 | https://arxiv.org/abs/2307.11291 |
+| Goujaud et al., COLT 2025 open problem, arXiv 2502.19916 | https://arxiv.org/abs/2502.19916 |
+| Kharitenko, arXiv 2607.23599 | https://arxiv.org/abs/2607.23599 |
+| Seiler, Carrasco, arXiv 2009.02468 | https://arxiv.org/abs/2009.02468 |
+| Zhang, Carrasco, Heath, arXiv 2008.11975 | https://arxiv.org/abs/2008.11975 |
+| Heath, Carrasco, Zhang, arXiv 2109.00744 | https://arxiv.org/abs/2109.00744 |
+| Fotopoulos et al. Lean repository | https://github.com/kostfoto/Non-Acceleration-Heavy-Ball-1D |
+| Pasechnyuk-Vilensky code | https://github.com/dmivilensky/Heavy-Ball |
+| Hernanz repository (paper on alphaXiv) | https://github.com/marcoshernanz/heavy-ball-optimal-rate |
+| F. Wang's notes | https://github.com/Trace231/heavyball-blog |
+| ETH ODI blog post (7 Jul 2026) | https://odi.inf.ethz.ch/blog/heavy-ball-one-dimension/ |
+| citing papers, 2610.25104 | https://api.semanticscholar.org/graph/v1/paper/arXiv:2610.25104/citations?fields=title,externalIds |
+| citing papers, 2610.09912 | https://api.semanticscholar.org/graph/v1/paper/arXiv:2610.09912/citations?fields=title,externalIds |
+| newest heavy-ball papers on arXiv | https://arxiv.org/search/?query=heavy-ball&searchtype=all&order=-announced_date_first |
+| new commits, Fotopoulos et al. repository | `gh api repos/kostfoto/Non-Acceleration-Heavy-Ball-1D/commits` |
+| new commits, Hernanz repository | `gh api repos/marcoshernanz/heavy-ball-optimal-rate/commits` |
+
+The remaining queries (arXiv searches for "Lur'e", "Zames-Falb", "Kalman conjecture", author search
+"Dieuleveut", GitHub repository and code searches) are listed with their results in the sections below.
 Scope: the question "do HB cycles exist on 1D functions in F_{mu,L}(R) at (alpha, beta) outside
 Omega_aug (Fotopoulos–Helcig–Deck–Alsbach)?", equivalently "can Pasechnyuk-Vilensky's multi-harmonic fan
 orbits be realized by scalar functions?" Focus: kappa = 100, level-1 gaps.
@@ -30,10 +66,9 @@ Pasechnyuk-Vilensky (Thm fan-div) by a scalar function, and none proves that thi
   |arg M_1| + arg(1 - M_1) <= pi/K (quoted in the blog and in PV §7). At mu = 1, L = 100, gamma = 4/121,
   beta = 81/121 the left side is 0.458, below pi/3 for K = 3. It is also 0.399 < pi/4 for K = 4 and
   0.419 < pi/5 for K = 5. **So we cannot claim "first multi-harmonic 1D cycle". Any claim
-  must be scoped to tunings outside Omega_aug, or inside the Omega_1 gaps.** The Phase-1 report's
-  table row "Hernanz: no fan orbits" is correct in letter: it is not a fan orbit and not outside
-  Omega_aug. But it should be softened to say Hernanz does have a two-harmonic 1D cycle, at Polyak's
-  tuning.
+  must be scoped to tunings outside Omega_aug, or inside the Omega_1 gaps.** A statement
+  such as "Hernanz has no fan orbits" is correct in letter (his cycle is not a fan orbit and not outside
+  Omega_aug), but it should say that Hernanz does have a two-harmonic 1D cycle, at Polyak's tuning.
 - **Scope warning 2: the generic control analogue has been answered negatively.** Kharitenko
   2607.23599 (Jul 2026) reports a numerical disproof of Carrasco's conjecture "no OZF multiplier =>
   not absolutely stable" for discrete-time scalar slope-restricted Lur'e systems [2nd-hand: fetch-tool
@@ -193,7 +228,7 @@ Protocol.
 | J. Zhang, J. Carrasco, W.P. Heath, "Duality bounds for discrete-time Zames–Falb multipliers", IEEE TAC 67(7):3521–3528, 2022, arXiv 2008.11975 | [read: v2 PDF text] | Separation and duality gives single-frequency closed-form limits and **multi-frequency limits via LP**. Conjecture 2: no LTI ZF multiplier => not absolutely stable. Conclusion: [40] (Seiler–Carrasco) connected the **single-frequency** result to periodic behaviour, "however, an interpretation of the multiple frequency condition is still open". | **Key: states our control-side question as open (2020/2022).** |
 | W.P. Heath, J. Carrasco, J. Zhang, "Phase limitations of multipliers at harmonics", IEEE TAC 69(1):566–573, 2024, DOI 10.1109/TAC.2023.3271855, arXiv 2109.00744 | [read: v1 PDF text] | **Continuous-time.** A phase condition at omega and a harmonic of it (example: omega and 2 omega). It shows a third-order plant with delay is a Kalman counterexample, with the periodic response only observed in simulation. The conclusion says no multiplier does not necessarily mean not absolutely stable, and "the conjecture remains open for both continuous-time and discrete-time systems". | Related, differs: continuous time, no construction of a multi-harmonic nonlinearity |
 | L. Su, P. Seiler, J. Carrasco, S.Z. Khong, "On the necessity and sufficiency of discrete-time O'Shea–Zames–Falb multipliers", Automatica 2023 (S0005109823000225), arXiv 2112.07456 | [abs] | Splits the necessity conjecture into three steps and names the bottlenecks. PV cites it as [SSCK]. | Related, differs |
-| **A. Kharitenko, "Existence of stable Lur'e systems for which the O'Shea–Zames–Falb stability test fails", arXiv 2607.23599 (26 Jul 2026, v1, math.OC)** | [abs plus a fetch-tool summary of the HTML; 2nd-hand for details] | **Discrete-time**, slope-restricted (mainly monotone), oddness not assumed. A full-block, copositivity-based multiplier certifies stability where no OZF multiplier exists. This is called a "(numerical)" disproof of Carrasco's necessity conjecture: rational certificates at N = 4 and slope bound k = 2, with bisection for N = 2..6. Their "kappa" is the slope bound, not a condition number. It cites Seiler–Carrasco and ZCH, but not heavy-ball or Fotopoulos (although Fotopoulos thanks Kharitenko). It constructs no periodic signal. | **Closest related.** For a generic scalar Lur'e plant, failure of every ZF multiplier does not imply a destabilizing scalar nonlinearity. So the ZF/fan obstruction can be conservative in 1D. It does not settle the HB plant. **Read the full text in Phase 2.** |
+| **A. Kharitenko, "Existence of stable Lur'e systems for which the O'Shea–Zames–Falb stability test fails", arXiv 2607.23599 (26 Jul 2026, v1, math.OC)** | [abs plus a fetch-tool summary of the HTML; 2nd-hand for details] | **Discrete-time**, slope-restricted (mainly monotone), oddness not assumed. A full-block, copositivity-based multiplier certifies stability where no OZF multiplier exists. This is called a "(numerical)" disproof of Carrasco's necessity conjecture: rational certificates at N = 4 and slope bound k = 2, with bisection for N = 2..6. Their "kappa" is the slope bound, not a condition number. It cites Seiler–Carrasco and ZCH, but not heavy-ball or Fotopoulos (although Fotopoulos thanks Kharitenko). It constructs no periodic signal. | **Closest related.** For a generic scalar Lur'e plant, failure of every ZF multiplier does not imply a destabilizing scalar nonlinearity. So the ZF/fan obstruction can be conservative in 1D. It does not settle the HB plant. **Not read in full for this log.** |
 | H. Gyotoku, T. Yuno, Y. Ebihara, D. Peaucelle, S. Tarbouriech, V. Magron, "Detecting destabilizing nonlinearities in absolute stability analysis of discrete-time feedback systems", arXiv 2503.05875 (Feb 2025). Related: arXiv 2411.14339 (dual LMIs for static OZF). | [abs] | The dual LMI with a rank-one condition extracts a destabilizing nonlinearity and a **nonzero equilibrium**, not a periodic orbit | Related, differs |
 | K. Tong, C. Grussler, M.S. Chong, "Periodic fixed-points and their algebraic characteristics in discrete-time Lur'e feedback systems", arXiv 2609.14336 (13/15 Sep 2026) | [abs] | Circulant-matrix necessary condition (sector bound from singular values) for P-periodic points with memoryless nonlinearities, for all P. Not slope-restricted; not exact search. | Related, differs. Possibly a useful necessary-condition cross-check. |
 | W.P. Heath, S. Das, J. Carrasco, "Multipliers for forced Lurye systems with slope-restricted nonlinearities", arXiv 2512.24453 (Dec 2025) | [abs] | Forced systems, power gain, period-preserving solutions | Not relevant |

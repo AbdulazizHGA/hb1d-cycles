@@ -1,18 +1,18 @@
-100/1740 cells, 15s
-200/1740 cells, 27s
-300/1740 cells, 40s
-400/1740 cells, 52s
-500/1740 cells, 64s
-600/1740 cells, 109s
-700/1740 cells, 116s
-800/1740 cells, 129s
-900/1740 cells, 141s
-1000/1740 cells, 154s
-1100/1740 cells, 166s
-1200/1740 cells, 178s
-1300/1740 cells, 584s
-1400/1740 cells, 594s
-1500/1740 cells, 615s
-1600/1740 cells, 632s
-1700/1740 cells, 649s
-Counter({'nocycle': 1427, 'aug': 240, 'fan_long': 39, 'fan': 34})
+100/1740 cells, 8s
+200/1740 cells, 16s
+300/1740 cells, 22s
+400/1740 cells, 28s
+500/1740 cells, 33s
+600/1740 cells, 52s
+700/1740 cells, 52s
+800/1740 cells, 57s
+900/1740 cells, 62s
+1000/1740 cells, 66s
+1100/1740 cells, 71s
+1200/1740 cells, 76s
+1300/1740 cells, 284s
+1400/1740 cells, 284s
+1500/1740 cells, 284s
+1600/1740 cells, 284s
+1700/1740 cells, 284s
+Counter({'nocycle': 1427, 'aug': 240, 'mixed_feasible_long': 39, 'mixed_feasible': 34})

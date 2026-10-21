@@ -130,14 +130,48 @@ def fan_program_slacks(t: Tuning, k: int, nu: dict):
     return lags + [sum(w * math.cos(th) for w, th in zip(ws, ths))]
 
 
-def mixed_float(t: Tuning, K: int, tol=1e-10):
-    """Floating-point verdict for (MIX_K): +1 strictly feasible, -1 strictly infeasible, 0 boundary. [numerical]"""
+MIXED_TOL = 1e-8
+
+
+def mixed_float_record(t: Tuning, K: int, tol=MIXED_TOL):
+    """Floating-point verdict for (MIX_K), with the evidence. [numerical]
+
+    Solves both LPs: sigma = max margin of a feasible s (Phi s <= -sigma) and tau = max margin of an
+    infeasibility vector y (Phi^T y >= tau), each over the simplex. Verdict +1 if sigma > tol, -1 if tau > tol,
+    and 0 (undecided) if neither margin clears tol or if a solver did not report success (status != 0)."""
     Phi = phi_matrix_float(t, K)
     n = K - 1
     c = np.r_[np.zeros(n), -1]
     eq = dict(A_eq=[[1] * n + [0]], b_eq=[1], bounds=[(0, None)] * n + [(None, None)], method="highs")
-    sig = -linprog(c, A_ub=np.hstack([Phi, np.ones((n, 1))]), b_ub=np.zeros(n), **eq).fun
-    if sig > tol:
-        return 1
-    tau = -linprog(c, A_ub=np.hstack([-Phi.T, np.ones((n, 1))]), b_ub=np.zeros(n), **eq).fun
-    return -1 if tau > tol else 0
+    rf = linprog(c, A_ub=np.hstack([Phi, np.ones((n, 1))]), b_ub=np.zeros(n), **eq)
+    ra = linprog(c, A_ub=np.hstack([-Phi.T, np.ones((n, 1))]), b_ub=np.zeros(n), **eq)
+    sigma = -rf.fun if rf.status == 0 else None
+    tau = -ra.fun if ra.status == 0 else None
+    if rf.status != 0 or ra.status != 0:
+        v = 0
+    elif sigma > tol:
+        v = 1
+    elif tau > tol:
+        v = -1
+    else:
+        v = 0
+    return dict(v=v, sigma=sigma, tau=tau, status_feasible_lp=int(rf.status), status_alternative_lp=int(ra.status))
+
+
+def mixed_float(t: Tuning, K: int, tol=MIXED_TOL):
+    """+1 strictly feasible, -1 strictly infeasible, 0 undecided (see mixed_float_record). [numerical]"""
+    return mixed_float_record(t, K, tol)["v"]
+
+
+def fan_program_margin(t: Tuning, k: int):
+    """Largest min-slack of Pasechnyuk-Vilensky's program of Thm fan-div(a) at period k over weights on the
+    frequencies 2 pi j/k, 1 <= j < k/2 (normalized to sum 1); > 0 means strictly feasible. Also returns the
+    weights. Floating point. [numerical]"""
+    js = list(range(1, (k + 1) // 2))
+    cols = np.array([fan_program_slacks(t, k, {j: 1}) for j in js]).T
+    n, m = len(js), cols.shape[0]
+    res = linprog(np.r_[np.zeros(n), -1], A_ub=np.hstack([-cols, np.ones((m, 1))]), b_ub=np.zeros(m),
+                  A_eq=[[1] * n + [0]], b_eq=[1], bounds=[(0, None)] * n + [(None, None)], method="highs")
+    if res.status != 0:
+        return None, {}
+    return -res.fun, {j: float(w) for j, w in zip(js, res.x[:n]) if w > 1e-12}
