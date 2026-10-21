@@ -56,3 +56,24 @@ def test_wang_no_cycle_point_consistent():
     from hb1d.tunings import Tuning
     t = Tuning("Wang", F(113, 50), F(3, 5), F(100))
     assert all(mixed(t, K)["feasible"] is False for K in range(3, 41))
+
+
+@pytest.mark.parametrize("t,k,lo,hi", [(FAN7, 7, 1 / 4, 1 / 3), (FAN9, 9, 1 / 5, 1 / 4), (PROP13, 13, 1 / 5, 1 / 4)])
+def test_fan_tunings_satisfy_pasechnyuk_program(t, k, lo, hi):
+    """FAN7 / FAN9 are fan-tongue points in Pasechnyuk-Vilensky's own sense: his program of Thm fan-div(a) (with the
+    minimizer constraint) is strictly feasible with harmonics 1/k, 2/k, and the dip lies in (1/(K+1), 1/K), i.e. the
+    tuning is in his gap I_K. At Prop. 13 the same LP recovers his weights 149/797, 648/797. [numerical]"""
+    import numpy as np
+    from scipy.optimize import linprog
+    from hb1d.geometry import dip
+    js = list(range(1, (k + 1) // 2))
+    cols = np.array([fan_program_slacks(t, k, {j: 1}) for j in js]).T
+    n, m = len(js), cols.shape[0]
+    res = linprog(np.r_[np.zeros(n), -1], A_ub=np.hstack([-cols, np.ones((m, 1))]), b_ub=np.zeros(m),
+                  A_eq=[[1] * n + [0]], b_eq=[1], bounds=[(0, None)] * n + [(None, None)])
+    assert -res.fun > 1e-4
+    d = dip(t)
+    assert lo < d[0] < d[1] < hi
+    if t is PROP13:
+        w = dict(zip(js, res.x[:n]))
+        assert abs(w[2] - 149 / 797) < 0.01 and abs(w[3] - 648 / 797) < 0.01

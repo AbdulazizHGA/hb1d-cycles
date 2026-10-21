@@ -234,4 +234,7 @@ multiplier is, or is not, realizable by a scalar slope-restricted nonlinearity?
 3. Done: README states that dmivilensky/Heavy-Ball classifies the kappa = 100 gaps without a dimension
    restriction and that our diagram adds the 1D question.
 4. Done: tests/test_mixed.py::test_wang_no_cycle_point_consistent, under the stated reading of the notation.
-5. Open: re-run the Semantic Scholar / arXiv checks right before publishing.
+5. Done (2026-10-21, before publishing; read directly): Semantic Scholar citations of 2610.25104 and 2610.09912
+   are both empty (`{"offset": 0, "data": []}`); both abs pages show only [v1]; the arXiv search for "heavy-ball"
+   sorted by announcement date shows nothing after 2610.27990 (20 Oct, momentum and Polyak-Ruppert averaging,
+   unrelated). No new work on 1D cycles, Omega_aug or fan orbits.

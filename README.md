@@ -23,9 +23,9 @@ Heavy ball, x_{k+1} = x_k − α f′(x_k) + β(x_k − x_{k−1}), on F_{μ,L}(
   ℝ⁵ with harmonics 2/13 and 3/13). He states as open: "the realization of the fan orbits … by scalar functions
   is the corresponding question in dimension one".
 
-The two questions meet: Pasechnyuk's single-harmonic region {Θ(2πj/k) ≤ π/k} is exactly Ω_aug (proved in one
-line in [docs/method.md §4](docs/method.md), checked in SymPy), so the fan tongues lie outside Ω_aug, and a 1D fan
-orbit would refute the conjecture.
+The two questions meet: as Pasechnyuk-Vilensky notes after his Thm A, his single-harmonic region
+{Θ(2πj/k) ≤ π/k} is exactly Ω_aug (the one-line reason is in [docs/method.md §4](docs/method.md), checked here in
+SymPy). So the fan tongues lie outside Ω_aug, and a 1D fan orbit would refute the conjecture.
 
 ## 2. Results
 
@@ -55,7 +55,10 @@ certified negative margin (Prop. 13: K₀ = 28, largest margin −0.00155 at (K,
 | Example 3.2 of Fotopoulos et al. (κ = 5/4) | 18/5 | 17/20 | yes (Ω_{5,2}) | 1D 5-cycle [exact]; none for K = 3, 4, 6 | rational certificate |
 
 FAN7 and FAN9 are found by `scripts/find_fan_tunings.py`. At both, the mixed condition of Fotopoulos et al.
-holds strictly at the fan length with modes 1/k and 2/k, so a cycle exists in ℝ⁴ (their Prop. 5.1): these are
+holds strictly at the fan length with modes 1/k and 2/k, so a cycle exists in ℝ⁴ (their Prop. 5.1). They are
+fan-tongue points in Pasechnyuk-Vilensky's own sense too: his program of Thm fan-div(a), including the
+minimizer constraint, is strictly feasible there with harmonics 1/k and 2/k, and the dips lie in (1/4, 1/3) and
+(1/5, 1/4), i.e. in the gaps I₃ and I₄ [numerical, margins 1.3·10⁻³ and 1.9·10⁻³]. They are
 explicit rational points with two-harmonic higher-dimensional cycles and **no** 1D cycle of length ≤ 13.
 
 At Prop. 13 the mixed condition (a necessary condition for a K-cycle in **every** dimension) is certified
