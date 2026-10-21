@@ -9,6 +9,7 @@ import gzip
 import json
 import os
 import platform
+import re
 import sys
 import time
 from fractions import Fraction as F
@@ -20,10 +21,19 @@ from hb1d.exact import check_cycle, search, search_parallel  # noqa: E402
 from hb1d.tunings import NAMED, Tuning  # noqa: E402
 
 
+def file_key(key):
+    """A file-name-safe form of a tuning key. Named keys are kept; a fraction triple such as '111/50,31/50,100'
+    becomes '111d50_31d50_100' ('/' -> 'd', ',' -> '_', distinct so different inputs never share a name)."""
+    out = key.replace("/", "d").replace(",", "_")
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+", out):
+        raise ValueError(f"tuning key {key!r} cannot be used in a file name")
+    return out
+
+
 def write_certs(directory, key, t, K, certs, rec):
-    """certificates/<key>_K<K>.farkas.gz in the format read by scripts/verify_certificates.py."""
+    """certificates/<file_key(key)>_K<K>.farkas.gz in the format read by scripts/verify_certificates.py."""
     os.makedirs(directory, exist_ok=True)
-    name = f"{key}_K{K}.farkas.gz"
+    name = f"{file_key(key)}_K{K}.farkas.gz"
     head = dict(format="hb1d-farkas-v1", key=key, tuning=t.name, alpha=str(t.alpha), beta=str(t.beta),
                 kappa=str(t.kappa), K=K, nodes=rec["nodes"], pruned=rec["pruned"], date=rec["date"])
     # mtime=0 keeps the gzip bytes reproducible
@@ -31,7 +41,8 @@ def write_certs(directory, key, t, K, certs, rec):
         gz.write((json.dumps(head) + "\n").encode())
         for p, sup in sorted(certs):
             gz.write((",".join(map(str, p)) + "|" + ",".join(map(str, sup)) + "\n").encode())
-    return os.path.relpath(os.path.join(directory, name), os.path.join(os.path.dirname(__file__), ".."))
+    path, root = os.path.abspath(os.path.join(directory, name)), os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    return os.path.relpath(path, root) if path.startswith(root + os.sep) else path   # repo-relative when inside it
 
 
 def main():

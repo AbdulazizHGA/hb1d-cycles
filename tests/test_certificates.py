@@ -105,3 +105,28 @@ def test_rigorous_grid_membership_matches_classification():
     d = json.load(open(os.path.join(CERTS, "mixed_and_omega_aug.json")))
     assert len(d["grid"]) == 1740
     assert all((e["member"] is True) == (e["cls"] == "aug") for e in d["grid"])
+
+
+def test_fraction_input_writes_a_checkable_certificate(tmp_path):
+    """run_exact.py documents fraction input such as 111/50,31/50,100; its certificate must get a safe file name
+    (no '/' subfolders) and pass the independent verifier."""
+    import subprocess
+    import sys
+    out, certs = tmp_path / "x.jsonl", tmp_path / "certs"
+    subprocess.run([sys.executable, os.path.join(ROOT, "scripts", "run_exact.py"), "111/50,31/50,100", "5", "5",
+                    "--out", str(out), "--certs", str(certs)], check=True, capture_output=True)
+    rec = json.loads(out.read_text().splitlines()[-1])
+    assert rec["verdict"] == "none [exact]"
+    path = certs / "111d50_31d50_100_K5.farkas.gz"
+    assert path.exists() and rec["certificate"] == str(path)
+    assert verify_file(str(path))["ok"]
+
+
+def test_file_key_is_safe_and_injective():
+    from scripts.run_exact import file_key
+    assert file_key("prop13") == "prop13"
+    assert file_key("111/50,31/50,100") == "111d50_31d50_100"
+    assert file_key("1/1,1") != file_key("1,1/1")
+    assert os.sep not in file_key("../x")             # '/' never reaches the file name
+    with pytest.raises(ValueError):
+        file_key("1 /2,3")                             # anything else unsafe is refused

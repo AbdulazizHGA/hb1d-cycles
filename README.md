@@ -4,9 +4,11 @@
 augmented root-of-unity region Ω_aug? Can Pasechnyuk-Vilensky's multi-harmonic fan orbits be realized by a
 scalar function?**
 
-This repository answers both questions **in the negative at every tuning and cycle length it examines**, with
-exact certificates, and finds **no counterexample**. Nothing here proves the conjecture: one 1D cycle outside
-Ω_aug would refute it, and no number of cases without one can prove it.
+Within the tunings and cycle lengths it examines, this repository finds **no counterexample**: the answer to
+both questions is no in every case checked. The results for the named tunings (§2.2) carry exact certificates
+that an independent checker verifies (§2.5). The phase diagram (§2.3) adds grid evidence whose cell
+classification is numerical; there, exact 1D searches cover only the lengths stated. Nothing here proves the
+conjecture: one 1D cycle outside Ω_aug would refute it, and no number of cases without one can prove it.
 
 ## 1. The question
 
@@ -204,8 +206,8 @@ SciPy 1.18.1 on an Apple M1.
 تحقيق مدارات «المروحة» متعددة التوافقيات عند Pasechnyuk-Vilensky بدالة ذات بعد واحد؟ وجود دورة واحدة كهذه
 يدحض حدسية Fotopoulos وزملائه.
 
-**النتيجة:** لم نجد أي مثال مضاد. النتائج الثلاث التالية `[exact]`، أي بشهادات كسرية دقيقة أو بحساب فترات
-دقيق، وكلها محفوظة في `certificates/` ويفحصها مدقق مستقل:
+**النتيجة ضمن الحالات والأطوال المفحوصة:** لم نجد مثالاً مضاداً. النتائج الثلاث التالية للنقاط المسماة
+`[exact]`، أي بحساب كسري أو بحساب فترات دقيق، وشهاداتها محفوظة في `certificates/` ويفحصها مدقق مستقل:
 * معاملات Prop. 13 خارج Ω_aug، ولا توجد لها دورة في بعد واحد بأي طول K ≤ 25. الأطوال من 3 إلى 14 بالبحث
   الدقيق، وبقية الأطوال حتى 25 لأن الشرط المختلط (شرط لازم في كل الأبعاد) غير ممكن. أول طول مفتوح هو 26.
 * نقطتان جديدتان داخل لساني المروحة 2/7 و2/9 عند κ = 100: لهما دورات في ℝ⁴، ولا دورة في بعد واحد بطول
