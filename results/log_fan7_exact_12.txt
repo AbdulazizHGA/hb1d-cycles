@@ -1,2 +1,3 @@
 {"key": "fan7", "K": 12, "verdict": "none [exact]", "nodes": 44739, "pruned": 37537, "unresolved": 0, "seconds": 264.435665845871}
 {"key": "fan7", "K": 13, "verdict": "none [exact]", "nodes": 161961, "pruned": 137732, "unresolved": 0, "seconds": 994.212033033371}
+{"key": "fan7", "K": 14, "verdict": "none [exact]", "nodes": 576640, "pruned": 496440, "unresolved": 0, "seconds": 2152.9604432582855}

@@ -21,7 +21,7 @@ def records():
 
 
 CLAIMED_NONE = ([("prop13", K) for K in range(3, 15)] + [("convgap", K) for K in range(3, 13)]
-                + [("fan7", K) for K in range(3, 14)] + [("fan9", K) for K in range(3, 15)]
+                + [("fan7", K) for K in range(3, 15)] + [("fan9", K) for K in range(3, 15)]
                 + [("p1", 10), ("p1", 13), ("ex32", 3), ("ex32", 4)])
 
 

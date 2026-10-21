@@ -48,7 +48,7 @@ certified negative margin (Prop. 13: K₀ = 28, largest margin −0.00155 at (K,
 |---|---|---|---|---|---|
 | **Prop. 13** (κ = 100), 13-cycle in ℝ⁵ | 70471/31800 | 6169/9900 | no | **no 1D cycle of any length K ≤ 25** [exact] | exact search K = 3..14; mixed condition infeasible for every other K ≤ 25 (and at K = 14, where both agree) |
 | conv-gap (κ = 100), converges | 111/50 | 31/50 | no | no cycle of length K ≤ 40 in any dimension [exact] | mixed condition; exact 1D search K = 3..12 agrees |
-| **FAN7** (κ = 100), 2/7 fan tongue, gap I₃ | 34/13 | 312/665 | no | **no 1D cycle for K ≤ 13** [exact] | exact search K = 3..13 |
+| **FAN7** (κ = 100), 2/7 fan tongue, gap I₃ | 34/13 | 312/665 | no | **no 1D cycle for K ≤ 14** [exact] | exact search K = 3..14 |
 | **FAN9** (κ = 100), 2/9 fan tongue, gap I₄ | 2201/986 | 199/320 | no | **no 1D cycle for K ≤ 16** [exact] | exact search K = 3..14; mixed infeasible at 15, 16 |
 | **P₁** of Fotopoulos et al. (κ = 10⁴/531), cycle in ℝ⁴ | 32829/12500 | 4879/10000 | no | **no 1D cycle for K ≤ 13** [exact] | exact search K = 10, 13; mixed infeasible otherwise |
 | Polyak (κ = 100) | 400/121 | 81/121 | yes (3-tongue) | 1D cycles for every K = 3..8 [exact] | rational certificates |
@@ -59,7 +59,7 @@ holds strictly at the fan length with modes 1/k and 2/k, so a cycle exists in �
 fan-tongue points in Pasechnyuk-Vilensky's own sense too: his program of Thm fan-div(a), including the
 minimizer constraint, is strictly feasible there with harmonics 1/k and 2/k, and the dips lie in (1/4, 1/3) and
 (1/5, 1/4), i.e. in the gaps I₃ and I₄ [numerical, margins 1.3·10⁻³ and 1.9·10⁻³]. They are
-explicit rational points with two-harmonic higher-dimensional cycles and **no** 1D cycle of length ≤ 13.
+explicit rational points with two-harmonic higher-dimensional cycles and **no** 1D cycle of length ≤ 14.
 
 At Prop. 13 the mixed condition (a necessary condition for a K-cycle in **every** dimension) is certified
 feasible for K ≤ 60 only at K ∈ {13, 26, 35, 39, 44, 48, 52, 53, 56, 57} and certified infeasible at every
@@ -178,7 +178,7 @@ SciPy 1.18.1 on an Apple M1.
 * معاملات Prop. 13 خارج Ω_aug، ولا توجد لها دورة في بعد واحد بأي طول K ≤ 25. الطول 13 بالبحث الدقيق،
   والأطوال الأخرى لأن الشرط المختلط (شرط لازم في كل الأبعاد) غير ممكن. أول طول مفتوح هو 26.
 * نقطتان جديدتان داخل لساني المروحة 2/7 و2/9 عند κ = 100: لهما دورات في ℝ⁴، ولا دورة في بعد واحد بطول
-  ≤ 13 و≤ 16 على الترتيب.
+  ≤ 14 و≤ 16 على الترتيب.
 * النقطة P₁ عند Fotopoulos (دورة في ℝ⁴): لا دورة في بعد واحد بطول ≤ 13.
 * مخطط طور في بعد واحد لفجوات المستوى الأول عند κ = 100 (1,740 خلية): الدورات في بعد واحد تظهر في خلايا Ω_aug
   كلها (240 خلية) ولا تظهر في أي خلية من خلايا المروحة (34 خلية). التصنيف عددي، والبحث داخل كل خلية دقيق.

@@ -361,7 +361,7 @@
   "K0": 21,
   "witnesses": [],
   "first_1d_cycle": null,
-  "no_1d_cycle_up_to": 13,
+  "no_1d_cycle_up_to": 14,
   "searched": [
    3,
    4,
@@ -373,10 +373,10 @@
    10,
    11,
    12,
-   13
+   13,
+   14
   ],
   "open": [
-   14,
    15,
    16,
    17,
@@ -461,12 +461,9 @@
     "seconds": 994.2
    },
    "14": {
-    "v": "open",
-    "mixed": true,
-    "support": [
-     3,
-     4
-    ]
+    "v": "none:search",
+    "nodes": 576640,
+    "seconds": 2153.0
    },
    "15": {
     "v": "open",
