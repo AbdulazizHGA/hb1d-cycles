@@ -23,10 +23,13 @@ from scripts.phase_diagram import gap_top  # noqa: E402
 
 SURFACE, INK, INK2 = "#fcfcfb", "#0b0b0b", "#52514e"
 CLASSES = [  # (label, color); order = index in the colormap
-    (r"no cycle of length $\leq 30$ in any dimension (numerical)", "#e4e3df"),
-    (r"in $\Omega_{\rm aug}$: 1D cycle found (exact)", "#2a78d6"),
-    (r"cycle in higher dimension (mixed condition, $K \leq 10$); no 1D cycle (exact)", "#eb6834"),
-    (r"cycle in higher dimension only at $10 < K \leq 30$; 1D not searched", "#1baf7a"),
+    (r"mixed condition infeasible for every $K \leq 30$ (numerical): no cycle of length $\leq 30$ in any dimension",
+     "#e4e3df"),
+    (r"in $\Omega_{\rm aug}$ (rigorous): a 1D cycle found by exact search", "#2a78d6"),
+    (r"outside $\Omega_{\rm aug}$; mixed condition feasible at some $K \leq 10$ (numerical): exact 1D search at those"
+     r" $K$ found no cycle", "#eb6834"),
+    (r"outside $\Omega_{\rm aug}$; mixed condition feasible only at some $10 < K \leq 30$ (numerical): no 1D search",
+     "#1baf7a"),
     ("on a region boundary: exact search unresolved", "#8a8985"),
 ]
 IDX = {"omega1": 0, "nocycle": 0, "aug": 1, "fan": 2, "fan_long": 3, "unresolved": 4}
@@ -50,7 +53,7 @@ def main():
     Hm = np.array(H)
     h_edges = np.r_[Hm[0] - (Hm[1] - Hm[0]) / 2, (Hm[1:] + Hm[:-1]) / 2, Hm[-1] + (Hm[-1] - Hm[-2]) / 2]
 
-    fig, ax = plt.subplots(figsize=(10, 5.2), facecolor=SURFACE)
+    fig, ax = plt.subplots(figsize=(10, 5.8), facecolor=SURFACE)
     ax.set_facecolor(SURFACE)
     cmap = ListedColormap([c for _, c in CLASSES])
     ax.pcolormesh(r_edges, h_edges, np.ma.masked_invalid(grid), cmap=cmap, vmin=-0.5, vmax=len(CLASSES) - 0.5,
@@ -80,7 +83,7 @@ def main():
     present = {int(v) for v in np.unique(grid[~np.isnan(grid)])}
     ax.legend(handles=[Patch(facecolor=c, edgecolor="none", label=l) for i, (l, c) in enumerate(CLASSES) if i in present],
               loc="upper center",
-              bbox_to_anchor=(0.5, -0.13), ncol=2, frameon=False, fontsize=8.5)
+              bbox_to_anchor=(0.5, -0.13), ncol=1, frameon=False, fontsize=8.5)
     fig.tight_layout()
     os.makedirs(os.path.join(HERE, "..", "figures"), exist_ok=True)
     fig.savefig(os.path.join(HERE, "..", "figures", "phase_diagram_1d_k100.png"), dpi=160, facecolor=SURFACE)

@@ -79,17 +79,21 @@ on 3 cores). Each cell is a rational tuning (denominators ≤ 10⁵):
 
 | cell class | cells | 1D result |
 |---|---|---|
-| in Ω_aug (the K-tongues, K = 3..6, above the gaps) | 240 | a 1D cycle in **every** cell, of exactly the predicted minimal period K [exact] |
-| outside Ω_aug, mixed condition feasible at some K ≤ 10 (fan tongues 2/7, 2/9, 3/10, …) | 34 | **no 1D cycle** in any of the 36 exact searches (K = 7, 9, 10) [exact] |
-| outside Ω_aug, mixed condition feasible only at 10 < K ≤ 30 (e.g. around Prop. 13, K = 13) | 39 | not searched on the grid |
-| mixed condition infeasible for all K ≤ 30 | 1,427 | no cycle of length ≤ 30 in any dimension [numerical] |
+| in Ω_aug (the K-tongues, K = 3..6, above the gaps; membership rechecked rigorously in every cell) | 240 | a 1D cycle in **every** cell, of exactly the predicted minimal period K [exact] |
+| outside Ω_aug, mixed condition feasible at some K ≤ 10 [numerical] (fan tongues 2/7, 2/9, 3/10, …) | 34 | the exact 1D search found **no cycle** at the lengths that passed the filter (36 searches, K = 7, 9, 10) [exact]; other lengths K ≤ 10 are excluded only by the numerical filter |
+| outside Ω_aug, mixed condition feasible only at some 10 < K ≤ 30 [numerical] (e.g. around Prop. 13, K = 13) | 39 | not searched on the grid |
+| mixed condition infeasible for all K ≤ 30 [numerical] | 1,427 | no cycle of length ≤ 30 in any dimension [numerical] |
 
 So on this grid a 1D cycle was found in every Ω_aug cell (as Fotopoulos et al.'s Thm 4.1 guarantees), and **no
 1D cycle was found outside Ω_aug within the lengths examined**: K ∈ {7, 9, 10} in the 34 fan cells, no 1D search
 in the 39 cells whose first mixed-feasible length exceeds 10, and only lengths K ≤ 30 (numerically, in any
-dimension) in the other 1,427 cells. The grid says nothing about longer cycles in those cells. Cell classes are
-floating-point verdicts; the 1D searches inside the cells are exact. The named tunings (circles) are separate points with their own results in §2.2;
-the neighbouring cells are different tunings. Pasechnyuk-Vilensky's `dmivilensky/Heavy-Ball` already classifies
+dimension) in the other 1,427 cells. The grid says nothing about longer cycles in those cells. The mixed-condition
+classes are floating-point verdicts: which lengths get an exact 1D search, and the existence of higher-dimensional
+cycles in the fan cells (Fotopoulos et al. Prop. 5.1), rest on that numerical filter and are not certified cell
+by cell (the named tunings FAN7, FAN9 and Prop. 13 do have rigorous mixed-condition certificates, §2.5). Ω_aug
+membership was rechecked rigorously in all 1,740 cells, and the 1D searches inside the cells are exact. The named
+tunings (circles) are separate points with their own results in §2.2; the neighbouring cells are different
+tunings. Pasechnyuk-Vilensky's `dmivilensky/Heavy-Ball` already classifies
 these gaps in unrestricted dimension; the new part here is the one-dimensional column.
 
 ### 2.4 Validation against known results (all in `tests/`)
