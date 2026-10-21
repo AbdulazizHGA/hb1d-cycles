@@ -128,3 +128,16 @@ def fan_program_slacks(t: Tuning, k: int, nu: dict):
         oms.append(om)
     lags = [sum(w * (math.cos(th) - math.cos(n * om - th)) for w, th, om in zip(ws, ths, oms)) for n in range(1, k)]
     return lags + [sum(w * math.cos(th) for w, th in zip(ws, ths))]
+
+
+def mixed_float(t: Tuning, K: int, tol=1e-10):
+    """Floating-point verdict for (MIX_K): +1 strictly feasible, -1 strictly infeasible, 0 boundary. [numerical]"""
+    Phi = phi_matrix_float(t, K)
+    n = K - 1
+    c = np.r_[np.zeros(n), -1]
+    eq = dict(A_eq=[[1] * n + [0]], b_eq=[1], bounds=[(0, None)] * n + [(None, None)], method="highs")
+    sig = -linprog(c, A_ub=np.hstack([Phi, np.ones((n, 1))]), b_ub=np.zeros(n), **eq).fun
+    if sig > tol:
+        return 1
+    tau = -linprog(c, A_ub=np.hstack([-Phi.T, np.ones((n, 1))]), b_ub=np.zeros(n), **eq).fun
+    return -1 if tau > tol else 0

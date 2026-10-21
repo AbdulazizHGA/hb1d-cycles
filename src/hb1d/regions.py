@@ -1,5 +1,5 @@
 """Membership in the augmented root-of-unity region Omega_aug of Fotopoulos, Helcig, Deck and Alsbach
-(arXiv 2610.25104), and Pasechniuk-Vilensky's angle function Theta (arXiv 2610.09912).
+(arXiv 2610.25104), and Pasechnyuk-Vilensky's angle function Theta (arXiv 2610.09912).
 
 Fotopoulos et al., Lemma 3.1: for K >= 3, m in U_K = {1 <= m < K : gcd(m, K) = 1}, after replacing m by K - m
 so that 1 <= m <= (K-1)/2, write M_m = p_m - i q_m with
@@ -140,11 +140,11 @@ def omega_aug_report(t: Tuning, prec: int = PREC):
 
 
 # ----------------------------------------------------------------------------------------------------------------
-# Pasechniuk-Vilensky's angle function, computed from its definition and from the closed form, and the identity
+# Pasechnyuk-Vilensky's angle function, computed from its definition and from the closed form, and the identity
 # with Fotopoulos et al.'s angle.
 
 def theta_def(t: Tuning, omega):
-    """Theta(omega) in (0, pi]: the angle from -a(e^{i omega}) to b(e^{i omega}) (Pasechniuk Def. 'Angle function'),
+    """Theta(omega) in (0, pi]: the angle from -a(e^{i omega}) to b(e^{i omega}) (Pasechnyuk Def. 'Angle function'),
     a(z) = z^2 - (1 + beta - alpha mu) z + beta, b(z) = z^2 - (1 + beta - alpha L) z + beta. Floating point."""
     import cmath
     z = cmath.exp(1j * omega)
@@ -154,7 +154,7 @@ def theta_def(t: Tuning, omega):
 
 
 def theta_closed(t: Tuning, omega):
-    """Theta from Pasechniuk Lemma 'angle at the threshold': cot Theta = Xi(cos omega)/sin omega."""
+    """Theta from Pasechnyuk Lemma 'angle at the threshold': cot Theta = Xi(cos omega)/sin omega."""
     import math
     al, be, mu = float(t.alpha), float(t.beta), float(t.mu)
     A, B = 1 + be - al * (1 + mu) / 2, al * (1 - mu) / 2

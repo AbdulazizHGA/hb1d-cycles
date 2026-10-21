@@ -47,3 +47,12 @@ def test_fan_tunings_mixed_feasible(t, k):
 
 def test_polyak_mixed_feasible_at_3():
     assert mixed(POLYAK100, 3)["feasible"] is True
+
+
+def test_wang_no_cycle_point_consistent():
+    """Feiming Wang's notes (github.com/Trace231/heavyball-blog) report no nonconstant cycle in any dimension at
+    (q, a, b) = (1/100, 113/50, 3/5); read as (mu/L, alpha L, beta) (our assumption about the notation), the
+    mixed condition fails for every K <= 40 there, so there is no cycle of length <= 40 in any dimension."""
+    from hb1d.tunings import Tuning
+    t = Tuning("Wang", F(113, 50), F(3, 5), F(100))
+    assert all(mixed(t, K)["feasible"] is False for K in range(3, 41))

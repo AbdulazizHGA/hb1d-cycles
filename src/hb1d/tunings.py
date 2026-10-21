@@ -1,6 +1,6 @@
 """Named heavy-ball tunings used throughout, as exact rationals.
 
-Conventions (shared by every module): L = 1, mu = 1/kappa with kappa = L/mu >= 1 (Pasechniuk-Vilensky's
+Conventions (shared by every module): L = 1, mu = 1/kappa with kappa = L/mu >= 1 (Pasechnyuk-Vilensky's
 convention; Fotopoulos et al. write kappa_F = mu/L = 1/kappa), step size alpha = gamma (alpha L = alpha), and
 
     x_{k+1} = x_k - alpha f'(x_k) + beta (x_k - x_{k-1}),
@@ -34,8 +34,8 @@ def polyak(kappa) -> Tuning:
     return Tuning(f"Polyak kappa={kappa}", 4 / (1 + s) ** 2, ((1 - s) / (1 + s)) ** 2, kappa)
 
 
-PROP13 = Tuning("Pasechniuk Prop. 13 (gap I_4, two-harmonic 13-cycle in R^5)", F(70471, 31800), F(6169, 9900), F(100))
-CONV_GAP = Tuning("Pasechniuk Prop. conv-gap (gap I_4, converges)", F(111, 50), F(31, 50), F(100))
+PROP13 = Tuning("Pasechnyuk Prop. 13 (gap I_4, two-harmonic 13-cycle in R^5)", F(70471, 31800), F(6169, 9900), F(100))
+CONV_GAP = Tuning("Pasechnyuk Prop. conv-gap (gap I_4, converges)", F(111, 50), F(31, 50), F(100))
 POLYAK100 = polyak(100)
 # Fotopoulos et al. Example 3.2: kappa_F = mu/L = 4/5, beta = 17/20, L gamma = 18/5; in int(Omega_{5,2}) \ Omega_rou.
 FHDA_EX32 = Tuning("Fotopoulos et al. Example 3.2 (in Omega_{5,2}, not in Omega_rou)", F(18, 5), F(17, 20), F(5, 4))
@@ -43,7 +43,7 @@ FHDA_EX32 = Tuning("Fotopoulos et al. Example 3.2 (in Omega_{5,2}, not in Omega_
 # modes 2/10 and 3/10, outside Omega_aug.
 FHDA_P1 = Tuning("Fotopoulos et al. P_1 (4D cycle, outside Omega_aug)", F(32829, 12500), F(4879, 10000), F(10000, 531))
 
-# Tunings found here inside Pasechniuk's first-level fan tongues at kappa = 100 (scripts/find_fan_tunings.py):
+# Tunings found here inside Pasechnyuk's first-level fan tongues at kappa = 100 (scripts/find_fan_tunings.py):
 # strictly mixed-feasible at level k with modes 1/k, 2/k (so a cycle exists in R^4), certified outside Omega_aug.
 FAN7 = Tuning("fan tongue 2/7 in gap I_3 (this repo)", F(34, 13), F(312, 665), F(100))
 FAN9 = Tuning("fan tongue 2/9 in gap I_4 (this repo)", F(2201, 986), F(199, 320), F(100))

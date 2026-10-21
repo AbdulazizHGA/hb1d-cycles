@@ -1,0 +1,69 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite it as below."
+title: "hb1d-cycles: exact search for heavy-ball cycles on one-dimensional functions outside the augmented root-of-unity region"
+abstract: >-
+  Exact (rational Farkas certificates, interval arithmetic) search for heavy-ball cycles on one-dimensional
+  L-smooth mu-strongly convex functions at tunings outside the augmented root-of-unity region Omega_aug of
+  Fotopoulos, Helcig, Deck and Alsbach, and in the fan tongues of Pasechnyuk-Vilensky. No counterexample to the
+  one-dimensional consequence of the conjecture Omega_aug = Omega_cyc^(2) is found: at Pasechnyuk-Vilensky's
+  Prop. 13 tuning (kappa = 100) there is no 1D cycle of any length K <= 25, and at two new rational tunings in the
+  2/7 and 2/9 fan tongues, which have cycles in R^4, there is no 1D cycle of length K <= 13 (K <= 16 at the
+  second). Includes a 1D phase
+  diagram of the first-level gaps at kappa = 100.
+type: software
+url: "https://github.com/AbdulazizHGA/hb1d-cycles"
+repository-code: "https://github.com/AbdulazizHGA/hb1d-cycles"
+authors:
+  - given-names: "Abdulaziz"
+    email: abdulaziz787hlal@gmail.com
+version: 0.1.0
+date-released: 2026-10-21
+license: Apache-2.0
+keywords:
+  - heavy-ball method
+  - momentum
+  - cycles
+  - non-acceleration
+  - smooth strongly convex interpolation
+  - Farkas certificates
+  - exact verification
+  - Lur'e systems
+references:
+  - type: article
+    title: "Non-Acceleration of the Heavy-Ball Method in 1D"
+    authors:
+      - family-names: Fotopoulos
+        given-names: Konstantinos
+      - family-names: Helcig
+        given-names: Michael
+      - family-names: Deck
+        given-names: Karl
+      - family-names: Alsbach
+        given-names: Jannis
+    year: 2026
+    identifiers:
+      - type: other
+        value: "arXiv:2610.25104"
+  - type: article
+    title: "Two Answers on Heavy-Ball Dynamics"
+    authors:
+      - family-names: Pasechnyuk-Vilensky
+        given-names: Dmitry
+    year: 2026
+    identifiers:
+      - type: other
+        value: "arXiv:2610.09912"
+  - type: article
+    title: "Provable non-accelerations of the heavy-ball method"
+    authors:
+      - family-names: Goujaud
+        given-names: Baptiste
+      - family-names: Taylor
+        given-names: Adrien
+      - family-names: Dieuleveut
+        given-names: Aymeric
+    journal: "Mathematical Programming"
+    year: 2025
+    identifiers:
+      - type: other
+        value: "arXiv:2307.11291"

@@ -1,0 +1,18 @@
+100/1740 cells, 11s
+200/1740 cells, 20s
+300/1740 cells, 29s
+400/1740 cells, 37s
+500/1740 cells, 46s
+600/1740 cells, 73s
+700/1740 cells, 82s
+800/1740 cells, 90s
+900/1740 cells, 98s
+1000/1740 cells, 107s
+1100/1740 cells, 115s
+1200/1740 cells, 124s
+1300/1740 cells, 460s
+1400/1740 cells, 460s
+1500/1740 cells, 460s
+1600/1740 cells, 460s
+1700/1740 cells, 460s
+Counter({'nocycle': 1427, 'aug': 240, 'fan_long': 39, 'fan': 34})

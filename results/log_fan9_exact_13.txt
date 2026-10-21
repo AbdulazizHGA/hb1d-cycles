@@ -1,0 +1,2 @@
+{"key": "fan9", "K": 13, "verdict": "none [exact]", "nodes": 65171, "pruned": 54996, "unresolved": 0, "seconds": 290.312059879303}
+{"key": "fan9", "K": 14, "verdict": "none [exact]", "nodes": 230051, "pruned": 196422, "unresolved": 0, "seconds": 1072.7753949165344}

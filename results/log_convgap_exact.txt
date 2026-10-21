@@ -1,0 +1,10 @@
+{"key": "convgap", "K": 3, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.0047910213470458984}
+{"key": "convgap", "K": 4, "verdict": "none [exact]", "nodes": 8, "pruned": 5, "unresolved": 0, "seconds": 0.028836965560913086}
+{"key": "convgap", "K": 5, "verdict": "none [exact]", "nodes": 15, "pruned": 10, "unresolved": 0, "seconds": 0.07991504669189453}
+{"key": "convgap", "K": 6, "verdict": "none [exact]", "nodes": 27, "pruned": 19, "unresolved": 0, "seconds": 0.1513669490814209}
+{"key": "convgap", "K": 7, "verdict": "none [exact]", "nodes": 93, "pruned": 68, "unresolved": 0, "seconds": 0.5662410259246826}
+{"key": "convgap", "K": 8, "verdict": "none [exact]", "nodes": 229, "pruned": 176, "unresolved": 0, "seconds": 1.560185194015503}
+{"key": "convgap", "K": 9, "verdict": "none [exact]", "nodes": 667, "pruned": 520, "unresolved": 0, "seconds": 5.103791952133179}
+{"key": "convgap", "K": 10, "verdict": "none [exact]", "nodes": 1828, "pruned": 1464, "unresolved": 0, "seconds": 16.284330129623413}
+{"key": "convgap", "K": 11, "verdict": "none [exact]", "nodes": 6186, "pruned": 5077, "unresolved": 0, "seconds": 61.46946692466736}
+{"key": "convgap", "K": 12, "verdict": "none [exact]", "nodes": 19392, "pruned": 16179, "unresolved": 0, "seconds": 216.96078896522522}

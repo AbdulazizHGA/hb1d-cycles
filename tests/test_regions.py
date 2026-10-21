@@ -109,3 +109,15 @@ def test_gtd_identity():
         mu, be, v = float(t.mu), float(t.beta), float(t.alpha * t.mu)
         h = v * v - 2 * (be - c + mu * (1 - be * c)) * v + 2 * mu * (1 - c) * (1 + be * be - 2 * be * c)
         assert abs(h - mu * lag_one(t, c)) < 1e-12
+
+
+def test_theta_identity_symbolic():
+    """Why Theta(2 pi m/K) = -arg M_m + arg(1 - M_m): with z = e^{i omega},
+    (L - mu) gamma M = -a(z)/z and (L - mu) gamma (1 - M) = b(z)/z (L = 1, x = gamma mu, y = gamma), so the angle
+    from M to 1 - M equals the angle from -a(z) to b(z), which is Pasechnyuk's Theta. Exact (SymPy)."""
+    z, g, b, mu = sp.symbols("z gamma beta mu")
+    M = ((1 + b - mu * g) - z - b / z) / ((1 - mu) * g)
+    a_poly = z ** 2 - (1 + b - g * mu) * z + b
+    b_poly = z ** 2 - (1 + b - g) * z + b
+    assert sp.simplify((1 - mu) * g * M + a_poly / z) == 0
+    assert sp.simplify((1 - mu) * g * (1 - M) - b_poly / z) == 0

@@ -1,0 +1,6 @@
+{"key": "polyak100", "K": 3, "verdict": "cycle", "nodes": 2, "pruned": 0, "unresolved": 0, "seconds": 0.016530990600585938}
+{"key": "polyak100", "K": 4, "verdict": "cycle", "nodes": 4, "pruned": 1, "unresolved": 0, "seconds": 0.02710890769958496}
+{"key": "polyak100", "K": 5, "verdict": "cycle", "nodes": 5, "pruned": 1, "unresolved": 0, "seconds": 0.030139923095703125}
+{"key": "polyak100", "K": 6, "verdict": "cycle", "nodes": 7, "pruned": 2, "unresolved": 0, "seconds": 0.03532290458679199}
+{"key": "polyak100", "K": 7, "verdict": "cycle", "nodes": 23, "pruned": 13, "unresolved": 0, "seconds": 0.13730812072753906}
+{"key": "polyak100", "K": 8, "verdict": "cycle", "nodes": 67, "pruned": 45, "unresolved": 0, "seconds": 0.4352877140045166}

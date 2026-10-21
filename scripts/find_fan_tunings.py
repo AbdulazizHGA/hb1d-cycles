@@ -1,4 +1,4 @@
-"""Find rational tunings at kappa = 100 strictly inside the first-level fan tongues 2/(2K+1) of Pasechniuk-Vilensky,
+"""Find rational tunings at kappa = 100 strictly inside the first-level fan tongues 2/(2K+1) of Pasechnyuk-Vilensky,
 with a certified distance from Omega_aug.
 
 For a gap I_K the 2/(2K+1) fan tongue sits at the top of the gap, next to the (K+1)-tongue. We scan the gap in

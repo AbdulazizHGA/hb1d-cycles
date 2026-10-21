@@ -7,3 +7,4 @@
 {"key": "fan7", "K": 9, "verdict": "none [exact]", "nodes": 1302, "pruned": 1025, "unresolved": 0, "seconds": 5.966793060302734}
 {"key": "fan7", "K": 10, "verdict": "none [exact]", "nodes": 4235, "pruned": 3421, "unresolved": 0, "seconds": 23.92408800125122}
 {"key": "fan7", "K": 11, "verdict": "none [exact]", "nodes": 12912, "pruned": 10664, "unresolved": 0, "seconds": 101.42406678199768}
+{"key": "fan7", "K": 12, "verdict": "none [exact]", "nodes": 44739, "pruned": 37537, "unresolved": 0, "seconds": 396.25812673568726}

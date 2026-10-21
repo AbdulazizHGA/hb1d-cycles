@@ -9,3 +9,4 @@
 {"key": "prop13", "K": 11, "verdict": "none [exact]", "nodes": 6125, "pruned": 5026, "unresolved": 0, "seconds": 28.576857805252075}
 {"key": "prop13", "K": 12, "verdict": "none [exact]", "nodes": 19361, "pruned": 16149, "unresolved": 0, "seconds": 136.9860761165619}
 {"key": "prop13", "K": 13, "verdict": "none [exact]", "nodes": 63362, "pruned": 53500, "unresolved": 0, "seconds": 468.8352222442627}
+{"key": "prop13", "K": 14, "verdict": "none [exact]", "nodes": 222835, "pruned": 190368, "unresolved": 0, "seconds": 2699.94682765007}

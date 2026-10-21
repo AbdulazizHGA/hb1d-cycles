@@ -129,3 +129,20 @@ def test_found_cycles_satisfy_mixed_condition(K):
 def test_p1_gradient_matrix_rational():
     G = grad_matrix(FHDA_P1, 5)
     assert all(sum(r) == 0 for r in G)                 # translation invariance
+
+
+def test_liu_et_al_appendix_h_three_cycle():
+    """Liu et al. (arXiv 2610.10369) App. H: Polyak at kappa = 100 has the 3-cycle -1 -> 0 -> 1 on a 1D function."""
+    c = check_cycle(POLYAK100, [F(-1), F(0), F(1)])
+    assert c["ok"] and c["period"] == 3
+
+
+def test_hernanz_degenerate_five_cycle():
+    """Hernanz, Thm 'Polyak's tuning fails from rest in one dimension' (kappa >= 100): the period-5 orbit
+    1, 0, -1, -delta/beta, 1 with delta = 1 - beta has a repeated point; our exact checker accepts it through the
+    tie branch (equal points, equal gradients) and reports it as non-strict."""
+    b = POLYAK100.beta
+    d = 1 - b
+    c = check_cycle(POLYAK100, [F(1), F(0), F(-1), -d / b, F(1)])
+    assert c["ok"] and c["period"] == 5 and not c["strict"]
+    assert c["gradients"][0] == c["gradients"][4]

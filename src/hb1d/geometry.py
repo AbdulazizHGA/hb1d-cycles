@@ -1,4 +1,4 @@
-"""Phase-diagram geometry of Pasechniuk-Vilensky (arXiv 2610.09912, Sections 'Regions' and 'Levels').
+"""Phase-diagram geometry of Pasechnyuk-Vilensky (arXiv 2610.09912, Sections 'Regions' and 'Levels').
 
 x = alpha mu, y = alpha L (L = 1). The lag-one quadratic
 
@@ -7,7 +7,7 @@ x = alpha mu, y = alpha L (L = 1). The lag-one quadratic
 decides Theta(omega) > omega/2 <=> Lc(cos omega) > 0. Omega_1 (lag-one convergence) is {Lc > 0 on [-1, 1]};
 the K-tongue (= Omega_{K,1} of Fotopoulos et al. = GTD's root-of-unity region) is {Lc(cos(2 pi/K)) <= 0}.
 
-Unrolled coordinates (Pasechniuk Fig. regions(d), level1): a boundary point of Omega_1 with tangency rotation number
+Unrolled coordinates (Pasechnyuk Fig. regions(d), level1): a boundary point of Omega_1 with tangency rotation number
 rho = omega_*/2 pi has Lc(c_*) = Lc'(c_*) = 0 at c_* = cos(2 pi rho); the tuning with unrolled coordinates
 (rho, delta) is (alpha_b(rho) + delta, beta_b(rho)), i.e. delta is the distance in alpha L beyond the boundary.
 """
