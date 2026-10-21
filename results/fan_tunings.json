@@ -1,0 +1,36 @@
+[
+ {
+  "K_gap": 3,
+  "k": 7,
+  "alpha": "34/13",
+  "beta": "312/665",
+  "kappa": "100",
+  "mixed_feasible": true,
+  "mixed_margin": 0.00033322095410073306,
+  "mixed_support": [
+   1,
+   2
+  ],
+  "in_omega_aug": false,
+  "K0": 21,
+  "rho": 0.28283195156047686,
+  "delta": 0.0843889337631305
+ },
+ {
+  "K_gap": 4,
+  "k": 9,
+  "alpha": "2201/986",
+  "beta": "199/320",
+  "kappa": "100",
+  "mixed_feasible": true,
+  "mixed_margin": 0.00046699250864561755,
+  "mixed_support": [
+   1,
+   2
+  ],
+  "in_omega_aug": false,
+  "K0": 28,
+  "rho": 0.22108387399583207,
+  "delta": 0.06471246320051316
+ }
+]

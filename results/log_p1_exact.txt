@@ -1,0 +1,1 @@
+{"key": "p1", "K": 10, "verdict": "none [exact]", "nodes": 3970, "pruned": 3216, "unresolved": 0, "seconds": 9.258756875991821}

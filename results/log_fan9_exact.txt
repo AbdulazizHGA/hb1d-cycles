@@ -1,0 +1,10 @@
+{"key": "fan9", "K": 3, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.002682209014892578}
+{"key": "fan9", "K": 4, "verdict": "none [exact]", "nodes": 8, "pruned": 5, "unresolved": 0, "seconds": 0.014166831970214844}
+{"key": "fan9", "K": 5, "verdict": "none [exact]", "nodes": 15, "pruned": 10, "unresolved": 0, "seconds": 0.027366161346435547}
+{"key": "fan9", "K": 6, "verdict": "none [exact]", "nodes": 27, "pruned": 19, "unresolved": 0, "seconds": 0.05416989326477051}
+{"key": "fan9", "K": 7, "verdict": "none [exact]", "nodes": 93, "pruned": 68, "unresolved": 0, "seconds": 0.21158289909362793}
+{"key": "fan9", "K": 8, "verdict": "none [exact]", "nodes": 231, "pruned": 177, "unresolved": 0, "seconds": 0.7909209728240967}
+{"key": "fan9", "K": 9, "verdict": "none [exact]", "nodes": 671, "pruned": 523, "unresolved": 0, "seconds": 3.0009961128234863}
+{"key": "fan9", "K": 10, "verdict": "none [exact]", "nodes": 1852, "pruned": 1484, "unresolved": 0, "seconds": 9.49681282043457}
+{"key": "fan9", "K": 11, "verdict": "none [exact]", "nodes": 6291, "pruned": 5160, "unresolved": 0, "seconds": 47.29512882232666}
+{"key": "fan9", "K": 12, "verdict": "none [exact]", "nodes": 19782, "pruned": 16492, "unresolved": 0, "seconds": 173.66670989990234}

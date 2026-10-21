@@ -1,0 +1,11 @@
+{"key": "prop13", "K": 3, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.015224933624267578}
+{"key": "prop13", "K": 4, "verdict": "none [exact]", "nodes": 8, "pruned": 5, "unresolved": 0, "seconds": 0.014036893844604492}
+{"key": "prop13", "K": 5, "verdict": "none [exact]", "nodes": 15, "pruned": 10, "unresolved": 0, "seconds": 0.028810977935791016}
+{"key": "prop13", "K": 6, "verdict": "none [exact]", "nodes": 27, "pruned": 19, "unresolved": 0, "seconds": 0.05587291717529297}
+{"key": "prop13", "K": 7, "verdict": "none [exact]", "nodes": 93, "pruned": 68, "unresolved": 0, "seconds": 0.21645116806030273}
+{"key": "prop13", "K": 8, "verdict": "none [exact]", "nodes": 229, "pruned": 176, "unresolved": 0, "seconds": 0.6245541572570801}
+{"key": "prop13", "K": 9, "verdict": "none [exact]", "nodes": 656, "pruned": 512, "unresolved": 0, "seconds": 2.0952930450439453}
+{"key": "prop13", "K": 10, "verdict": "none [exact]", "nodes": 1823, "pruned": 1460, "unresolved": 0, "seconds": 7.198091983795166}
+{"key": "prop13", "K": 11, "verdict": "none [exact]", "nodes": 6125, "pruned": 5026, "unresolved": 0, "seconds": 28.576857805252075}
+{"key": "prop13", "K": 12, "verdict": "none [exact]", "nodes": 19361, "pruned": 16149, "unresolved": 0, "seconds": 136.9860761165619}
+{"key": "prop13", "K": 13, "verdict": "none [exact]", "nodes": 63362, "pruned": 53500, "unresolved": 0, "seconds": 468.8352222442627}
