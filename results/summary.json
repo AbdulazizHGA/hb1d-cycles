@@ -58,17 +58,17 @@
    "8": {
     "v": "none:search",
     "nodes": 229,
-    "seconds": 0.6
+    "seconds": 0.7
    },
    "9": {
     "v": "none:search",
     "nodes": 656,
-    "seconds": 2.1
+    "seconds": 2.4
    },
    "10": {
     "v": "none:search",
     "nodes": 1823,
-    "seconds": 7.2
+    "seconds": 7.1
    },
    "11": {
     "v": "none:search",
@@ -78,17 +78,17 @@
    "12": {
     "v": "none:search",
     "nodes": 19361,
-    "seconds": 137.0
+    "seconds": 67.0
    },
    "13": {
     "v": "none:search",
     "nodes": 63362,
-    "seconds": 468.8
+    "seconds": 259.2
    },
    "14": {
     "v": "none:search",
     "nodes": 222835,
-    "seconds": 2699.9
+    "seconds": 1066.1
    },
    "15": {
     "v": "none:mixed"
@@ -223,7 +223,7 @@
    "4": {
     "v": "none:search",
     "nodes": 8,
-    "seconds": 0.0
+    "seconds": 0.2
    },
    "5": {
     "v": "none:search",
@@ -233,37 +233,37 @@
    "6": {
     "v": "none:search",
     "nodes": 27,
-    "seconds": 0.2
+    "seconds": 0.3
    },
    "7": {
     "v": "none:search",
     "nodes": 93,
-    "seconds": 0.6
+    "seconds": 3.2
    },
    "8": {
     "v": "none:search",
     "nodes": 229,
-    "seconds": 1.6
+    "seconds": 5.8
    },
    "9": {
     "v": "none:search",
     "nodes": 667,
-    "seconds": 5.1
+    "seconds": 15.1
    },
    "10": {
     "v": "none:search",
     "nodes": 1828,
-    "seconds": 16.3
+    "seconds": 48.9
    },
    "11": {
     "v": "none:search",
     "nodes": 6186,
-    "seconds": 61.5
+    "seconds": 169.5
    },
    "12": {
     "v": "none:search",
     "nodes": 19392,
-    "seconds": 217.0
+    "seconds": 162.5
    },
    "13": {
     "v": "none:mixed"
@@ -418,52 +418,52 @@
    "5": {
     "v": "none:search",
     "nodes": 18,
-    "seconds": 0.0
+    "seconds": 0.1
    },
    "6": {
     "v": "none:search",
     "nodes": 51,
-    "seconds": 0.1
+    "seconds": 0.2
    },
    "7": {
     "v": "none:search",
     "nodes": 133,
-    "seconds": 0.3
+    "seconds": 3.3
    },
    "8": {
     "v": "none:search",
     "nodes": 385,
-    "seconds": 1.5
+    "seconds": 10.8
    },
    "9": {
     "v": "none:search",
     "nodes": 1302,
-    "seconds": 6.0
+    "seconds": 31.0
    },
    "10": {
     "v": "none:search",
     "nodes": 4235,
-    "seconds": 23.9
+    "seconds": 115.5
    },
    "11": {
     "v": "none:search",
     "nodes": 12912,
-    "seconds": 101.4
+    "seconds": 291.7
    },
    "12": {
     "v": "none:search",
     "nodes": 44739,
-    "seconds": 264.4
+    "seconds": 222.7
    },
    "13": {
     "v": "none:search",
     "nodes": 161961,
-    "seconds": 994.2
+    "seconds": 812.5
    },
    "14": {
     "v": "none:search",
     "nodes": 576640,
-    "seconds": 2153.0
+    "seconds": 2126.6
    },
    "15": {
     "v": "open",
@@ -802,37 +802,37 @@
    "8": {
     "v": "none:search",
     "nodes": 231,
-    "seconds": 0.8
+    "seconds": 0.7
    },
    "9": {
     "v": "none:search",
     "nodes": 671,
-    "seconds": 3.0
+    "seconds": 2.4
    },
    "10": {
     "v": "none:search",
     "nodes": 1852,
-    "seconds": 9.5
+    "seconds": 7.0
    },
    "11": {
     "v": "none:search",
     "nodes": 6291,
-    "seconds": 47.3
+    "seconds": 28.5
    },
    "12": {
     "v": "none:search",
     "nodes": 19782,
-    "seconds": 173.7
+    "seconds": 66.9
    },
    "13": {
     "v": "none:search",
     "nodes": 65171,
-    "seconds": 290.3
+    "seconds": 261.0
    },
    "14": {
     "v": "none:search",
     "nodes": 230051,
-    "seconds": 1072.8
+    "seconds": 1088.2
    },
    "15": {
     "v": "none:mixed"
@@ -1124,7 +1124,7 @@
    "10": {
     "v": "none:search",
     "nodes": 3970,
-    "seconds": 9.3
+    "seconds": 71.8
    },
    "11": {
     "v": "none:mixed"
@@ -1135,7 +1135,7 @@
    "13": {
     "v": "none:search",
     "nodes": 143617,
-    "seconds": 440.9
+    "seconds": 867.2
    },
    "14": {
     "v": "open",

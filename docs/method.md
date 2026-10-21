@@ -53,6 +53,9 @@ order whose system cannot be refuted is solved exactly (rational vertex from the
 re-verified by `check_cycle` with Fractions. Nodes that are neither pruned nor shown feasible exactly are counted
 as `unresolved`; every verdict reported below has `unresolved = 0` and `complete = true`.
 
+Every pruned node is stored as (prefix, support of y) in `certificates/<tuning>_K<K>.farkas.gz`; `scripts/verify_certificates.py` recomputes y from its support by exact elimination and rechecks every
+certificate, and the coverage of the tree, with the standard library only.
+
 Tag: **[exact]** (rational arithmetic). The tree size grows by roughly 3x per unit of K: Prop. 13 needs 63,362
 nodes and 469 s at K = 13 on one core of an M1.
 

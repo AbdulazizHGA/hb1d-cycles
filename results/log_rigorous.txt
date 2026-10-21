@@ -1,0 +1,17 @@
+fan7 False
+fan9 False
+polyak100 True
+prop13 False
+convgap False
+ex32 True
+p1 False
+grid: rigorous Omega_aug membership agrees with the floating classification in 1740/1740 cells
+fan7: Omega_aug member = False; mixed infeasible at 7 lengths, feasible at 31
+fan9: Omega_aug member = False; mixed infeasible at 12 lengths, feasible at 26
+polyak100: Omega_aug member = True; mixed infeasible at 0 lengths, feasible at 38
+prop13: Omega_aug member = False; mixed infeasible at 48 lengths, feasible at 10
+convgap: Omega_aug member = False; mixed infeasible at 38 lengths, feasible at 0
+ex32: Omega_aug member = True; mixed infeasible at 13 lengths, feasible at 22
+p1: Omega_aug member = False; mixed infeasible at 9 lengths, feasible at 29
+grid: 1740/1740 Omega_aug verdicts verified
+OK

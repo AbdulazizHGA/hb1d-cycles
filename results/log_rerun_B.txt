@@ -1,0 +1,25 @@
+{"key": "fan9", "K": 3, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.0028100013732910156}
+{"key": "fan9", "K": 4, "verdict": "none [exact]", "nodes": 8, "pruned": 5, "unresolved": 0, "seconds": 0.014611959457397461}
+{"key": "fan9", "K": 5, "verdict": "none [exact]", "nodes": 15, "pruned": 10, "unresolved": 0, "seconds": 0.02793598175048828}
+{"key": "fan9", "K": 6, "verdict": "none [exact]", "nodes": 27, "pruned": 19, "unresolved": 0, "seconds": 0.058853864669799805}
+{"key": "fan9", "K": 7, "verdict": "none [exact]", "nodes": 93, "pruned": 68, "unresolved": 0, "seconds": 0.24509882926940918}
+{"key": "fan9", "K": 8, "verdict": "none [exact]", "nodes": 231, "pruned": 177, "unresolved": 0, "seconds": 0.6645212173461914}
+{"key": "fan9", "K": 9, "verdict": "none [exact]", "nodes": 671, "pruned": 523, "unresolved": 0, "seconds": 2.3923468589782715}
+{"key": "fan9", "K": 10, "verdict": "none [exact]", "nodes": 1852, "pruned": 1484, "unresolved": 0, "seconds": 7.036198854446411}
+{"key": "fan9", "K": 11, "verdict": "none [exact]", "nodes": 6291, "pruned": 5160, "unresolved": 0, "seconds": 28.53116226196289}
+{"key": "fan9", "K": 12, "verdict": "none [exact]", "nodes": 19782, "pruned": 16492, "unresolved": 0, "seconds": 66.90930581092834}
+{"key": "fan9", "K": 13, "verdict": "none [exact]", "nodes": 65171, "pruned": 54996, "unresolved": 0, "seconds": 261.0494258403778}
+{"key": "fan9", "K": 14, "verdict": "none [exact]", "nodes": 230051, "pruned": 196422, "unresolved": 0, "seconds": 1088.169804096222}
+{"key": "fan7", "K": 3, "verdict": "none [exact]", "nodes": 3, "pruned": 2, "unresolved": 0, "seconds": 0.011565208435058594}
+{"key": "fan7", "K": 4, "verdict": "none [exact]", "nodes": 8, "pruned": 5, "unresolved": 0, "seconds": 0.02488088607788086}
+{"key": "fan7", "K": 5, "verdict": "none [exact]", "nodes": 18, "pruned": 12, "unresolved": 0, "seconds": 0.05536699295043945}
+{"key": "fan7", "K": 6, "verdict": "none [exact]", "nodes": 51, "pruned": 36, "unresolved": 0, "seconds": 0.22994089126586914}
+{"key": "fan7", "K": 7, "verdict": "none [exact]", "nodes": 133, "pruned": 99, "unresolved": 0, "seconds": 3.2561471462249756}
+{"key": "fan7", "K": 8, "verdict": "none [exact]", "nodes": 385, "pruned": 295, "unresolved": 0, "seconds": 10.849035024642944}
+{"key": "fan7", "K": 9, "verdict": "none [exact]", "nodes": 1302, "pruned": 1025, "unresolved": 0, "seconds": 31.041276931762695}
+{"key": "fan7", "K": 10, "verdict": "none [exact]", "nodes": 4235, "pruned": 3421, "unresolved": 0, "seconds": 115.46680879592896}
+{"key": "fan7", "K": 11, "verdict": "none [exact]", "nodes": 12912, "pruned": 10664, "unresolved": 0, "seconds": 291.72301292419434}
+{"key": "fan7", "K": 12, "verdict": "none [exact]", "nodes": 44739, "pruned": 37537, "unresolved": 0, "seconds": 222.72474193572998}
+{"key": "fan7", "K": 13, "verdict": "none [exact]", "nodes": 161961, "pruned": 137732, "unresolved": 0, "seconds": 812.4587299823761}
+{"key": "fan7", "K": 14, "verdict": "none [exact]", "nodes": 576640, "pruned": 496440, "unresolved": 0, "seconds": 2126.611722946167}
+CHAIN_B_DONE

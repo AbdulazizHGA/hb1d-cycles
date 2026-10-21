@@ -1,0 +1,35 @@
+{"key": "prop13", "K": 3, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.0028138160705566406}
+{"key": "prop13", "K": 4, "verdict": "none [exact]", "nodes": 8, "pruned": 5, "unresolved": 0, "seconds": 0.01450490951538086}
+{"key": "prop13", "K": 5, "verdict": "none [exact]", "nodes": 15, "pruned": 10, "unresolved": 0, "seconds": 0.028387784957885742}
+{"key": "prop13", "K": 6, "verdict": "none [exact]", "nodes": 27, "pruned": 19, "unresolved": 0, "seconds": 0.058737993240356445}
+{"key": "prop13", "K": 7, "verdict": "none [exact]", "nodes": 93, "pruned": 68, "unresolved": 0, "seconds": 0.2475910186767578}
+{"key": "prop13", "K": 8, "verdict": "none [exact]", "nodes": 229, "pruned": 176, "unresolved": 0, "seconds": 0.6641278266906738}
+{"key": "prop13", "K": 9, "verdict": "none [exact]", "nodes": 656, "pruned": 512, "unresolved": 0, "seconds": 2.3885040283203125}
+{"key": "prop13", "K": 10, "verdict": "none [exact]", "nodes": 1823, "pruned": 1460, "unresolved": 0, "seconds": 7.116366863250732}
+{"key": "prop13", "K": 11, "verdict": "none [exact]", "nodes": 6125, "pruned": 5026, "unresolved": 0, "seconds": 28.593278169631958}
+{"key": "prop13", "K": 12, "verdict": "none [exact]", "nodes": 19361, "pruned": 16149, "unresolved": 0, "seconds": 66.96187400817871}
+{"key": "prop13", "K": 13, "verdict": "none [exact]", "nodes": 63362, "pruned": 53500, "unresolved": 0, "seconds": 259.17779517173767}
+{"key": "prop13", "K": 14, "verdict": "none [exact]", "nodes": 222835, "pruned": 190368, "unresolved": 0, "seconds": 1066.10888504982}
+{"key": "convgap", "K": 3, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.009253978729248047}
+{"key": "convgap", "K": 4, "verdict": "none [exact]", "nodes": 8, "pruned": 5, "unresolved": 0, "seconds": 0.18053603172302246}
+{"key": "convgap", "K": 5, "verdict": "none [exact]", "nodes": 15, "pruned": 10, "unresolved": 0, "seconds": 0.1126410961151123}
+{"key": "convgap", "K": 6, "verdict": "none [exact]", "nodes": 27, "pruned": 19, "unresolved": 0, "seconds": 0.2828822135925293}
+{"key": "convgap", "K": 7, "verdict": "none [exact]", "nodes": 93, "pruned": 68, "unresolved": 0, "seconds": 3.1924452781677246}
+{"key": "convgap", "K": 8, "verdict": "none [exact]", "nodes": 229, "pruned": 176, "unresolved": 0, "seconds": 5.842060804367065}
+{"key": "convgap", "K": 9, "verdict": "none [exact]", "nodes": 667, "pruned": 520, "unresolved": 0, "seconds": 15.071890830993652}
+{"key": "convgap", "K": 10, "verdict": "none [exact]", "nodes": 1828, "pruned": 1464, "unresolved": 0, "seconds": 48.92554807662964}
+{"key": "convgap", "K": 11, "verdict": "none [exact]", "nodes": 6186, "pruned": 5077, "unresolved": 0, "seconds": 169.54121232032776}
+{"key": "convgap", "K": 12, "verdict": "none [exact]", "nodes": 19392, "pruned": 16179, "unresolved": 0, "seconds": 162.5444736480713}
+{"key": "p1", "K": 10, "verdict": "none [exact]", "nodes": 3970, "pruned": 3216, "unresolved": 0, "seconds": 71.7907247543335}
+{"key": "p1", "K": 13, "verdict": "none [exact]", "nodes": 143617, "pruned": 122432, "unresolved": 0, "seconds": 867.2444970607758}
+{"key": "ex32", "K": 3, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.004952669143676758}
+{"key": "ex32", "K": 4, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.0027611255645751953}
+{"key": "ex32", "K": 5, "verdict": "cycle", "nodes": 7, "pruned": 3, "unresolved": 0, "seconds": 0.022153854370117188}
+{"key": "ex32", "K": 6, "verdict": "none [exact]", "nodes": 1, "pruned": 1, "unresolved": 0, "seconds": 0.0035681724548339844}
+{"key": "polyak100", "K": 3, "verdict": "cycle", "nodes": 2, "pruned": 0, "unresolved": 0, "seconds": 0.00934600830078125}
+{"key": "polyak100", "K": 4, "verdict": "cycle", "nodes": 4, "pruned": 1, "unresolved": 0, "seconds": 0.017413854598999023}
+{"key": "polyak100", "K": 5, "verdict": "cycle", "nodes": 5, "pruned": 1, "unresolved": 0, "seconds": 0.020770788192749023}
+{"key": "polyak100", "K": 6, "verdict": "cycle", "nodes": 7, "pruned": 2, "unresolved": 0, "seconds": 0.029443025588989258}
+{"key": "polyak100", "K": 7, "verdict": "cycle", "nodes": 23, "pruned": 13, "unresolved": 0, "seconds": 0.0916750431060791}
+{"key": "polyak100", "K": 8, "verdict": "cycle", "nodes": 67, "pruned": 45, "unresolved": 0, "seconds": 0.30202698707580566}
+CHAIN_A_DONE

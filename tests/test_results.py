@@ -58,3 +58,21 @@ def test_phase_diagram_has_no_candidate_and_tongues_cycle():
     assert aug and all(c["found_1d"] for c in aug)
     fan = [c for c in cells if c["cls"] == "fan"]
     assert all(v["complete"] and v["unresolved"] == 0 for c in fan for v in c["exact_1d"].values())
+
+
+def test_phase_diagram_evidence_is_stored_and_checks():
+    """Every Omega_aug cell stores its exact 1D cycle (re-verified here); every fan-cell search stores a
+    certificate file that the independent verifier accepts."""
+    from fractions import Fraction as F
+    from hb1d.tunings import Tuning
+    from scripts.verify_certificates import verify_file
+    cells = json.load(open(os.path.join(RES, "phase_diagram_k100.json")))["cells"]
+    for c in cells:
+        if c["cls"] == "aug":
+            t = Tuning("cell", F(c["alpha"]), F(c["beta"]), F(100))
+            chk = check_cycle(t, [F(v) for v in c["x"]])
+            assert chk["ok"] and chk["period"] == c["witness"][0]
+        if c["cls"] == "fan":
+            for K, v in c["exact_1d"].items():
+                r = verify_file(os.path.join(RES, "..", v["certificate"]))
+                assert r["ok"] and r["K"] == int(K)

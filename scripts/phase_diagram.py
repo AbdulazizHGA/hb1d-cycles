@@ -27,11 +27,15 @@ from fractions import Fraction as F
 from multiprocessing import get_context
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from hb1d.exact import check_cycle, search  # noqa: E402
 from hb1d.geometry import in_omega1, unrolled_to_tuning  # noqa: E402
 from hb1d.mixed import mixed_float  # noqa: E402
 from hb1d.regions import omega_aug_report  # noqa: E402
 from hb1d.tunings import Tuning  # noqa: E402
+from scripts.run_exact import write_certs  # noqa: E402
+
+GRID_CERTS = os.path.join(os.path.dirname(__file__), "..", "certificates", "grid")
 
 KAPPA = F(100)
 KMIX, K1D, KAUG = 30, 10, 40
@@ -89,7 +93,8 @@ def classify(args):
         K, m = w
         cyc, st = search(t, K)
         out.update(cls="aug" if cyc else "unresolved", witness=[K, m], found_1d=bool(cyc), nodes=st["nodes"],
-                   period=check_cycle(t, cyc[0])["period"] if cyc else None)
+                   period=check_cycle(t, cyc[0])["period"] if cyc else None,
+                   x=[str(v) for v in cyc[0]] if cyc else None)
         return out
     verdicts = {K: mixed_float(t, K) for K in range(3, KMIX + 1)}
     feas = [K for K, v in verdicts.items() if v >= 0]
@@ -104,13 +109,18 @@ def classify(args):
         return out
     res = {}
     for K in short:
-        cyc, st = search(t, K)
+        certs = []
+        cyc, st = search(t, K, record=certs)
         if cyc:
             rep = omega_aug_report(t)
             out.update(cls="CANDIDATE" if rep["member"] is False else "aug_boundary", K_cycle=K,
                        x=[str(v) for v in cyc[0]], omega_aug_member=rep["member"])
             return out
         res[K] = dict(complete=st["complete"], unresolved=st["unresolved"], nodes=st["nodes"])
+        if st["complete"] and st["unresolved"] == 0:
+            key = f"grid_rho{rho:.6f}_delta{delta:.6f}"
+            res[K]["certificate"] = write_certs(GRID_CERTS, key, t, K, certs,
+                                                dict(nodes=st["nodes"], pruned=st["pruned"], date="grid"))
     ok = all(v["complete"] and v["unresolved"] == 0 for v in res.values())
     out.update(cls="fan" if ok else "unresolved", exact_1d=res)
     return out

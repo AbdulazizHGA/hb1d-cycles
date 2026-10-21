@@ -181,13 +181,17 @@ def check_cycle(t: Tuning, x):
 
 # ------------------------------------------------------------------ branch and bound
 
-def search(t: Tuning, K: int, max_cycles=1, time_limit=None, log_every=0, start=None):
+def search(t: Tuning, K: int, max_cycles=1, time_limit=None, log_every=0, start=None, record=None):
     """Exact search for K-cycles of HB on F_{mu,L}(R).
 
     Returns (cycles, stats). cycles: list of exact rational point lists x (verified by check_cycle) found at full
     orders; the search stops after max_cycles. stats: nodes, pruned (each with a verified Farkas certificate),
     unresolved (nodes that could be neither pruned exactly nor shown feasible exactly; must be 0 for an exact
-    verdict), complete (bool: the whole tree was explored), seconds."""
+    verdict), complete (bool: the whole tree was explored), seconds.
+
+    If `record` is a list, every pruned node is appended to it as (prefix, support): the prefix of the sorted order
+    and the indices of the nonzero entries of its verified Farkas vector y. That is enough to rebuild y exactly
+    (scripts/verify_certificates.py solves B_S^T y_S = (-1, ..., -1) on the support S)."""
     G = grad_matrix(t, K)
     mu, L = t.mu, F(1)
     stats = dict(K=K, tuning=t.name, nodes=0, pruned=0, unresolved=0, leaves_feasible=0, complete=False)
@@ -208,6 +212,8 @@ def search(t: Tuning, K: int, max_cycles=1, time_limit=None, log_every=0, start=
         y, status = farkas_certificate(rows, K)
         if y is not None:
             stats["pruned"] += 1
+            if record is not None:
+                record.append((tuple(prefix), tuple(r for r, v in enumerate(y) if v)))
             continue
         if len(remaining) <= 1:
             full = prefix + remaining
@@ -234,11 +240,13 @@ def search(t: Tuning, K: int, max_cycles=1, time_limit=None, log_every=0, start=
 
 
 def _subtree(args):
-    t, K, prefix, max_cycles = args
-    return search(t, K, max_cycles=max_cycles, start=[prefix])
+    t, K, prefix, max_cycles, rec = args
+    certs = [] if rec else None
+    cycles, st = search(t, K, max_cycles=max_cycles, start=[prefix], record=certs)
+    return cycles, st, certs
 
 
-def search_parallel(t: Tuning, K: int, workers=4, depth=3, max_cycles=1):
+def search_parallel(t: Tuning, K: int, workers=4, depth=3, max_cycles=1, record=None):
     """Same verdict as `search`, with the subtrees below the prefixes of length `depth` explored by a process pool.
     Prefixes of length < depth are handled serially (and may be pruned there)."""
     from multiprocessing import get_context
@@ -255,12 +263,17 @@ def search_parallel(t: Tuning, K: int, workers=4, depth=3, max_cycles=1):
             y, _ = farkas_certificate(node_rows(G, mu, L, prefix, remaining), K)
             if y is not None:
                 agg["pruned"] += 1
+                if record is not None:
+                    record.append((tuple(prefix), tuple(r for r, v in enumerate(y) if v)))
             else:
                 nxt += [prefix + [j] for j in remaining]
         frontier, level = nxt, level + 1
     cycles = []
     with get_context("spawn").Pool(workers) as pool:
-        for cyc, st in pool.imap_unordered(_subtree, [(t, K, p, max_cycles) for p in frontier]):
+        for cyc, st, certs in pool.imap_unordered(_subtree, [(t, K, p, max_cycles, record is not None)
+                                                             for p in frontier]):
+            if record is not None:
+                record += certs
             for k in ("nodes", "pruned", "unresolved", "leaves_feasible"):
                 agg[k] += st[k]
             cycles += cyc
