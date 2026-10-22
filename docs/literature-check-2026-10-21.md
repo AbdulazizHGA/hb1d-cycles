@@ -1,4 +1,7 @@
-# Literature / novelty check, 2026-10-21: 1D heavy-ball cycles outside Omega_aug; 1D realization of fan orbits
+# Literature / novelty check: 1D heavy-ball cycles outside Omega_aug; 1D realization of fan orbits
+
+First run 2026-10-21; last re-checked 2026-10-22 (see the end of this file). This is a snapshot: re-run the
+queries below before any new release.
 
 **How this log was made.** The searches were run on 2026-10-21 by an AI research assistant (Claude, Anthropic)
 working for the repository author, using web search, direct page fetches, the Semantic Scholar and OpenAlex APIs
@@ -273,3 +276,16 @@ multiplier is, or is not, realizable by a scalar slope-restricted nonlinearity?
    are both empty (`{"offset": 0, "data": []}`); both abs pages show only [v1]; the arXiv search for "heavy-ball"
    sorted by announcement date shows nothing after 2610.27990 (20 Oct, momentum and Polyak-Ruppert averaging,
    unrelated). No new work on 1D cycles, Omega_aug or fan orbits.
+
+## Re-check, 2026-10-22 (before the next release; read directly)
+
+| channel | result |
+|---|---|
+| Semantic Scholar citations of 2610.25104 and 2610.09912 | both `{"offset": 0, "data": []}` |
+| arXiv abs pages of 2610.25104 and 2610.09912 | both v1 only |
+| arXiv search "heavy-ball", newest first | one new item since 20 Oct: 2610.29723 (Zhang et al., accelerated primal-dual dynamics for bilinear saddle-point problems, 21 Oct) — unrelated |
+| latest commits | kostfoto/Non-Acceleration-Heavy-Ball-1D 2705c16 (17 Oct), marcoshernanz/heavy-ball-optimal-rate b836df7 (16 Oct), dmivilensky/Heavy-Ball 2f1f6de (7 Oct): no change |
+
+Verdict: nothing new that answers or overlaps the question. Same limits as above (no Google Scholar, unpublished
+work cannot be found).
+

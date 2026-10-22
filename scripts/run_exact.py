@@ -18,6 +18,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import scipy  # noqa: E402
 
 from hb1d.exact import check_cycle, search, search_parallel  # noqa: E402
+from hb1d.mixed import highs_version  # noqa: E402
 from hb1d.tunings import NAMED, Tuning  # noqa: E402
 
 
@@ -78,7 +79,8 @@ def main():
         if cycles:
             c = check_cycle(t, cycles[0])
             rec.update(x=[str(v) for v in cycles[0]], period=c["period"], strict_vertex=c["strict"], order=c["order"])
-        rec.update(scipy=scipy.__version__, python=platform.python_version(), date=time.strftime("%Y-%m-%d %H:%M:%S"))
+        rec.update(scipy=scipy.__version__, highs=highs_version(), python=platform.python_version(),
+                   date=time.strftime("%Y-%m-%d %H:%M:%S"))
         if certs is not None and rec["verdict"] == "none [exact]":
             rec["certificate"] = write_certs(args.certs, args.tuning, t, K, certs, rec)
         print(json.dumps({k: rec[k] for k in ("key", "K", "verdict", "nodes", "pruned", "unresolved", "seconds")}),

@@ -5,8 +5,10 @@ augmented root-of-unity region Ω_aug? Can Pasechnyuk-Vilensky's multi-harmonic 
 scalar function?**
 
 Within the tunings and cycle lengths it examines, this repository finds **no counterexample**: the answer to
-both questions is no in every case checked. The results for the named tunings (§2.2) carry exact certificates
-that an independent checker verifies (§2.5). The phase diagram (§2.3) adds grid evidence whose cell
+both questions is no in every case checked. The results for the named tunings (§2.2) are exact, with two kinds of
+evidence (§2.5): every "no cycle" verdict is a stored certificate (rational Farkas certificates, or interval
+arithmetic for the mixed condition and Ω_aug) that stand-alone checkers outside the package verify, and every
+cycle found is stored as rational points that `hb1d.exact.check_cycle` and the tests re-verify exactly. The phase diagram (§2.3) adds grid evidence whose cell
 classification is numerical; there, exact 1D searches cover only the lengths stated. Nothing here proves the
 conjecture: one 1D cycle outside Ω_aug would refute it, and no number of cases without one can prove it.
 
@@ -98,7 +100,9 @@ cycles in the `mixed_feasible` cells (Fotopoulos et al. Prop. 5.1), rest on that
 certified cell by cell (the named tunings FAN7, FAN9 and Prop. 13 do have rigorous mixed-condition certificates,
 §2.5). For each cell outside Ω_aug and each K ≤ 30, `results/phase_diagram_k100.json` stores the LP record: the
 verdict, both margins (σ for a feasible weight vector, τ for an infeasibility vector; they agree with LP duality,
-σ = −τ to 4·10⁻¹⁵) and both solver statuses. All 42,000 LPs reported success, and the smallest margin was
+σ = −τ to 4·10⁻¹⁵) and both solver statuses; the LP solutions themselves (the weight vectors s and y) are in
+`results/phase_diagram_k100_lp_vectors.json.gz`, so the margins can be recomputed without the solver (a test does
+this for a sample of cells), and the HiGHS version (1.12.0, bundled with SciPy 1.18.1) is recorded. All 42,000 LPs reported success, and the smallest margin was
 9.6·10⁻⁸, ten times the tolerance, so no verdict was undecided. The class name `mixed_feasible` does not claim
 that a cell is in a fan tongue in Pasechnyuk-Vilensky's sense; his fan program (Thm fan-div(a)) was nevertheless
 evaluated in every such cell (field `pv_fan_program`) and is strictly feasible in all 34 at one of the searched
@@ -130,6 +134,7 @@ these gaps in unrestricted dimension; the new part here is the one-dimensional c
 | `certificates/<tuning>_K<K>.farkas.gz` (one per exact "none" in §2.2) | no 1D K-cycle at that tuning | `scripts/verify_certificates.py` |
 | `certificates/grid/*.farkas.gz` | no 1D cycle in each `mixed_feasible` cell of §2.3 at the searched K | same |
 | `certificates/mixed_and_omega_aug.json` | the mixed-condition verdicts of §2.2 and Ω_aug membership of the named tunings and of all 1,740 grid cells | `scripts/verify_rigorous.py` |
+| `results/phase_diagram_k100_lp_vectors.json.gz` | the LP solutions behind every numerical mixed-condition verdict of §2.3 (not a proof) | `tests/test_results.py` recomputes the margins from them |
 | `results/exact_search.jsonl`, `results/phase_diagram_k100.json` (field `x`) | the cycles found (Polyak, Example 3.2, every Ω_aug cell) as exact rationals | `hb1d.exact.check_cycle`, `tests/` |
 
 A `.farkas.gz` file lists, for every pruned node of the search tree, its prefix of the sorted order and the
@@ -138,9 +143,10 @@ node's rows, recomputes the Farkas vector exactly on the stored support, checks 
 B^T y = (∗, −1, …, −1) in rational arithmetic, and walks the tree to check that the certified prefixes cover
 every sorted order. `verify_rigorous.py` uses only mpmath interval arithmetic and recomputes the Appendix B
 bound exactly. Neither imports this package or an LP solver. The tests check every stored file with K ≤ 10
-and that tampered files are rejected; CI also runs `verify_rigorous.py` and `verify_certificates.py` on every
-file with K ≤ 12. The full check of all files (including K = 13, 14, about an hour) is logged in
-`results/log_verify_certificates.txt`.
+and that tampered files are rejected; the per-push CI also runs `verify_rigorous.py` and `verify_certificates.py` on
+every file with K ≤ 12. The K = 13, 14 files (about 1 to 2 hours) are checked by a separate, manually started
+workflow (`.github/workflows/full-certificates.yml`, Actions → "Full certificate check") and by
+`FULL=1 ./reproduce.sh`; the last full local check is logged in `results/log_verify_certificates.txt`.
 
 ## 3. Method in one paragraph
 
@@ -198,12 +204,13 @@ The literature check (channels, queries, verdicts) is logged in
 ## 6. Reproduce
 
 ```bash
-python -m venv .venv && .venv/bin/pip install -e ".[test]"
+python3 -m venv .venv && .venv/bin/pip install -e ".[test]"
 .venv/bin/python -m pytest -q          # 4 to 6 minutes (Apple M1)
-./reproduce.sh                         # fast part; uses $PYTHON, else .venv/bin/python, else python3
-FULL=1 ./reproduce.sh                  # also reruns the long searches (hours)
-python scripts/verify_certificates.py certificates/*.farkas.gz certificates/grid/*.farkas.gz
-python scripts/verify_rigorous.py      # interval-arithmetic certificates
+./reproduce.sh                         # default part, about 22 minutes (M1); uses $PYTHON, else .venv/bin/python, else python3
+FULL=1 ./reproduce.sh                  # also the long searches (K = 12..14), the phase diagram and the K = 13, 14 certificate check (hours)
+.venv/bin/python scripts/verify_certificates.py --max-k 12 certificates/*.farkas.gz certificates/grid/*.farkas.gz   # ~9 min
+.venv/bin/python scripts/verify_certificates.py certificates/*.farkas.gz certificates/grid/*.farkas.gz              # all, 1 to 2 hours (M1)
+.venv/bin/python scripts/verify_rigorous.py      # interval-arithmetic certificates, ~1 min
 ```
 
 Reruns replace the earlier record for the same (tuning, K) in `results/exact_search.jsonl` and rewrite its

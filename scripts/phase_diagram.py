@@ -37,7 +37,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from hb1d.exact import check_cycle, search  # noqa: E402
 from hb1d.geometry import in_omega1, unrolled_to_tuning  # noqa: E402
-from hb1d.mixed import MIXED_TOL, fan_program_margin, mixed_float_record  # noqa: E402
+from hb1d.mixed import MIXED_TOL, fan_program_margin, highs_version, mixed_float_record  # noqa: E402
 from hb1d.regions import omega_aug_report  # noqa: E402
 from hb1d.tunings import Tuning  # noqa: E402
 from scripts.run_exact import write_certs  # noqa: E402
@@ -103,7 +103,8 @@ def classify(args):
                    period=check_cycle(t, cyc[0])["period"] if cyc else None,
                    x=[str(v) for v in cyc[0]] if cyc else None)
         return out
-    recs = {K: mixed_float_record(t, K) for K in range(3, KMIX + 1)}
+    recs = {K: mixed_float_record(t, K, vectors=True) for K in range(3, KMIX + 1)}
+    out["lp_vectors"] = {K: dict(s=r.pop("s"), y=r.pop("y")) for K, r in recs.items()}   # moved to a separate file
     out["mixed"] = recs
     feas = [K for K, r in recs.items() if r["v"] == 1]
     undec = [K for K, r in recs.items() if r["v"] == 0]
@@ -170,7 +171,19 @@ def main():
             if n % 100 == 0:
                 print(f"{n}/{len(pts)} cells, {time.time() - t0:.0f}s", flush=True)
     import scipy
-    meta = dict(mixed_tol=MIXED_TOL, normalized=args.normalized, H_LEVELS=H_LEVELS if args.normalized else None, kappa=str(KAPPA), KMIX=KMIX, K1D=K1D, KAUG=KAUG, nrho=args.nrho, ndelta=args.ndelta, rho=args.rho,
+    vectors = []
+    for i, c in enumerate(cells):
+        v = c.pop("lp_vectors", None)
+        if v is not None:
+            vectors.append(dict(cell=i, rho=c["rho"], delta=c["delta"], alpha=c["alpha"], beta=c["beta"], lp=v))
+    vec_path = os.path.splitext(args.out)[0] + "_lp_vectors.json.gz"
+    import gzip
+    with open(vec_path, "wb") as raw, gzip.GzipFile(fileobj=raw, mode="wb", mtime=0) as gz:
+        gz.write(json.dumps(dict(format="hb1d-lp-vectors-v1", highs=highs_version(), mixed_tol=MIXED_TOL,
+                                 note="s: weights on m = 1..K-1 (feasibility LP); y: weights on Delta = 1..K-1 "
+                                      "(alternative LP); nonzero entries only, 12 significant digits",
+                                 cells=vectors)).encode())
+    meta = dict(highs=highs_version(), lp_vectors=os.path.basename(vec_path), mixed_tol=MIXED_TOL, normalized=args.normalized, H_LEVELS=H_LEVELS if args.normalized else None, kappa=str(KAPPA), KMIX=KMIX, K1D=K1D, KAUG=KAUG, nrho=args.nrho, ndelta=args.ndelta, rho=args.rho,
                 delta=args.delta, seconds=time.time() - t0, scipy=scipy.__version__,
                 date=time.strftime("%Y-%m-%d %H:%M:%S"))
     with open(args.out, "w") as fh:

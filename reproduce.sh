@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Regenerate the results. Default: the fast part (about 15 minutes on one M1 core), the certificate check and the
-# tests. FULL=1 also reruns the long exact searches (K = 12..14, a few hours on 4 cores) and the phase diagram.
+# Regenerate the results. Default part (about 22 minutes on an M1): exact searches with K <= 11, the rigorous
+# export and its interval check, the Farkas-certificate check for K <= 12, the figure, the summary and the tests.
+# FULL=1 also reruns the long exact searches (K = 12..14, a few hours on 4 cores), the phase diagram, and checks
+# the K = 13, 14 certificates (1 to 2 hours more).
 # Each run REPLACES the earlier record for the same (tuning, K) in results/exact_search.jsonl and rewrites
 # certificates/<tuning>_K<K>.farkas.gz.
 set -euo pipefail
@@ -24,7 +26,12 @@ if [[ "${FULL:-0}" == "1" ]]; then
   "$PY" scripts/phase_diagram.py --nrho 60 --normalized --workers 3   # results/phase_diagram_k100.json
 fi
 "$PY" scripts/export_rigorous.py                        # certificates/mixed_and_omega_aug.json
-"$PY" scripts/verify_certificates.py certificates/*.farkas.gz certificates/grid/*.farkas.gz
+"$PY" scripts/verify_rigorous.py                        # interval check of that file (independent of hb1d)
+if [[ "${FULL:-0}" == "1" ]]; then                     # Farkas certificates (independent of hb1d)
+  "$PY" scripts/verify_certificates.py certificates/*.farkas.gz certificates/grid/*.farkas.gz
+else
+  "$PY" scripts/verify_certificates.py --max-k 12 certificates/*.farkas.gz certificates/grid/*.farkas.gz
+fi
 "$PY" scripts/plot_phase_diagram.py                     # figures/phase_diagram_1d_k100.png
 "$PY" scripts/summarize.py                              # results/summary.{json,md}
 "$PY" -m pytest -q

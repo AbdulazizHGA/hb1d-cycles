@@ -63,7 +63,7 @@ def mixed(t: Tuning, K: int, prec=256):
     Returns dict(feasible=True/False/None, margin=float, cert=...). feasible=False comes with a rational y whose
     certified products sum_D y_D phi(m/K, D) are > 0 for every m (rigorous). feasible=True comes with rational
     weights s whose certified constraint values are all < 0 (strict feasibility, rigorous); boundary cases with
-    zero margin return feasible=None."""
+    zero margin, and LP solver failures, return feasible=None with a note (and the solver status)."""
     Phi = phi_matrix_float(t, K)
     n = K - 1
     # alternative: max tau s.t. Phi^T y >= tau, sum y = 1, y >= 0
@@ -72,6 +72,9 @@ def mixed(t: Tuning, K: int, prec=256):
     A_ub = np.hstack([-Phi.T, np.ones((n, 1))])
     res = linprog(c, A_ub=A_ub, b_ub=np.zeros(n), A_eq=[[1] * n + [0]], b_eq=[1],
                   bounds=[(0, None)] * n + [(None, None)], method="highs")
+    if res.status != 0:
+        return dict(feasible=None, margin=None, status=int(res.status),
+                    note=f"alternative LP failed: {res.message}")
     tau = -res.fun
     if tau > 1e-12:
         y = _rationalize(res.x[:n])
@@ -85,6 +88,8 @@ def mixed(t: Tuning, K: int, prec=256):
     A_ub = np.hstack([Phi, np.ones((n, 1))])
     res = linprog(c, A_ub=A_ub, b_ub=np.zeros(n), A_eq=[[1] * n + [0]], b_eq=[1],
                   bounds=[(0, None)] * n + [(None, None)], method="highs")
+    if res.status != 0:
+        return dict(feasible=None, margin=tau, status=int(res.status), note=f"feasibility LP failed: {res.message}")
     sigma = -res.fun
     if sigma > 1e-12:
         s = _rationalize(res.x[:n])
@@ -133,12 +138,20 @@ def fan_program_slacks(t: Tuning, k: int, nu: dict):
 MIXED_TOL = 1e-8
 
 
-def mixed_float_record(t: Tuning, K: int, tol=MIXED_TOL):
+def highs_version():
+    """Version of the HiGHS solver bundled with SciPy (the one scipy.optimize.linprog/milp call)."""
+    from scipy.optimize._highspy import _core
+    return f"{_core.HIGHS_VERSION_MAJOR}.{_core.HIGHS_VERSION_MINOR}.{_core.HIGHS_VERSION_PATCH}"
+
+
+def mixed_float_record(t: Tuning, K: int, tol=MIXED_TOL, vectors=False):
     """Floating-point verdict for (MIX_K), with the evidence. [numerical]
 
     Solves both LPs: sigma = max margin of a feasible s (Phi s <= -sigma) and tau = max margin of an
     infeasibility vector y (Phi^T y >= tau), each over the simplex. Verdict +1 if sigma > tol, -1 if tau > tol,
-    and 0 (undecided) if neither margin clears tol or if a solver did not report success (status != 0)."""
+    and 0 (undecided) if neither margin clears tol or if a solver did not report success (status != 0).
+    With vectors=True the record also holds the LP solutions: s (weights on m = 1..K-1 from the feasibility LP)
+    and y (weights on Delta = 1..K-1 from the alternative LP), as {index: value} of their nonzero entries."""
     Phi = phi_matrix_float(t, K)
     n = K - 1
     c = np.r_[np.zeros(n), -1]
@@ -155,7 +168,11 @@ def mixed_float_record(t: Tuning, K: int, tol=MIXED_TOL):
         v = -1
     else:
         v = 0
-    return dict(v=v, sigma=sigma, tau=tau, status_feasible_lp=int(rf.status), status_alternative_lp=int(ra.status))
+    rec = dict(v=v, sigma=sigma, tau=tau, status_feasible_lp=int(rf.status), status_alternative_lp=int(ra.status))
+    if vectors:
+        nz = lambda x: {i + 1: float(f"{w:.12g}") for i, w in enumerate(x[:n]) if w > 1e-14} if x is not None else None
+        rec.update(s=nz(rf.x), y=nz(ra.x))
+    return rec
 
 
 def mixed_float(t: Tuning, K: int, tol=MIXED_TOL):

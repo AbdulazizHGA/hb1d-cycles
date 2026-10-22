@@ -65,7 +65,28 @@ def tuning_to_unrolled(t: Tuning):
     raise ValueError("not found")
 
 
-def in_omega1(t: Tuning, n=4001):
+def lag_one_coeffs(t: Tuning):
+    """Exact rational coefficients (a2, a1, a0) of Lc(c) = a2 c^2 + a1 c + a0 (x = alpha mu, y = alpha L, L = 1)."""
+    from fractions import Fraction as F
+    al, be, mu = F(t.alpha), F(t.beta), F(t.mu)
+    x, y = al * mu, al
+    return 4 * be, 2 * (y - 1 - 2 * be - be * be + be * x), 2 - 2 * x + x * y + 2 * be * be - 2 * be * y
+
+
+def in_omega1(t: Tuning):
+    """Omega_1 = {Lc > 0 on [-1, 1]} decided exactly: the minimum of the quadratic Lc over [-1, 1] is attained at an
+    endpoint or, if a2 > 0 and the vertex -a1/(2 a2) lies in (-1, 1), at the vertex (Pasechnyuk-Vilensky Cor. C(a)).
+    All arithmetic is in rationals."""
+    a2, a1, a0 = lag_one_coeffs(t)
+    q = lambda c: (a2 * c + a1) * c + a0
+    candidates = [-1, 1]
+    if a2 > 0 and -2 * a2 < -a1 < 2 * a2:
+        candidates.append(-a1 / (2 * a2))
+    return min(q(c) for c in candidates) > 0
+
+
+def in_omega1_sampled(t: Tuning, n=4001):
+    """The former floating-point test on n sample points; kept only for comparison in the tests."""
     return all(lag_one(t, -1 + 2 * i / (n - 1)) > 0 for i in range(n))
 
 

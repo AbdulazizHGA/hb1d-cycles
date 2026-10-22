@@ -61,7 +61,7 @@ def test_phase_diagram_has_no_candidate_and_tongues_cycle():
 
 
 def test_phase_diagram_evidence_is_stored_and_checks():
-    """Every Omega_aug cell stores its exact 1D cycle (re-verified here); every fan-cell search stores a
+    """Every Omega_aug cell stores its exact 1D cycle (re-verified here); every mixed_feasible-cell search stores a
     certificate file that the independent verifier accepts."""
     from fractions import Fraction as F
     from hb1d.tunings import Tuning
@@ -76,3 +76,35 @@ def test_phase_diagram_evidence_is_stored_and_checks():
             for K, v in c["exact_1d"].items():
                 r = verify_file(os.path.join(RES, "..", v["certificate"]))
                 assert r["ok"] and r["K"] == int(K)
+
+
+def test_phase_diagram_lp_vectors_reproduce_the_margins():
+    """The stored LP solutions alone (no solver) reproduce each stored verdict: for a sample of cells and every
+    K <= 30, the weights s give max_D (Phi s)_D = -sigma and the weights y give min_m (Phi^T y)_m = tau, up to
+    floating rounding. [numerical evidence, auditable without HiGHS]"""
+    import gzip
+    import random
+    from fractions import Fraction as F
+    import numpy as np
+    from hb1d.mixed import phi_matrix_float
+    from hb1d.tunings import Tuning
+    d = json.load(open(os.path.join(RES, "phase_diagram_k100.json")))
+    vec = json.load(gzip.open(os.path.join(RES, d["meta"]["lp_vectors"])))
+    assert vec["highs"] == d["meta"]["highs"]
+    cells = d["cells"]
+    sample = random.Random(7).sample(vec["cells"], 40)
+    for v in sample:
+        c = cells[v["cell"]]
+        t = Tuning("cell", F(c["alpha"]), F(c["beta"]), F(100))
+        for K, lp in v["lp"].items():
+            rec, K = c["mixed"][K], int(K)
+            Phi = phi_matrix_float(t, K)
+            s = np.zeros(K - 1)
+            for m, w in lp["s"].items():
+                s[int(m) - 1] = w
+            y = np.zeros(K - 1)
+            for D, w in lp["y"].items():
+                y[int(D) - 1] = w
+            assert abs(s.sum() - 1) < 1e-9 and abs(y.sum() - 1) < 1e-9
+            assert abs(-(Phi @ s).max() - rec["sigma"]) < 1e-9
+            assert abs((Phi.T @ y).min() - rec["tau"]) < 1e-9
