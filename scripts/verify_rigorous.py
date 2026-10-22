@@ -67,24 +67,34 @@ def mode_value(a, b, mu, K, m):
 
 
 def check_aug(e):
+    """True iff the stored Omega_aug verdict e is proved by the data it carries (see the module docstring)."""
     alpha, beta, kappa = F(e["alpha"]), F(e["beta"]), F(e["kappa"])
+    if not kappa > 1:
+        return False                                   # mu = 1/kappa < L = 1 is needed (den > 0 below)
     mu = 1 / kappa
     if not (abs(beta) < 1 and 0 < alpha < 2 * (1 + beta)):
-        return e["member"] is False
+        return e["member"] is False                    # Omega_aug lies inside Omega_cv(Q)
     a, b, m_ = I(alpha), I(beta), I(mu)
     if e["member"] is True:
         K, m = e["witness"]
-        return gcd(m, K) == 1 and mode_value(a, b, m_, K, m).a > 0
+        # the witness must be a reduced primitive mode: 1 <= m <= (K-1)/2 (Lemma 3.1 uses this reduction; for
+        # m > (K-1)/2 or m < 1 the sign of q flips and A - q cot(pi/K) is no longer the membership test)
+        return (isinstance(K, int) and isinstance(m, int) and K >= 3 and 1 <= m <= (K - 1) // 2
+                and gcd(m, K) == 1 and mode_value(a, b, m_, K, m).a > 0)
     if e["member"] is not False:
-        return True
+        return True                                    # undecided entries claim nothing
     den = (1 - mu) * alpha
     P0, P1 = (1 + beta - mu * alpha) / den, (1 + beta) / den
     lo, hi = max(F(-1), (P0 - 1) / P1), min(F(1), P0 / P1)
+    if lo > hi:                                        # p(u) never in [0, 1]: no pure mode can be feasible
+        return F(e["R"]) == 0
     smin = 1 - max(lo * lo, hi * hi)
+    if not smin > 0:
+        return False
     c = (1 - beta) / den
     R = 1 / (16 * c * c * smin)
     K0 = e["K0"]
-    if F(e["R"]) != R or not smin > 0 or not (iv.cot(iv.pi / K0) ** 2 - I(R)).a > 0:
+    if F(e["R"]) != R or not (iv.cot(iv.pi / K0) ** 2 - I(R)).a > 0:
         return False
     return all(mode_value(a, b, m_, K, m).b < 0 for K in range(3, K0) for m in range(1, (K - 1) // 2 + 1)
                if gcd(m, K) == 1)
@@ -104,8 +114,8 @@ def main(path):
         n_fea = sum(e["feasible"] is True for e in v["mixed"].values())
         print(f"{key}: Omega_aug member = {v['omega_aug']['member']}; mixed infeasible at {n_inf} lengths, "
               f"feasible at {n_fea}", flush=True)
-    gbad = [i for i, e in enumerate(d["grid"]) if not check_aug(e)]
-    print(f"grid: {len(d['grid']) - len(gbad)}/{len(d['grid'])} Omega_aug verdicts verified")
+    gbad = [i for i, e in enumerate(d["grid"]) if not check_aug(e) or e["member"] is None]
+    print(f"grid: {len(d['grid']) - len(gbad)}/{len(d['grid'])} Omega_aug verdicts verified (undecided counts as a failure)")
     bad += [("grid", i) for i in gbad]
     print("OK" if not bad else f"FAILED: {bad[:10]}")
     return not bad

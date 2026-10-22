@@ -18,6 +18,10 @@ class Tuning:
     beta: F
     kappa: F        # L / mu
 
+    def __post_init__(self):
+        if not F(self.kappa) > 1:
+            raise ValueError(f"kappa = L/mu must be > 1 (got {self.kappa}): the formulas divide by L - mu")
+
     @property
     def mu(self) -> F:
         return 1 / self.kappa
@@ -26,11 +30,12 @@ class Tuning:
 def polyak(kappa) -> Tuning:
     """Polyak's tuning alpha = 4/(sqrt L + sqrt mu)^2, beta = ((1 - sqrt q)/(1 + sqrt q))^2, q = 1/kappa.
     Rational whenever kappa is a rational square (kappa = 100 gives 400/121 and 81/121)."""
+    from math import isqrt
     kappa = F(kappa)
-    r = F(int(round(float(kappa) ** 0.5)))
-    if r * r != kappa:
-        raise ValueError("Polyak's tuning is rational only for square kappa")
-    s = 1 / r                                    # sqrt(mu / L)
+    rn, rd = isqrt(kappa.numerator), isqrt(kappa.denominator)
+    if rn * rn != kappa.numerator or rd * rd != kappa.denominator:
+        raise ValueError("Polyak's tuning is rational only when kappa is the square of a rational")
+    s = F(rd, rn)                                # sqrt(mu / L) = 1/sqrt(kappa)
     return Tuning(f"Polyak kappa={kappa}", 4 / (1 + s) ** 2, ((1 - s) / (1 + s)) ** 2, kappa)
 
 

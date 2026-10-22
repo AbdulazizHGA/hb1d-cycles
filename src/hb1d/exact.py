@@ -19,7 +19,8 @@ and the slope condition, which holds for all pairs in 1D). A node is pruned only
 has been verified in rational arithmetic. A full order whose system is feasible yields a cycle, which is then
 reconstructed exactly (rational vertex) and verified with Fractions.
 
-So "no K-cycle" from `search` is an exact statement (tag [exact]) whenever stats['unresolved'] == 0: it covers
+So "no K-cycle" from `search` is an exact statement (tag [exact]) whenever stats['complete'] is True and
+stats['unresolved'] == 0 (a time-limited run can stop early with unresolved == 0): it covers
 cycles with distinct points, repeated points and boundary slopes alike, for this K (minimal period or not).
 """
 import time
@@ -248,12 +249,15 @@ def _subtree(args):
 
 def search_parallel(t: Tuning, K: int, workers=4, depth=3, max_cycles=1, record=None):
     """Same verdict as `search`, with the subtrees below the prefixes of length `depth` explored by a process pool.
-    Prefixes of length < depth are handled serially (and may be pruned there)."""
+    Prefixes of length < depth are handled serially (and may be pruned there). Requires depth < K, so that every
+    frontier prefix still has an element to place and full orders are always handled inside `search`."""
     from multiprocessing import get_context
+    if not 1 <= depth < K:
+        raise ValueError(f"depth must satisfy 1 <= depth < K (got depth = {depth}, K = {K})")
     G = grad_matrix(t, K)
     mu, L = t.mu, F(1)
     t0 = time.time()
-    agg = dict(K=K, tuning=t.name, nodes=0, pruned=0, unresolved=0, leaves_feasible=0)
+    agg = dict(K=K, tuning=t.name, nodes=0, pruned=0, unresolved=0, leaves_feasible=0, inexact_branch=0)
     frontier, level = [[0]], 1
     while level < depth and frontier:
         nxt = []
@@ -274,8 +278,8 @@ def search_parallel(t: Tuning, K: int, workers=4, depth=3, max_cycles=1, record=
                                                              for p in frontier]):
             if record is not None:
                 record += certs
-            for k in ("nodes", "pruned", "unresolved", "leaves_feasible"):
-                agg[k] += st[k]
+            for k in ("nodes", "pruned", "unresolved", "leaves_feasible", "inexact_branch"):
+                agg[k] = agg.get(k, 0) + st.get(k, 0)
             cycles += cyc
             if len(cycles) >= max_cycles:
                 pool.terminate()

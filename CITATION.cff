@@ -8,8 +8,8 @@ abstract: >-
   one-dimensional consequence of the conjecture Omega_aug = Omega_cyc^(2) is found: at Pasechnyuk-Vilensky's
   Prop. 13 tuning (kappa = 100) there is no 1D cycle of any length K <= 25, and at two new rational tunings in the
   2/7 and 2/9 fan tongues, which have cycles in R^4, there is no 1D cycle of length K <= 14 (K <= 16 at the
-  second). Includes a 1D phase
-  diagram of the first-level gaps at kappa = 100.
+  second). Every exclusion is stored as a certificate with stand-alone checkers. Includes a 1D phase diagram of
+  the first-level gaps at kappa = 100 and the tongues above them (numerical classification, exact 1D searches).
 type: software
 url: "https://github.com/AbdulazizHGA/hb1d-cycles"
 repository-code: "https://github.com/AbdulazizHGA/hb1d-cycles"
@@ -17,7 +17,6 @@ authors:
   - given-names: "Abdulaziz"
     email: abdulaziz787hlal@gmail.com
 version: 0.1.0
-date-released: 2026-10-21
 license: Apache-2.0
 keywords:
   - heavy-ball method

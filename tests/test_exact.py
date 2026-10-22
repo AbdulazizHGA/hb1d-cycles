@@ -94,14 +94,14 @@ def test_farkas_certificates_verify_independently():
             y2 = list(y)
             k = next(i for i, v in enumerate(y2) if v > 0)
             y2[k] *= 2
-            assert not verify_farkas(rows, y2, K) or len(set(map(tuple, rows))) < len(rows)
+            assert not verify_farkas(rows, y2, K)
             n += 1
     assert n > 10
 
 
 def test_check_cycle_rejects_bad_points():
     (x,), _ = search(POLYAK100, 3)
-    assert not check_cycle(POLYAK100, [x[0], x[2], x[1]])["ok"] or len(set(x)) < 3
+    assert len(set(x)) == 3 and not check_cycle(POLYAK100, [x[0], x[2], x[1]])["ok"]   # reversed order
     assert not check_cycle(POLYAK100, [F(1)] * 3)["ok"]          # constant orbit is not a cycle
 
 
@@ -109,9 +109,10 @@ def test_check_cycle_rejects_bad_points():
                                         (FHDA_EX32, 4, False), (PROP13, 7, False), (CONV_GAP, 8, False)])
 def test_milp_agrees_with_exact(t, K, expect):
     r = milp_search(t, K, time_limit=120)
+    assert r["status"] in (0, 2), r["verdict"]           # solved to optimality or proved infeasible, no time-out
     assert (r["verdict"] != "infeasible") == expect
     if expect:
-        assert r["margin"] > 0
+        assert r["status"] == 0 and r["margin"] > 0
 
 
 @pytest.mark.parametrize("K", [3, 4, 5, 6])

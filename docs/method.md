@@ -7,7 +7,7 @@
 | method | x_{k+1} = x_k - alpha f'(x_k) + beta (x_k - x_{k-1}) | same, step alpha | same, step gamma |
 | smoothness | L = 1 | general L | general L (L = 1 in Sec. 5) |
 | condition number | kappa = L/mu (Prop. 13: kappa = 100) | kappa = L/mu | **kappa_F = mu/L** (Prop. 13: kappa_F = 1/100) |
-| step | alpha = alpha L | alpha L | L gamma |
+| step | alpha (= alpha L, since L = 1) | alpha L | L gamma |
 
 `hb1d.tunings` stores every tuning as exact rationals (alpha L, beta, kappa = L/mu). Fotopoulos et al.'s
 Example 3.2 (kappa_F = 4/5) is stored as kappa = 5/4, and their point P_1 (kappa_F = 531/10^4) as kappa = 10^4/531.
@@ -33,8 +33,9 @@ For a fixed sorted order sigma with sigma[0] = 0 this is a linear system
 
 and a 1D K-cycle exists iff one of the (K-1)! systems is feasible. The rows are **closed** inequalities, so one
 system covers cycles with distinct points, cycles with repeated points (Hernanz's 5-cycle is an example) and
-cycles with slopes equal to mu or L. The Phase 1 distinction between a strict and a non-strict MILP is therefore
-subsumed: every "no K-cycle" in this repository is the non-strict statement, which is the strongest one.
+cycles with slopes equal to mu or L. A distinction between "strict" cycles (distinct points, slopes strictly
+inside (mu, L)) and "non-strict" ones is therefore unnecessary: every "no K-cycle" in this repository is the
+non-strict statement, which is the strongest one.
 
 A search at length K finds every orbit whose period divides K, so "no K-cycle" also excludes, for instance,
 3-cycles when K = 6.
@@ -53,11 +54,12 @@ order whose system cannot be refuted is solved exactly (rational vertex from the
 re-verified by `check_cycle` with Fractions. Nodes that are neither pruned nor shown feasible exactly are counted
 as `unresolved`; every verdict reported below has `unresolved = 0` and `complete = true`.
 
-Every pruned node is stored as (prefix, support of y) in `certificates/<tuning>_K<K>.farkas.gz`; `scripts/verify_certificates.py` recomputes y from its support by exact elimination and rechecks every
+Every pruned node is stored as (prefix, support of y) in `certificates/<tuning>_K<K>.farkas.gz`.
+`scripts/verify_certificates.py` recomputes y from its support by exact elimination and rechecks every
 certificate, and the coverage of the tree, with the standard library only.
 
-Tag: **[exact]** (rational arithmetic). The tree size grows by roughly 3x per unit of K: Prop. 13 needs 63,362
-nodes and 469 s at K = 13 on one core of an M1.
+Tag: **[exact]** (rational arithmetic). The tree size grows by a factor of about 3 to 4 per unit of K: Prop. 13
+needs 63,362 nodes and 469 s at K = 13 on one core of an M1, and 222,835 nodes at K = 14.
 
 ## 3. The mixed condition: a necessary condition in every dimension (`hb1d.mixed`)
 
@@ -70,8 +72,8 @@ over j: the function values cancel and so do all cross terms between modes, leav
 with phi(f, Delta) = A(f)(cos(2 pi f Delta) - 1) + q(f) sin(2 pi f Delta) and A = p(1 - p) - q^2 (their
 eq. (3.4)). So if (MIX_K) has no solution s >= 0 (not all zero), there is no K-cycle in any dimension, in
 particular none in 1D. We only use this direction. (Fotopoulos et al. Prop. 5.1 gives the converse in dimension
-2r; Pasechnyuk-Vilensky's fan program in Thm fan-div(a) has an extra constraint from the minimizer and is not
-used as a filter here, only to validate the angle function.)
+2r. Pasechnyuk-Vilensky's fan program in Thm fan-div(a) has an extra constraint from the minimizer; it is not
+used as a filter here, but to validate the angle function and, as additional information, in the grid cells.)
 
 By the theorem of alternatives (MIX_K) is infeasible iff some y >= 0 has sum_Delta y_Delta phi(m/K, Delta) > 0 for
 every m. We take y from an LP, round it to a rational vector and check every sum with **interval arithmetic**
@@ -91,7 +93,8 @@ Omega_cv(Q) lies in Omega_{K,m} iff
 
 Their Appendix B excludes all large K at once: membership forces p in [0, 1], hence cos(2 pi m/K) in an explicit
 rational interval on which sqrt(1 - u^2) >= sin_min > 0, and with A <= 1/4 it gives
-cot(pi/K)^2 <= R := 1/(16 c^2 sin_min^2), c = (1 - beta)/((L - mu) gamma). R and sin_min^2 are exact rationals;
+cot(pi/K)^2 <= R := 1/(16 c^2 sin_min^2), c = (1 - beta)/((L - mu) gamma) with gamma = alpha. R and sin_min^2 are
+exact rationals;
 K_0 = min{K : cot(pi/K)^2 > R} and every mode with K < K_0 are decided by interval arithmetic.
 `omega_aug_report` reproduces Table 1 of Fotopoulos et al. (all 13 rows, 9 digits), their interval
 [-56921/74395, 168555301/185987500], sin_min^2 and K_0 = 10 at P_1 exactly (tests/test_regions.py).

@@ -117,8 +117,10 @@ def verify_file(path):
             continue
         stack += [p + (j,) for j in rem]
     ok = not bad and not uncovered
-    return dict(file=path, key=head.get("key"), K=K, certificates=len(certs), invalid=len(bad), uncovered=len(uncovered),
-                unused=len(certs) - len(used), ok=ok)
+    # alpha, beta, kappa are part of the result: a certificate proves "no 1D K-cycle" for exactly this tuning
+    return dict(file=path, key=head.get("key"), alpha=head["alpha"], beta=head["beta"], kappa=head["kappa"], K=K,
+                certificates=len(certs), invalid=len(bad), uncovered=len(uncovered), unused=len(certs) - len(used),
+                ok=ok)
 
 
 if __name__ == "__main__":

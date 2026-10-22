@@ -102,9 +102,15 @@ def test_rigorous_certificates_named_tunings():
 
 
 def test_rigorous_grid_membership_matches_classification():
+    """The rigorous Omega_aug verdict of every grid cell is decided (never None) and agrees with the class stored
+    in results/phase_diagram_k100.json for the same cell (matched by rho, delta and the rational tuning)."""
     d = json.load(open(os.path.join(CERTS, "mixed_and_omega_aug.json")))
-    assert len(d["grid"]) == 1740
-    assert all((e["member"] is True) == (e["cls"] == "aug") for e in d["grid"])
+    cells = json.load(open(os.path.join(ROOT, "results", "phase_diagram_k100.json")))["cells"]
+    assert len(d["grid"]) == len(cells) == 1740
+    for e, c in zip(d["grid"], cells):
+        assert (e["rho"], e["delta"], e["alpha"], e["beta"]) == (c["rho"], c["delta"], c["alpha"], c["beta"])
+        assert e["member"] in (True, False)
+        assert e["member"] == (c["cls"] == "aug")
 
 
 def test_fraction_input_writes_a_checkable_certificate(tmp_path):
@@ -130,3 +136,54 @@ def test_file_key_is_safe_and_injective():
     assert os.sep not in file_key("../x")             # '/' never reaches the file name
     with pytest.raises(ValueError):
         file_key("1 /2,3")                             # anything else unsafe is refused
+
+
+def test_certificate_headers_match_the_named_tunings():
+    """Each stored certificate's header names the exact tuning it certifies; it must be the named tuning."""
+    from hb1d.tunings import NAMED
+    for r in stored_records():
+        if r["verdict"] != "none [exact]":
+            continue
+        with gzip.open(os.path.join(ROOT, r["certificate"]), "rt") as fh:
+            head = json.loads(fh.readline())
+        t = NAMED[r["key"]]
+        assert (head["alpha"], head["beta"], head["kappa"]) == (str(t.alpha), str(t.beta), str(t.kappa))
+        assert (r["alpha"], r["beta"], r["kappa"]) == (str(t.alpha), str(t.beta), str(t.kappa))
+
+
+def _rigorous():
+    return json.load(open(os.path.join(CERTS, "mixed_and_omega_aug.json")))
+
+
+@pytest.mark.parametrize("key", ["prop13", "convgap", "fan7", "fan9", "p1"])
+@pytest.mark.parametrize("witness", [[4, 3], [5, 4], [4, -1], [5, 1], [6, 1]])
+def test_rigorous_verifier_rejects_forged_membership(key, witness):
+    """A tuning outside Omega_aug cannot be passed off as a member with any witness, reduced or not."""
+    e = dict(_rigorous()["named"][key]["omega_aug"], member=True, witness=witness)
+    assert not verify_rigorous.check_aug(e)
+
+
+@pytest.mark.parametrize("field,value", [("R", "1"), ("K0", 5), ("member", False)])
+def test_rigorous_verifier_rejects_edited_exclusions(field, value):
+    d = _rigorous()
+    if field == "member":
+        e = dict(d["named"]["polyak100"]["omega_aug"], member=False, K0=40, R="156")   # a member claimed outside
+    else:
+        e = dict(d["named"]["prop13"]["omega_aug"], **{field: value})
+    assert not verify_rigorous.check_aug(e)
+
+
+def test_rigorous_verifier_rejects_edited_mixed_vectors():
+    from fractions import Fraction as F
+    d = _rigorous()
+    t = d["named"]["prop13"]["omega_aug"]
+    inf = dict(d["named"]["prop13"]["mixed"]["12"])                      # infeasible at K = 12
+    n = len(inf["y"])
+    assert verify_rigorous.check_mixed(t, 12, inf)
+    last_lag_only = ["0"] * (n - 1) + ["1"]                              # not a certificate at this tuning
+    assert not verify_rigorous.check_mixed(t, 12, dict(inf, y=last_lag_only))
+    assert not verify_rigorous.check_mixed(t, 12, dict(inf, y=["-1"] + inf["y"][1:]))   # negative entry
+    fea = dict(d["named"]["prop13"]["mixed"]["13"])                      # feasible at K = 13
+    assert verify_rigorous.check_mixed(t, 13, fea)
+    assert not verify_rigorous.check_mixed(t, 13, dict(fea, s=["0"] * len(fea["s"])))
+    assert not verify_rigorous.check_mixed(t, 13, dict(fea, feasible=False, y=fea["s"]))

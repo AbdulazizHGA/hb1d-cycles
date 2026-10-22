@@ -49,7 +49,9 @@ def main():
         j = min(range(len(H)), key=lambda k: abs(H[k] - h))
         if c["cls"] == "CANDIDATE":
             raise SystemExit(f"candidate cell present, inspect it first: {c}")
-        grid[j, i] = IDX.get(c["cls"], np.nan)
+        if c["cls"] not in IDX:
+            raise SystemExit(f"unknown cell class {c['cls']!r}; add it to CLASSES/IDX before plotting: {c}")
+        grid[j, i] = IDX[c["cls"]]
     r_edges = np.r_[rhos[0] - (rhos[1] - rhos[0]) / 2, (np.array(rhos[1:]) + rhos[:-1]) / 2,
                     rhos[-1] + (rhos[1] - rhos[0]) / 2]
     Hm = np.array(H)

@@ -48,7 +48,7 @@ KAPPA = F(100)
 KMIX, K1D, KAUG = 30, 10, 40
 
 
-def pure_mode_witness(a, b, mu=0.01):
+def pure_mode_witness(a, b, mu=1 / float(KAPPA)):
     for K in range(3, KAUG + 1):
         for m in range(1, (K - 1) // 2 + 1):
             if math.gcd(m, K) != 1:

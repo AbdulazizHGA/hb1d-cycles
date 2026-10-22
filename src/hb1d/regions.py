@@ -109,9 +109,10 @@ def first_excluded_K(R: F, prec: int = PREC) -> int:
 def omega_aug_report(t: Tuning, prec: int = PREC):
     """Decide membership of a rational tuning in Omega_aug with a rigorous certificate.
 
-    Returns a dict with 'member' in {True, False, None}: True with a witness (K, m) whose value is certified >= 0
-    (> 0) or exactly on the boundary; False with K0 and, for every primitive mode with K < K0, a certified
-    negative value; None if some sign could not be decided at this precision."""
+    Returns a dict with 'member' in {True, False, None}: True with a reduced witness (K, m), 1 <= m <= (K-1)/2,
+    whose value A - q cot(pi/K) is certified > 0; False with K0 and, for every primitive mode with K < K0, a
+    certified negative value; None if some sign could not be decided at this precision (this includes a mode
+    exactly on the boundary, value 0, which the intervals cannot certify)."""
     out = {"tuning": t.name, "in_cv": in_cv(t)}
     if not out["in_cv"]:
         out["member"] = False

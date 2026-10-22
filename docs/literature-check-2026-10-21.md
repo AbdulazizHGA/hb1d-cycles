@@ -5,9 +5,9 @@ queries below before any new release.
 
 **How this log was made.** The searches were run on 2026-10-21 by an AI research assistant (Claude, Anthropic)
 working for the repository author, using web search, direct page fetches, the Semantic Scholar and OpenAlex APIs
-and the GitHub API; the author reviewed the result. A second, shorter check was run the same day just before
-publication (end of this file). Every [read] item was read in primary form; items marked [2nd-hand] or [abs]
-were not read in full.
+and the GitHub API; the author reviewed the result. Shorter re-checks were run on 2026-10-21 just before
+publication and on 2026-10-22 (end of this file). Every [read] item was read in primary form; items marked
+[2nd-hand] or [abs] were not read in full.
 
 **Limits.** A search that finds nothing does not show that no prior work exists. Google Scholar could not be
 queried and the arXiv API was rate-limited on 2026-10-21 (arXiv listing pages were used instead); indexes lag
@@ -40,13 +40,13 @@ Fotopoulos et al.'s acknowledgments) cannot be found this way.
 
 The remaining queries (arXiv searches for "Lur'e", "Zames-Falb", "Kalman conjecture", author search
 "Dieuleveut", GitHub repository and code searches) are listed with their results in the sections below.
-Scope: the question "do HB cycles exist on 1D functions in F_{mu,L}(R) at (alpha, beta) outside
-Omega_aug (Fotopoulos–Helcig–Deck–Alsbach)?", equivalently "can Pasechnyuk-Vilensky's multi-harmonic fan
-orbits be realized by scalar functions?" Focus: kappa = 100, level-1 gaps.
 
-Legend: **[read]** means I read the primary text (LaTeX source, PDF text, or repo file).
-**[abs]** means abstract page only. **[2nd-hand]** means I only have someone else's statement or a
-fetch-tool summary.
+**Scope.** The question "do HB cycles exist on 1D functions in F_{mu,L}(R) at (alpha, beta) outside Omega_aug
+(Fotopoulos–Helcig–Deck–Alsbach)?", equivalently "can Pasechnyuk-Vilensky's multi-harmonic fan orbits be
+realized by scalar functions?". Focus: kappa = 100, level-1 gaps.
+
+**Legend.** **[read]**: the primary text was read (LaTeX source, PDF text or repository file). **[abs]**: the
+abstract page only. **[2nd-hand]**: someone else's statement or a fetch-tool summary only.
 
 ---
 

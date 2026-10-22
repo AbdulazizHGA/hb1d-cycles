@@ -58,7 +58,11 @@ def _rationalize(v, den=10 ** 12):
 
 
 def mixed(t: Tuning, K: int, prec=256):
-    """Decide (MIX_K) for a rational tuning.
+    """Decide (MIX_K) for a rational tuning, rigorously.
+
+    A floating LP margin above 1e-12 selects which side to certify (this threshold only chooses the candidate
+    certificate; unlike MIXED_TOL of the numerical grid it is not a decision rule, because the candidate is then
+    checked with interval arithmetic and rejected if the check fails).
 
     Returns dict(feasible=True/False/None, margin=float, cert=...). feasible=False comes with a rational y whose
     certified products sum_D y_D phi(m/K, D) are > 0 for every m (rigorous). feasible=True comes with rational
@@ -112,7 +116,7 @@ def check_weights(t: Tuning, K: int, weights: dict, prec=256):
 
 
 def fan_program_slacks(t: Tuning, k: int, nu: dict):
-    """Pasechnyuk-Vilensky Thm 'Fan tongues'(a) at exponent t = 0 for a k-periodic spectrum nu = {j: weight}
+    """Pasechnyuk-Vilensky Thm fan-div(a) ("Fan tongues") at exponent t = 0 for a k-periodic spectrum nu = {j: weight}
     (frequencies omega_j = 2 pi j/k): with w_j = |g - 2is|(omega_j) nu_j, where |g - 2is| = |a(z) b(z)|/B^2 on
     |z| = 1, returns the slacks [sum_j w_j Lambda_n(omega_j) for n = 1..k-1] + [sum_j w_j cos theta_j]; the program
     is satisfied iff all are >= 0. Lambda_n(omega) = cos Theta - cos(n omega - Theta). Floating point."""
@@ -139,9 +143,13 @@ MIXED_TOL = 1e-8
 
 
 def highs_version():
-    """Version of the HiGHS solver bundled with SciPy (the one scipy.optimize.linprog/milp call)."""
-    from scipy.optimize._highspy import _core
-    return f"{_core.HIGHS_VERSION_MAJOR}.{_core.HIGHS_VERSION_MINOR}.{_core.HIGHS_VERSION_PATCH}"
+    """Version of the HiGHS solver bundled with SciPy (the one scipy.optimize.linprog/milp call), or "unknown" if
+    this SciPy does not expose it (the lookup uses a private module, so it must never break a finished run)."""
+    try:
+        from scipy.optimize._highspy import _core
+        return f"{_core.HIGHS_VERSION_MAJOR}.{_core.HIGHS_VERSION_MINOR}.{_core.HIGHS_VERSION_PATCH}"
+    except Exception:
+        return "unknown"
 
 
 def mixed_float_record(t: Tuning, K: int, tol=MIXED_TOL, vectors=False):

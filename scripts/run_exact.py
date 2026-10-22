@@ -51,7 +51,7 @@ def main():
     ap.add_argument("tuning", help=f"one of {sorted(NAMED)} or alpha,beta,kappa as fractions, e.g. 111/50,31/50,100")
     ap.add_argument("kmin", type=int)
     ap.add_argument("kmax", type=int)
-    ap.add_argument("--time-limit", type=float, default=None)
+    ap.add_argument("--time-limit", type=float, default=None, help="seconds; serial runs only (not with --workers)")
     ap.add_argument("--workers", type=int, default=1)
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "results", "exact_search.jsonl"))
     ap.add_argument("--certs", default=os.path.join(os.path.dirname(__file__), "..", "certificates"),
@@ -59,6 +59,8 @@ def main():
     ap.add_argument("--append", action="store_true",
                     help="keep earlier records for the same (key, K); by default they are replaced")
     args = ap.parse_args()
+    if args.time_limit is not None and args.workers > 1:
+        ap.error("--time-limit is supported only for serial runs (--workers 1)")
 
     if args.tuning in NAMED:
         t = NAMED[args.tuning]

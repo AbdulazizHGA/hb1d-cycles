@@ -19,6 +19,7 @@ jobs:
       - name: Interval-arithmetic certificates (Omega_aug, mixed condition)
         run: python scripts/verify_rigorous.py
       - name: All exact Farkas certificates (named tunings K = 3..14 and grid cells)
+        shell: bash   # bash -eo pipefail: a failing check is not hidden by tee's exit status
         run: python scripts/verify_certificates.py certificates/*.farkas.gz certificates/grid/*.farkas.gz | tee verify.log
       - uses: actions/upload-artifact@v4
         if: always()
