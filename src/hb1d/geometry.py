@@ -1,4 +1,4 @@
-"""Phase-diagram geometry of Pasechnyuk-Vilensky (arXiv 2610.09912, Sections 'Regions' and 'Levels').
+"""Phase-diagram geometry of Pasechnyuk-Vilensky (arXiv 2610.09912, Sections 7 and 8).
 
 x = alpha mu, y = alpha L (L = 1). The lag-one quadratic
 
@@ -7,8 +7,8 @@ x = alpha mu, y = alpha L (L = 1). The lag-one quadratic
 decides Theta(omega) > omega/2 <=> Lc(cos omega) > 0. Omega_1 (lag-one convergence) is {Lc > 0 on [-1, 1]};
 the K-tongue (= Omega_{K,1} of Fotopoulos et al. = GTD's root-of-unity region) is {Lc(cos(2 pi/K)) <= 0}.
 
-Unrolled coordinates (Pasechnyuk Fig. regions(d), level1): a boundary point of Omega_1 with tangency rotation number
-rho = omega_*/2 pi has Lc(c_*) = Lc'(c_*) = 0 at c_* = cos(2 pi rho); the tuning with unrolled coordinates
+Unrolled coordinates (Pasechnyuk-Vilensky Figs. 6(d) and 8): a boundary point of Omega_1 with tangency rotation
+number rho = omega_*/2 pi has Lc(c_*) = Lc'(c_*) = 0 at c_* = cos(2 pi rho); the tuning with unrolled coordinates
 (rho, delta) is (alpha_b(rho) + delta, beta_b(rho)), i.e. delta is the distance in alpha L beyond the boundary.
 """
 import math
@@ -75,8 +75,8 @@ def lag_one_coeffs(t: Tuning):
 
 def in_omega1(t: Tuning):
     """Omega_1 = {Lc > 0 on [-1, 1]} decided exactly: the minimum of the quadratic Lc over [-1, 1] is attained at an
-    endpoint or, if a2 > 0 and the vertex -a1/(2 a2) lies in (-1, 1), at the vertex (Pasechnyuk-Vilensky Cor. C(a)).
-    All arithmetic is in rationals."""
+    endpoint or, if a2 > 0 and the vertex -a1/(2 a2) lies in (-1, 1), at the vertex (Pasechnyuk-Vilensky
+    Corollary 7.3(a)). All arithmetic is in rationals."""
     a2, a1, a0 = lag_one_coeffs(t)
     q = lambda c: (a2 * c + a1) * c + a0
     candidates = [-1, 1]

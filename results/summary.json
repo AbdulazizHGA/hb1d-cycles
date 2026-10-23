@@ -1,7 +1,7 @@
 [
  {
   "key": "prop13",
-  "name": "Pasechnyuk Prop. 13 (gap I_4, two-harmonic 13-cycle in R^5)",
+  "name": "Pasechnyuk-Vilensky Prop. 9.4 (gap I_4, two-harmonic 13-cycle in R^5)",
   "alpha": "70471/31800",
   "beta": "6169/9900",
   "kappa": "100",
@@ -192,7 +192,7 @@
  },
  {
   "key": "convgap",
-  "name": "Pasechnyuk Prop. conv-gap (gap I_4, converges)",
+  "name": "Pasechnyuk-Vilensky Prop. 9.5 (gap I_4, converges)",
   "alpha": "111/50",
   "beta": "31/50",
   "kappa": "100",

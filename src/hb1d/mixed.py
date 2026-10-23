@@ -1,4 +1,4 @@
-"""The mixed condition of Fotopoulos et al. (arXiv 2610.25104, eq. (5.4)): a necessary condition for a
+"""The mixed condition of Fotopoulos et al. (arXiv 2610.25104, eq. (21)): a necessary condition for a
 heavy-ball cycle of length K in ANY dimension, hence in dimension one.
 
 With f = m/K, M(f) = p(f) - i q(f) and A(f) = p(1 - p) - q^2,
@@ -116,7 +116,7 @@ def check_weights(t: Tuning, K: int, weights: dict, prec=256):
 
 
 def fan_program_slacks(t: Tuning, k: int, nu: dict):
-    """Pasechnyuk-Vilensky Thm fan-div(a) ("Fan tongues") at exponent t = 0 for a k-periodic spectrum nu = {j: weight}
+    """Pasechnyuk-Vilensky Theorem 9.1(a) ("Fan tongues") at exponent t = 0 for a k-periodic spectrum nu = {j: weight}
     (frequencies omega_j = 2 pi j/k): with w_j = |g - 2is|(omega_j) nu_j, where |g - 2is| = |a(z) b(z)|/B^2 on
     |z| = 1, returns the slacks [sum_j w_j Lambda_n(omega_j) for n = 1..k-1] + [sum_j w_j cos theta_j]; the program
     is satisfied iff all are >= 0. Lambda_n(omega) = cos Theta - cos(n omega - Theta). Floating point."""
@@ -189,7 +189,7 @@ def mixed_float(t: Tuning, K: int, tol=MIXED_TOL):
 
 
 def fan_program_margin(t: Tuning, k: int):
-    """Largest min-slack of Pasechnyuk-Vilensky's program of Thm fan-div(a) at period k over weights on the
+    """Largest min-slack of Pasechnyuk-Vilensky's program of Theorem 9.1(a) at period k over weights on the
     frequencies 2 pi j/k, 1 <= j < k/2 (normalized to sum 1); > 0 means strictly feasible. Also returns the
     weights. Floating point. [numerical]"""
     js = list(range(1, (k + 1) // 2))

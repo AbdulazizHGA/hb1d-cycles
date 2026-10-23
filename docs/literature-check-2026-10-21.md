@@ -1,12 +1,12 @@
 # Literature / novelty check: 1D heavy-ball cycles outside Omega_aug; 1D realization of fan orbits
 
-First run 2026-10-21; last re-checked 2026-10-22 (see the end of this file). This is a snapshot: re-run the
+First run 2026-10-21; last re-checked 2026-10-23 (see the end of this file). This is a snapshot: re-run the
 queries below before any new release.
 
 **How this log was made.** The searches were run on 2026-10-21 by an AI research assistant (Claude, Anthropic)
 working for the repository author, using web search, direct page fetches, the Semantic Scholar and OpenAlex APIs
 and the GitHub API; the author reviewed the result. Shorter re-checks were run on 2026-10-21 just before
-publication and on 2026-10-22 (end of this file). Every [read] item was read in primary form; items marked
+publication, on 2026-10-22 and on 2026-10-23 (end of this file). Every [read] item was read in primary form; items marked
 [2nd-hand] or [abs] were not read in full.
 
 **Limits.** A search that finds nothing does not show that no prior work exists. Google Scholar could not be
@@ -54,7 +54,7 @@ abstract page only. **[2nd-hand]**: someone else's statement or a fetch-tool sum
 
 **Nothing I found answers the question, in either form.** No paper, preprint, repo, or blog post (as of
 2026-10-21) exhibits a 1D cycle at a tuning outside Omega_aug. None realizes a fan orbit of
-Pasechnyuk-Vilensky (Thm fan-div) by a scalar function, and none proves that this is impossible.
+Pasechnyuk-Vilensky (Theorem 9.1) by a scalar function, and none proves that this is impossible.
 
 - **The two anchors still stand.** Fotopoulos et al. 2610.25104 state the conjecture
   Omega_aug = Omega_cyc^(2) (a strict subset of Omega_cyc) [read]. Pasechnyuk-Vilensky 2610.09912 state the
@@ -179,7 +179,8 @@ Protocol.
 
 **Pasechnyuk-Vilensky: "Two Answers on Heavy-Ball Dynamics", arXiv 2610.09912** [read: source]
 - Conclusion: an open problem on the completeness of level 1. It ends with "the realization of the fan
-  orbits of Theorem fan-div by scalar functions is the corresponding question in dimension one."
+  orbits of Theorem 9.1 by scalar functions is the corresponding question in dimension one." (PDF wording; the LaTeX
+  source writes the theorem as a reference to its label)
 - Intro: multi-harmonic obstructions correspond to the duality bounds of Zhang–Carrasco–Heath.
 - In Badithela–Seiler (ACC 2019, pp. 4081–4085), kappa = 9+4 sqrt 5 is the threshold "at which a scalar
   function has a three-cycle" for Polyak's tuning [2nd-hand via PV; the web search confirmed the paper
@@ -190,8 +191,8 @@ Protocol.
   period pK+1, other single-harmonic tongue, fan-lag LP certificate, undecided. **These classifications
   are dimension-free; there is no 1D realizability check.**
 - Exact tunings in gap_examples.py, with kappa = 100:
-  - conv-gap: alpha L = 111/50, beta = 31/50.
-  - Prop. 13: alpha L = 70471/31800, beta = 6169/9900.
+  - Proposition 9.5 (convergence in a gap): alpha L = 111/50, beta = 31/50.
+  - Proposition 9.4 (a two-harmonic thirteen-cycle): alpha L = 70471/31800, beta = 6169/9900.
 - **Verdict: source of the question; does not answer it.** Our kappa = 100 phase diagram overlaps
   his gap_100 figure in parameter range. Ours differs in asking 1D realizability (point-ordering MILP
   plus exact LP/Farkas certificates), where his uses dimension-free fan programs and lag certificates.
@@ -288,4 +289,16 @@ multiplier is, or is not, realizable by a scalar slope-restricted nonlinearity?
 
 Verdict: nothing new that answers or overlaps the question. Same limits as above (no Google Scholar, unpublished
 work cannot be found).
+
+## Re-check, 2026-10-23 (before the public release; read directly)
+
+| channel | result |
+|---|---|
+| Semantic Scholar citations of 2610.25104 and 2610.09912 | both `{"offset": 0, "data": []}` |
+| arXiv abs pages of 2610.25104, 2610.09912, 2610.10369 | all v1 only |
+| arXiv search "heavy-ball", newest first | one new item since 21 Oct: 2610.31089 (Cai et al., transformers with chain of thought learning heavy-ball acceleration, 22 Oct) — unrelated |
+| web search (extended): heavy-ball cycles, one-dimensional functions, root-of-unity, fan orbits | only the known papers, the ETH ODI blog post and the Lean repository |
+| latest commits | kostfoto/Non-Acceleration-Heavy-Ball-1D bd1a2af (22 Oct): adds a CITATION.cff and an arXiv badge only, no new results; marcoshernanz/heavy-ball-optimal-rate b836df7 (16 Oct), dmivilensky/Heavy-Ball 2f1f6de (7 Oct), Trace231/heavyball-blog 08c84cc (11 Sep): no change |
+
+Verdict: nothing new that answers or overlaps the question.
 

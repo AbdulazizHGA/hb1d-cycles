@@ -8,22 +8,22 @@ from hb1d.tunings import CONV_GAP, FAN7, FAN9, FHDA_P1, POLYAK100, PROP13
 
 
 def test_p1_published_weights_strictly_feasible():
-    """Fotopoulos et al. eq. (5.6): s_{2/10} = 137/500, s_{3/10} = 363/500 strictly satisfy all nine inequalities."""
+    """Fotopoulos et al. eq. (24): s_{2/10} = 137/500, s_{3/10} = 363/500 strictly satisfy all nine inequalities."""
     ok, worst = check_weights(FHDA_P1, 10, {2: F(137, 500), 3: F(363, 500)})
     assert ok and worst < 0
 
 
 def test_prop13_pasechnyuk_weights():
-    """Pasechnyuk-Vilensky Prop. 13: nu = 149/797 at 2/13 and 648/797 at 3/13 satisfies the fan program; the same
-    weights fail at the convergent tuning of Prop. conv-gap."""
+    """Pasechnyuk-Vilensky Prop. 9.4: nu = 149/797 at 2/13 and 648/797 at 3/13 satisfies the fan program; the same
+    weights fail at the convergent tuning of Prop. 9.5."""
     nu = {2: F(149, 797), 3: F(648, 797)}
     assert min(fan_program_slacks(PROP13, 13, nu)) > 1e-4
     assert min(fan_program_slacks(CONV_GAP, 13, nu)) < 0
 
 
 def test_prop13_mixed_only_at_13_below_26():
-    """Rigorous: at Prop. 13 the mixed condition holds at K = 13 (support {2, 3}) and fails for every other
-    K <= 25, so Prop. 13 has no cycle of length K in {3..25} \\ {13} in ANY dimension."""
+    """Rigorous: at Prop. 9.4 the mixed condition holds at K = 13 (support {2, 3}) and fails for every other
+    K <= 25, so Prop. 9.4 has no cycle of length K in {3..25} \\ {13} in ANY dimension."""
     for K in range(3, 26):
         r = mixed(PROP13, K)
         if K == 13:
@@ -60,9 +60,9 @@ def test_wang_no_cycle_point_consistent():
 
 @pytest.mark.parametrize("t,k,lo,hi", [(FAN7, 7, 1 / 4, 1 / 3), (FAN9, 9, 1 / 5, 1 / 4), (PROP13, 13, 1 / 5, 1 / 4)])
 def test_fan_tunings_satisfy_pasechnyuk_program(t, k, lo, hi):
-    """FAN7 / FAN9 are fan-tongue points in Pasechnyuk-Vilensky's own sense: his program of Thm fan-div(a) (with the
+    """FAN7 / FAN9 are fan-tongue points in Pasechnyuk-Vilensky's own sense: his program of Theorem 9.1(a) (with the
     minimizer constraint) is strictly feasible with harmonics 1/k, 2/k, and the dip lies in (1/(K+1), 1/K), i.e. the
-    tuning is in his gap I_K. At Prop. 13 the same LP recovers his weights 149/797, 648/797. [numerical]"""
+    tuning is in his gap I_K. At Prop. 9.4 the same LP recovers his weights 149/797, 648/797. [numerical]"""
     import numpy as np
     from scipy.optimize import linprog
     from hb1d.geometry import dip

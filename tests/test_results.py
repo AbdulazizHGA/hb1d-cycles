@@ -41,7 +41,7 @@ def test_recorded_cycles_reverify(key, K):
 
 
 def test_prop13_mixed_feasible_lengths_up_to_60():
-    """Rigorous side of the filter: at Prop. 13, (MIX_K) is certified infeasible for every K <= 60 outside
+    """Rigorous side of the filter: at Prop. 9.4, (MIX_K) is certified infeasible for every K <= 60 outside
     {13, 26, 35, 39, 44, 48, 52, 53, 56, 57}, and certified (strictly) feasible at those ten lengths."""
     feas = {13, 26, 35, 39, 44, 48, 52, 53, 56, 57}
     for K in range(3, 61):

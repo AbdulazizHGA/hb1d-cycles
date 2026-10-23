@@ -1,7 +1,7 @@
 """Independent checker for certificates/mixed_and_omega_aug.json. Needs only the standard library and mpmath
 (interval arithmetic with outward rounding, 256 bits); it does not import hb1d.
 
-Mixed condition (Fotopoulos et al. eq. (5.4)), with f = m/K, den = (1 - mu) alpha (L = 1),
+Mixed condition (Fotopoulos et al. eq. (21)), with f = m/K, den = (1 - mu) alpha (L = 1),
     p = ((1 + beta - mu alpha) - (1 + beta) cos 2 pi f)/den,  q = (1 - beta) sin 2 pi f/den,  A = p(1 - p) - q^2,
     phi(f, D) = A (cos 2 pi f D - 1) + q sin 2 pi f D.
   infeasible at K: the stored y >= 0 has sum_D y_D phi(m/K, D) > 0 for every m = 1..K-1 (theorem of alternatives);

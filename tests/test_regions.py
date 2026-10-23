@@ -101,7 +101,7 @@ def test_theta_identity_and_membership_agree():
 
 
 def test_gtd_identity():
-    """Pasechnyuk eq. (gtd): GTD's h(alpha mu, c) = (mu/L) Lc(c)."""
+    """Pasechnyuk-Vilensky eq. (7.1): GTD's h(alpha mu, c) = (mu/L) Lc(c)."""
     rng = random.Random(1)
     for _ in range(200):
         t = Tuning("r", F(rng.randint(1, 3000), 1000), F(rng.randint(0, 999), 1000), F(rng.choice([2, 10, 100])))

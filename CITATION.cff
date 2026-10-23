@@ -6,7 +6,7 @@ abstract: >-
   L-smooth mu-strongly convex functions at tunings outside the augmented root-of-unity region Omega_aug of
   Fotopoulos, Helcig, Deck and Alsbach, and in the fan tongues of Pasechnyuk-Vilensky. No counterexample to the
   one-dimensional consequence of the conjecture Omega_aug = Omega_cyc^(2) is found: at Pasechnyuk-Vilensky's
-  Prop. 13 tuning (kappa = 100) there is no 1D cycle of any length K <= 25, and at two new rational tunings in the
+  Proposition 9.4 tuning (kappa = 100) there is no 1D cycle of any length K <= 25, and at two new rational tunings in the
   2/7 and 2/9 fan tongues, which have cycles in R^4, there is no 1D cycle of length K <= 14 (K <= 16 at the
   second). Every exclusion is stored as a certificate with stand-alone checkers. Includes a 1D phase diagram of
   the first-level gaps at kappa = 100 and the tongues above them (numerical classification, exact 1D searches).

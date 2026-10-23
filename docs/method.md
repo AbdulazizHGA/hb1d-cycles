@@ -6,7 +6,7 @@
 |---|---|---|---|
 | method | x_{k+1} = x_k - alpha f'(x_k) + beta (x_k - x_{k-1}) | same, step alpha | same, step gamma |
 | smoothness | L = 1 | general L | general L (L = 1 in Sec. 5) |
-| condition number | kappa = L/mu (Prop. 13: kappa = 100) | kappa = L/mu | **kappa_F = mu/L** (Prop. 13: kappa_F = 1/100) |
+| condition number | kappa = L/mu (Prop. 9.4: kappa = 100) | kappa = L/mu | **kappa_F = mu/L** (Prop. 9.4: kappa_F = 1/100) |
 | step | alpha (= alpha L, since L = 1) | alpha L | L gamma |
 
 `hb1d.tunings` stores every tuning as exact rationals (alpha L, beta, kappa = L/mu). Fotopoulos et al.'s
@@ -58,7 +58,7 @@ Every pruned node is stored as (prefix, support of y) in `certificates/<tuning>_
 `scripts/verify_certificates.py` recomputes y from its support by exact elimination and rechecks every
 certificate, and the coverage of the tree, with the standard library only.
 
-Tag: **[exact]** (rational arithmetic). The tree size grows by a factor of about 3 to 4 per unit of K: Prop. 13
+Tag: **[exact]** (rational arithmetic). The tree size grows by a factor of about 3 to 4 per unit of K: Prop. 9.4
 needs 63,362 nodes and 469 s at K = 13 on one core of an M1, and 222,835 nodes at K = 14.
 
 ## 3. The mixed condition: a necessary condition in every dimension (`hb1d.mixed`)
@@ -69,19 +69,20 @@ over j: the function values cancel and so do all cross terms between modes, leav
 
     sum_m s_m phi(m/K, Delta) <= 0   (Delta = 1, ..., K-1),   s_m proportional to |c_m|^2,          (MIX_K)
 
-with phi(f, Delta) = A(f)(cos(2 pi f Delta) - 1) + q(f) sin(2 pi f Delta) and A = p(1 - p) - q^2 (their
-eq. (3.4)). So if (MIX_K) has no solution s >= 0 (not all zero), there is no K-cycle in any dimension, in
-particular none in 1D. We only use this direction. (Fotopoulos et al. Prop. 5.1 gives the converse in dimension
-2r. Pasechnyuk-Vilensky's fan program in Thm fan-div(a) has an extra constraint from the minimizer; it is not
-used as a filter here, but to validate the angle function and, as additional information, in the grid cells.)
+(their eq. (21); eq. (8) is the two-dimensional case), with
+phi(f, Delta) = A(f)(cos(2 pi f Delta) - 1) + q(f) sin(2 pi f Delta) and A = p(1 - p) - q^2 (their eq. (11)).
+So if (MIX_K) has no solution s >= 0 (not all zero), there is no K-cycle in any dimension, in particular none in
+1D. We only use this direction. (Fotopoulos et al. Prop. 5.1 gives the converse in dimension 2r, r = |supp s|.
+Pasechnyuk-Vilensky's fan program in Theorem 9.1(a) has an extra constraint from the minimizer; it is not used as
+a filter here, but to validate the angle function and, as additional information, in the grid cells.)
 
 By the theorem of alternatives (MIX_K) is infeasible iff some y >= 0 has sum_Delta y_Delta phi(m/K, Delta) > 0 for
 every m. We take y from an LP, round it to a rational vector and check every sum with **interval arithmetic**
 (mpmath `iv`, 256 bits, outward rounding); the entries cos(2 pi m Delta/K) are algebraic, not rational.
 Tag: **[exact]** in the sense of a rigorous computer-assisted check, the same standard as Pasechnyuk-Vilensky's
-Prop. 13 ("proved with exact rational data ... interval arithmetic").
+Prop. 9.4 ("proved with exact rational data ... interval arithmetic").
 
-This filter is what makes long lengths reachable: at Prop. 13, (MIX_K) is feasible for K <= 60 only at
+This filter is what makes long lengths reachable: at Prop. 9.4, (MIX_K) is feasible for K <= 60 only at
 K = 13, 26, 35, 39, 44, 48, 52, 53, 56, 57, so the exact 1D search is needed only at those K.
 
 ## 4. Omega_aug membership (`hb1d.regions`)
@@ -105,7 +106,7 @@ b(z) = z^2 - (1 + beta - gamma L) z + beta,
     (L - mu) gamma M = -a(z)/z,      (L - mu) gamma (1 - M) = b(z)/z,
 
 so -arg M + arg(1 - M) is the angle from -a(z) to b(z), which is Theta(omega) by Pasechnyuk-Vilensky's
-definition. Hence Omega_{K,m} = {Theta(2 pi m/K) <= pi/K}: his single-harmonic region of Thm A(ii) is exactly
+definition. Hence Omega_{K,m} = {Theta(2 pi m/K) <= pi/K}: his single-harmonic region of Theorem 7.1(ii) is exactly
 Fotopoulos et al.'s Omega_aug, as he states. The identity is checked symbolically (SymPy) and numerically on
 26,700 (tuning, K, m) triples.
 
@@ -117,9 +118,9 @@ solve: t* > 0 (a strict cycle), t* = 0 (only degenerate cycles), infeasible, or 
 
 Big-M: with x in [0, 1] (x_0 = 0 is the minimum and sum x = 1), |g_k| <= ((1 + beta) + beta + 1)/alpha =
 2(1 + beta)/alpha, so |g_j - g_i| <= 4(1 + beta)/alpha and |x_j - x_i| <= 1; every switched expression plus
-t <= 1 is bounded by M = 4(1 + beta)/alpha + L + 1 (we use 1.01 M; about 4.0 at Prop. 13). The order rows need
+t <= 1 is bounded by M = 4(1 + beta)/alpha + L + 1 (we use 1.01 M; about 4.0 at Prop. 9.4). The order rows need
 M = 2. Tag: **[numerical]**; the MILP is used only as a cross-check (tests/test_exact.py) because the exact
-search is faster at the lengths that matter (HiGHS reaches its 60 s limit at K = 13 for Prop. 13).
+search is faster at the lengths that matter (HiGHS reaches its 60 s limit at K = 13 for Prop. 9.4).
 
 ## 6. Phase diagram (`scripts/phase_diagram.py`)
 

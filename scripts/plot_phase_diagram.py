@@ -31,7 +31,7 @@ CLASSES = [  # (label, color); order = index in the colormap
     (r"outside $\Omega_{\rm aug}$; mixed condition feasible only at some $10 < K \leq 30$ (numerical): no 1D search",
      "#1baf7a"),
     ("undecided: mixed-condition margin within tolerance, or exact search unresolved", "#8a8985"),
-    (r"lag-one convergent ($\Omega_1$, Pasechnyuk-Vilensky Thm A(i))", "#f4f3f0"),
+    (r"lag-one convergent ($\Omega_1$, Pasechnyuk-Vilensky Theorem 7.1(i))", "#f4f3f0"),
 ]
 IDX = {"omega1": 5, "nocycle": 0, "aug": 1, "mixed_feasible": 2, "mixed_feasible_long": 3, "unresolved": 4,
        "undecided": 4}
@@ -70,7 +70,7 @@ def main():
             bbox=dict(boxstyle="round,pad=0.15", fc=SURFACE, ec="none", alpha=0.85), zorder=6)
     for K, lo, hi in ((3, 1 / 4, 1 / 3), (4, 1 / 5, 1 / 4), (5, 1 / 6, 1 / 5)):
         ax.text((lo + hi) / 2, 0.02, f"gap $I_{K}$", ha="center", va="bottom", fontsize=10, color=INK)
-    for t, lab in ((PROP13, "Prop. 13"), (CONV_GAP, "conv-gap"), (FAN7, "FAN7"), (FAN9, "FAN9")):
+    for t, lab in ((PROP13, "Prop. 9.4"), (CONV_GAP, "Prop. 9.5"), (FAN7, "FAN7"), (FAN9, "FAN9")):
         r, dl = tuning_to_unrolled(t)
         h = dl / gap_top(r)
         ax.plot(r, h, marker="o", ms=8, mfc="white", mec=INK, mew=1.5, zorder=5)

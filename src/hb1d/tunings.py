@@ -39,8 +39,11 @@ def polyak(kappa) -> Tuning:
     return Tuning(f"Polyak kappa={kappa}", 4 / (1 + s) ** 2, ((1 - s) / (1 + s)) ** 2, kappa)
 
 
-PROP13 = Tuning("Pasechnyuk Prop. 13 (gap I_4, two-harmonic 13-cycle in R^5)", F(70471, 31800), F(6169, 9900), F(100))
-CONV_GAP = Tuning("Pasechnyuk Prop. conv-gap (gap I_4, converges)", F(111, 50), F(31, 50), F(100))
+# Pasechnyuk-Vilensky, arXiv 2610.09912: Propositions 9.4 and 9.5 (numbers as printed in the PDF; the keys prop13 and
+# convgap below come from the LaTeX labels of these propositions).
+PROP13 = Tuning("Pasechnyuk-Vilensky Prop. 9.4 (gap I_4, two-harmonic 13-cycle in R^5)",
+                F(70471, 31800), F(6169, 9900), F(100))
+CONV_GAP = Tuning("Pasechnyuk-Vilensky Prop. 9.5 (gap I_4, converges)", F(111, 50), F(31, 50), F(100))
 POLYAK100 = polyak(100)
 # Fotopoulos et al. Example 3.2: kappa_F = mu/L = 4/5, beta = 17/20, L gamma = 18/5; in int(Omega_{5,2}) \ Omega_rou.
 FHDA_EX32 = Tuning("Fotopoulos et al. Example 3.2 (in Omega_{5,2}, not in Omega_rou)", F(18, 5), F(17, 20), F(5, 4))

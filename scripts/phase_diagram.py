@@ -5,7 +5,7 @@ Grid in Pasechnyuk-Vilensky's unrolled coordinates (rho, delta): rho = tangency 
 Omega_1, delta = distance in alpha L beyond that boundary. Each grid tuning is rounded to a rational (denominators
 <= 10^5) and classified:
 
-  omega1     Lc > 0 on [-1, 1]: converges (Pasechnyuk Thm A(i))                                    [numerical]
+  omega1     Lc > 0 on [-1, 1]: converges (Pasechnyuk-Vilensky Thm 7.1(i))                          [numerical]
   aug        in Omega_aug (some pure mode K <= 40 has A - q cot(pi/K) >= 0); the exact 1D search is run at the
              smallest such K and is expected to find a cycle (Fotopoulos Thm 4.1)       [1D search: exact]
   mixed_feasible       outside Omega_aug, mixed condition feasible (or undecided) at some K <= K1D: exact 1D

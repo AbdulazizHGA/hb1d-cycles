@@ -55,7 +55,7 @@ def test_verifier_rejects_wrong_support(tmp_path):
 
 
 def test_verifier_rejects_other_tuning(tmp_path):
-    """Certificates for Prop. 13 do not certify Polyak's tuning, which has cycles."""
+    """Certificates for Prop. 9.4 do not certify Polyak's tuning, which has cycles."""
     p = make(tmp_path, PROP13, "prop13", 5)
 
     def swap(ls):
@@ -86,7 +86,7 @@ def test_every_exact_none_has_a_certificate_file():
                                         if int(p.rsplit("_K", 1)[1].split(".")[0]) <= 10))
 def test_stored_certificates_verify(path):
     """Full independent check of every stored certificate file with K <= 10 (the larger ones are checked by
-    reproduce.sh / scripts/verify_certificates.py; results/log_verify_certificates.txt records that run)."""
+    reproduce.sh / scripts/verify_certificates.py; results/logs/log_verify_certificates.txt records that run)."""
     assert verify_file(path)["ok"]
 
 

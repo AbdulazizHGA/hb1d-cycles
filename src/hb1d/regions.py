@@ -8,7 +8,7 @@ so that 1 <= m <= (K-1)/2, write M_m = p_m - i q_m with
     q_m = (1 - beta) sin(2 pi m/K) / ((L - mu) gamma).
 
 Then (gamma, beta) in Omega_{K,m}  <=>  (gamma, beta) in Omega_cv(Q)  and  phi_{K,m}(Delta_m) <= 0, which (by
-their eq. (3.5) with m Delta_m = 1 mod K) reads
+their eq. (11) with m Delta_m = 1 mod K) reads
 
     A_{K,m} - q_m cot(pi/K) >= 0,        A_{K,m} = p_m (1 - p_m) - q_m^2.
 
@@ -145,7 +145,7 @@ def omega_aug_report(t: Tuning, prec: int = PREC):
 # with Fotopoulos et al.'s angle.
 
 def theta_def(t: Tuning, omega):
-    """Theta(omega) in (0, pi]: the angle from -a(e^{i omega}) to b(e^{i omega}) (Pasechnyuk Def. 'Angle function'),
+    """Theta(omega) in (0, pi]: the angle from -a(e^{i omega}) to b(e^{i omega}) (Pasechnyuk-Vilensky Definition 6.1),
     a(z) = z^2 - (1 + beta - alpha mu) z + beta, b(z) = z^2 - (1 + beta - alpha L) z + beta. Floating point."""
     import cmath
     z = cmath.exp(1j * omega)
@@ -155,7 +155,7 @@ def theta_def(t: Tuning, omega):
 
 
 def theta_closed(t: Tuning, omega):
-    """Theta from Pasechnyuk Lemma 'angle at the threshold': cot Theta = Xi(cos omega)/sin omega."""
+    """Theta from Pasechnyuk-Vilensky Lemma 6.2: cot Theta = Xi(cos omega)/sin omega."""
     import math
     al, be, mu = float(t.alpha), float(t.beta), float(t.mu)
     A, B = 1 + be - al * (1 + mu) / 2, al * (1 - mu) / 2
