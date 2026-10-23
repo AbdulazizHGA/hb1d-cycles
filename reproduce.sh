@@ -23,7 +23,7 @@ if [[ "${FULL:-0}" == "1" ]]; then
   "$PY" scripts/run_exact.py fan7 12 14 --workers 4
   "$PY" scripts/run_exact.py fan9 12 14 --workers 4
   "$PY" scripts/run_exact.py p1 13 13 --workers 4
-  "$PY" scripts/phase_diagram.py --nrho 60 --normalized --workers 3   # results/phase_diagram_k100.json
+  "$PY" scripts/phase_diagram.py --nrho 60 --normalized --workers 4   # results/phase_diagram_k100.json
 fi
 "$PY" scripts/export_rigorous.py                        # certificates/mixed_and_omega_aug.json
 "$PY" scripts/verify_rigorous.py                        # interval check of that file (independent of hb1d)

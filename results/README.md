@@ -5,7 +5,7 @@ The authoritative records are the first five files; the certificates that prove 
 
 | file | content | written by |
 |---|---|---|
-| `exact_search.jsonl` | one record per (tuning, K) of the exact 1D search: verdict (`cycle` / `none [exact]`), nodes, pruned nodes, `complete`, `unresolved`, seconds, the cycle as exact rationals when one is found, the certificate file, Python / SciPy / HiGHS versions | `scripts/run_exact.py` |
+| `exact_search.jsonl` | one record per (tuning, K) of the exact 1D search: verdict (`cycle` / `none [exact]`), nodes, pruned nodes, `complete`, `unresolved`, seconds, the cycle as exact rationals when one is found, the certificate file, the Python and SciPy versions (runs made after 22 Oct 2026 also record the HiGHS version) | `scripts/run_exact.py` |
 | `summary.md`, `summary.json` | the main table of the README (§2.2), built from `exact_search.jsonl` and the rigorous mixed-condition verdicts | `scripts/summarize.py` |
 | `phase_diagram_k100.json` | the 1,740 grid cells of the phase diagram (README §2.3): tuning, class, the exact 1D cycle of every Ω_aug cell, the exact-search records and certificate files of every `mixed_feasible` cell, and for every cell outside Ω_aug the mixed-condition LP record for each K ≤ 30 (verdict, margins, solver statuses) | `scripts/phase_diagram.py` |
 | `phase_diagram_k100_lp_vectors.json.gz` | the LP solutions (weight vectors) behind the numerical mixed-condition verdicts of the grid; numerical evidence, not a proof | `scripts/phase_diagram.py` |

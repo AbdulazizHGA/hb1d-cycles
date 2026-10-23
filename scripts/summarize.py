@@ -1,4 +1,5 @@
-"""Combine the evidence into the main table: for each named tuning and each K, the 1D verdict and its reason.
+"""Combine the stored evidence for the named tunings: for each tuning and each K <= 40, the 1D verdict and its reason.
+This is the data behind the main table of the README (section 2.2).
 
 Per (tuning, K):
   cycle            an exact rational 1D cycle was found (exact search, results/exact_search.jsonl)
@@ -60,19 +61,34 @@ def main():
         rows.append(dict(key=key, name=t.name, alpha=str(t.alpha), beta=str(t.beta), kappa=str(t.kappa),
                          in_omega_aug=aug["member"], K0=aug["K0"], witnesses=aug["witnesses"][:3],
                          first_1d_cycle=first_cycle, no_1d_cycle_up_to=None if first_cycle else n_none,
+                         cycles_at=[K for K in per_K if per_K[K]["v"] == "cycle"],
                          searched=[K for K in per_K if per_K[K]["v"] == "none:search"],
+                         mixed_excluded=[K for K in per_K if per_K[K]["v"] == "none:mixed"],
                          open=[K for K in per_K if per_K[K]["v"] == "open"], per_K=per_K))
     with open(os.path.join(HERE, "..", "results", "summary.json"), "w") as fh:
         json.dump(rows, fh, indent=1)
-    lines = ["| tuning | alpha L | beta | kappa | in Omega_aug | 1D result | exact searches at K | first open K |",
-             "|---|---|---|---|---|---|---|---|"]
+    def ranges(ks):
+        """Compact list of integers: [3, 4, 5, 7] -> '3-5, 7'."""
+        out, ks = [], sorted(ks)
+        for k in ks:
+            if out and k == out[-1][1] + 1:
+                out[-1][1] = k
+            else:
+                out.append([k, k])
+        return ", ".join(f"{a}" if a == b else f"{a}-{b}" for a, b in out) or "-"
+
+    lines = ["| tuning | alpha L | beta | kappa | in Omega_aug | 1D cycle found at K | exact 1D search, no cycle, at K | "
+             "other K excluded by the certified mixed condition | no 1D cycle for every K <= | first open K |",
+             "|---|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
-        res = (f"cycle at K = {r['first_1d_cycle']}" if r["first_1d_cycle"]
-               else f"no 1D cycle for K <= {r['no_1d_cycle_up_to']}")
-        s = r["searched"]
-        lines.append(f"| {r['key']} | {r['alpha']} | {r['beta']} | {r['kappa']} | {r['in_omega_aug']} | {res} | "
-                     f"{', '.join(map(str, s)) if s else '-'} | "
-                     f"{'-' if r['first_1d_cycle'] else (r['open'][0] if r['open'] else '> ' + str(KMAX))} |")
+        upto = "-" if r["first_1d_cycle"] else str(r["no_1d_cycle_up_to"])
+        first_open = "-" if r["first_1d_cycle"] else (str(r["open"][0]) if r["open"] else "> " + str(KMAX))
+        lines.append(f"| {r['key']} | {r['alpha']} | {r['beta']} | {r['kappa']} | {r['in_omega_aug']} | "
+                     f"{ranges(r['cycles_at'])} | {ranges(r['searched'])} | {ranges(r['mixed_excluded'])} | {upto} | "
+                     f"{first_open} |")
+    lines.append("")
+    lines.append(f"K runs over 3..{KMAX}. Keys: prop13 and convgap are the tunings of Pasechnyuk-Vilensky's "
+                 "Propositions 9.4 and 9.5; p1 and ex32 are Fotopoulos et al.'s P_1 and Example 3.2.")
     md = "\n".join(lines) + "\n"
     with open(os.path.join(HERE, "..", "results", "summary.md"), "w") as fh:
         fh.write(md)

@@ -4,10 +4,10 @@ First run 2026-10-21; last re-checked 2026-10-23 (see the end of this file). Thi
 queries below before any new release.
 
 **How this log was made.** The searches were run on 2026-10-21 by an AI research assistant (Claude, Anthropic)
-working for the repository author, using web search, direct page fetches, the Semantic Scholar and OpenAlex APIs
-and the GitHub API; the author reviewed the result. Shorter re-checks were run on 2026-10-21 just before
-publication, on 2026-10-22 and on 2026-10-23 (end of this file). Every [read] item was read in primary form; items marked
-[2nd-hand] or [abs] were not read in full.
+working for the repository author, using web search, direct page fetches, the Semantic Scholar and OpenAlex APIs and
+the GitHub API; the author reviewed the result. Shorter re-checks were run on 2026-10-21 before the first upload, on
+2026-10-22 and on 2026-10-23 (end of this file). Every [read] item was read in primary form; items marked [2nd-hand]
+or [abs] were not read in full.
 
 **Limits.** A search that finds nothing does not show that no prior work exists. Google Scholar could not be
 queried and the arXiv API was rate-limited on 2026-10-21 (arXiv listing pages were used instead); indexes lag
@@ -42,7 +42,7 @@ The remaining queries (arXiv searches for "Lur'e", "Zames-Falb", "Kalman conject
 "Dieuleveut", GitHub repository and code searches) are listed with their results in the sections below.
 
 **Scope.** The question "do HB cycles exist on 1D functions in F_{mu,L}(R) at (alpha, beta) outside Omega_aug
-(Fotopoulos–Helcig–Deck–Alsbach)?", equivalently "can Pasechnyuk-Vilensky's multi-harmonic fan orbits be
+(Fotopoulos–Helcig–Deck–Alsbach)?", and its special case "can Pasechnyuk-Vilensky's multi-harmonic fan orbits be
 realized by scalar functions?". Focus: kappa = 100, level-1 gaps.
 
 **Legend.** **[read]**: the primary text was read (LaTeX source, PDF text or repository file). **[abs]**: the
@@ -68,8 +68,8 @@ Pasechnyuk-Vilensky (Theorem 9.1) by a scalar function, and none proves that thi
   It is also inside Omega_aug, verified numerically with Fotopoulos' angle condition
   |arg M_1| + arg(1 - M_1) <= pi/K (quoted in the blog and in PV §7). At mu = 1, L = 100, gamma = 4/121,
   beta = 81/121 the left side is 0.458, below pi/3 for K = 3. It is also 0.399 < pi/4 for K = 4 and
-  0.419 < pi/5 for K = 5. **So we cannot claim "first multi-harmonic 1D cycle". Any claim
-  must be scoped to tunings outside Omega_aug, or inside the Omega_1 gaps.** A statement
+  0.419 < pi/5 for K = 5. **Consequence: a multi-harmonic 1D cycle is not new by itself;
+  the open question concerns tunings outside Omega_aug, e.g. in the Omega_1 gaps.** A statement
   such as "Hernanz has no fan orbits" is correct in letter (his cycle is not a fan orbit and not outside
   Omega_aug), but it should say that Hernanz does have a two-harmonic 1D cycle, at Polyak's tuning.
 - **Scope warning 2: the generic control analogue has been answered negatively.** Kharitenko
@@ -103,7 +103,7 @@ Pasechnyuk-Vilensky (Theorem 9.1) by a scalar function, and none proves that thi
 
 **Method-adjacent, title only:** another 2307.11291 citer is **2412.11330**, Ranjan, Park, Gualandi,
 Lodi, Stellato, "Exact Verification of First-Order Methods via Mixed-Integer Linear Programming" (Dec 2024).
-Our approach is also a MILP. Read it before citing; not characterized here.
+This repository also uses a MILP, as a cross-check only. Not read for this log; not characterized here.
 
 Hernanz's paper (alphaXiv only) cites 2610.09912, 2610.10369 and the ETH blog [read]. No index lists it as a
 citer.
@@ -134,8 +134,7 @@ convex) functions with schedules [abs]. It does not discuss cycles or Omega regi
 
 **Liu, Wu, Sun, Chen, Li, Qu: "Sharp Initialization Guarantees for the Heavy-Ball Method", arXiv
 2610.10369** (AISTATS-2027 preprint style). Full author list: Kang Liu, Quanen Wu, Zhan Sun, Mengxiao Chen,
-Suyan Li, Bohao Qu. Affiliations: XJTU, PolyU, HUST, NUS, A*STAR. [read: LaTeX source in
-stage1/data/src/2610.10369]
+Suyan Li, Bohao Qu. Affiliations: XJTU, PolyU, HUST, NUS, A*STAR. [read: LaTeX source]
 Appendix letters: A Related Work, B Energy, C Startup, D Smooth Cycles, E Three-Cycle Constants,
 **F Global Non-Acceleration**, G Necessary Cycle Size, **H Cycles from Zero Velocity**, I Numerical
 Protocol.
@@ -196,7 +195,7 @@ Protocol.
 - **Verdict: source of the question; does not answer it.** Our kappa = 100 phase diagram overlaps
   his gap_100 figure in parameter range. Ours differs in asking 1D realizability (point-ordering MILP
   plus exact LP/Farkas certificates), where his uses dimension-free fan programs and lag certificates.
-  The write-up must say this explicitly.
+  The README says this explicitly.
 
 ## (c) GitHub
 
@@ -206,7 +205,7 @@ Protocol.
 | `gh api repos/marcoshernanz/heavy-ball-optimal-rate/commits` | 22 commits, 2026-10-15 21:51 to 2026-10-16 15:42. The last is b836df7, a README BibTeX fix. **No commits since 16 Oct.** | See below |
 | Hernanz paper/main.tex, App. D "Results in One Dimension" [read] | D.1: projected-rotations lemma. For single-harmonic x_t = cos(omega t + psi), a phase exists iff Phi_K >= 0, and the visit order matches GTD's conjecture (checked for K = 3..39). D.2: Thm, constant 50/3 (c_1(kappa) <= 100/(6+25/kappa)). D.3: Prop. "cycle method stops at 16"; it notes that multi-jump cycles (PV §7.4) have Phi_K >= 0 for some real K, so they do not beat the bound either. **D.4: Thm "Polyak's tuning fails from rest in 1D", kappa >= 100.** f' is piecewise linear and the period-5 orbit 1, 0, -1, -delta/beta, 1 has a repeated point. **My DFT at kappa = 100: |c_0| = 0.101, |c_1| = 0.562, |c_2| = 0.058, so it is two-harmonic.** He also says shapes with a free middle point appear feasible for kappa above about 45.76 (numerical), with exact instances at kappa = 49 and 64. Open questions: whether c_1(kappa) -> 8 in 1D, which "would require" 1D functions slowing every tuning as much as spirals; whether Polyak fails from rest in 1D for all kappa >= 9+4 sqrt 5. | **Related, differs:** a non-projected, two-harmonic 1D cycle exists, but only at Polyak's tuning, which is inside the cycling region. No fan orbits and no tunings outside Omega_aug. Its open "c_1 -> 8 in 1D" question is adjacent: multi-frequency 1D functions would be one route. |
 | Repo search: "heavy ball cycle", "heavy-ball cycling", "heavy ball one-dimensional", "Kalman conjecture", "Lur'e periodic", "Pasechniuk", "Omega_aug", "root-of-unity cycle", "PEP heavy ball" | Only kostfoto and marcoshernanz are relevant. Also found dmivilensky/Heavy-Ball (PV code) and Kanyooo/HeavyBall (Liu Kang, one zip, 4 Oct). | Nothing prior |
-| Repo search "heavy-ball" (updated after 2026-09-01) | **Trace231/heavyball-blog** (Feiming Wang, notes on the **second** riddle, 9–10 Sep 2026) [read: notes.md excerpts]. At normalized (q, a, b) = (1/100, 113/50, 3/5) the two-point Lyapunov family fails, yet no nonconstant cycle exists in any dimension (Fourier multimode cycle exclusion), with global convergence in a box. Others found: heavyball-research.github.io (ML lab blog, unrelated) and HomebrewML/HeavyBall (optimizer library, unrelated). | **Related, differs:** it proves convergence and no cycles at one kappa = 100 point, in all dimensions. Use it as a consistency check: our 1D diagram must show no cycles there (map (a, b) to (alpha L, beta) first; the notation is not checked). |
+| Repo search "heavy-ball" (updated after 2026-09-01) | **Trace231/heavyball-blog** (Feiming Wang, notes on the **second** riddle, 9–10 Sep 2026) [read: notes.md excerpts]. At normalized (q, a, b) = (1/100, 113/50, 3/5) the two-point Lyapunov family fails, yet no nonconstant cycle exists in any dimension (Fourier multimode cycle exclusion), with global convergence in a box. Others found: heavyball-research.github.io (ML lab blog, unrelated) and HomebrewML/HeavyBall (optimizer library, unrelated). | **Related, differs:** it proves convergence and no cycles at one kappa = 100 point, in all dimensions. It serves as a consistency check: there should be no cycles there in any dimension (reading (a, b) as (alpha L, beta), an assumption about the notation; see tests/test_mixed.py). |
 | Code search: "heavy ball cycle interpolation", "Omega_aug", "fan orbit heavy", "heavy-ball cycle milp", "heavy ball Farkas cycle" | "Omega_aug" only matched unrelated code. The others returned nothing. | Nothing prior |
 
 ## (d) ETH ODI blog
@@ -253,7 +252,7 @@ multiplier is, or is not, realizable by a scalar slope-restricted nonlinearity?
 
 ---
 
-## To-do flagged before publishing
+## Follow-ups
 
 1. Read Kharitenko 2607.23599 in full. Is his plant or certificate structure related to the HB plant
    G(z) = -gamma z/((1-z)(beta-z))?
@@ -262,10 +261,10 @@ multiplier is, or is not, realizable by a scalar slope-restricted nonlinearity?
    App. F/H.
 3. Cite PV's gap_100 classification (dmivilensky/Heavy-Ball) and state how our 1D diagram differs.
 4. Add a consistency point: Feiming Wang's (q, a, b) = (1/100, 113/50, 3/5) after checking the notation.
-5. Re-run the S2 and arXiv API checks just before publishing; both were rate-limited today. Check
+5. Re-run the S2 and arXiv API checks before the first upload; both were rate-limited on 2026-10-21. Check
    arXiv daily listings for 21 Oct and later.
 
-## Status of the to-do items (2026-10-21, after the computations)
+## Status of the follow-ups (2026-10-21, after the computations)
 
 1. Kharitenko 2607.23599: still read only at abstract level ([abs]); cited only as context, not as a result.
 2. Done: README scopes every claim to tunings outside Omega_aug / fan orbits and cites Hernanz App. D and Liu et
@@ -273,7 +272,7 @@ multiplier is, or is not, realizable by a scalar slope-restricted nonlinearity?
 3. Done: README states that dmivilensky/Heavy-Ball classifies the kappa = 100 gaps without a dimension
    restriction and that our diagram adds the 1D question.
 4. Done: tests/test_mixed.py::test_wang_no_cycle_point_consistent, under the stated reading of the notation.
-5. Done (2026-10-21, before publishing; read directly): Semantic Scholar citations of 2610.25104 and 2610.09912
+5. Done (2026-10-21, before the first upload; read directly): Semantic Scholar citations of 2610.25104 and 2610.09912
    are both empty (`{"offset": 0, "data": []}`); both abs pages show only [v1]; the arXiv search for "heavy-ball"
    sorted by announcement date shows nothing after 2610.27990 (20 Oct, momentum and Polyak-Ruppert averaging,
    unrelated). No new work on 1D cycles, Omega_aug or fan orbits.

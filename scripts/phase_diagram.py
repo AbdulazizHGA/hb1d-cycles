@@ -22,7 +22,8 @@ Every cell outside Omega_aug stores, for each K <= KMIX, the mixed-condition LP 
 tau, solver statuses; hb1d.mixed.mixed_float_record).
   CANDIDATE  a 1D cycle outside Omega_aug (then re-checked with the rigorous omega_aug_report)
 
-    python scripts/phase_diagram.py --nrho 48 --ndelta 36 --workers 4
+    python scripts/phase_diagram.py --nrho 60 --normalized --workers 4     # the recorded run (README section 2.3)
+    python scripts/phase_diagram.py --nrho 48 --ndelta 36 --workers 4       # absolute delta grid instead
 """
 import argparse
 import json
@@ -183,8 +184,12 @@ def main():
                                  note="s: weights on m = 1..K-1 (feasibility LP); y: weights on Delta = 1..K-1 "
                                       "(alternative LP); nonzero entries only, 12 significant digits",
                                  cells=vectors)).encode())
-    meta = dict(highs=highs_version(), lp_vectors=os.path.basename(vec_path), mixed_tol=MIXED_TOL, normalized=args.normalized, H_LEVELS=H_LEVELS if args.normalized else None, kappa=str(KAPPA), KMIX=KMIX, K1D=K1D, KAUG=KAUG, nrho=args.nrho, ndelta=args.ndelta, rho=args.rho,
-                delta=args.delta, seconds=time.time() - t0, scipy=scipy.__version__,
+    meta = dict(highs=highs_version(), lp_vectors=os.path.basename(vec_path), mixed_tol=MIXED_TOL,
+                normalized=args.normalized, H_LEVELS=H_LEVELS if args.normalized else None, kappa=str(KAPPA),
+                KMIX=KMIX, K1D=K1D, KAUG=KAUG, nrho=args.nrho, rho=args.rho,
+                ndelta=None if args.normalized else args.ndelta,          # unused with --normalized
+                delta=None if args.normalized else args.delta,
+                seconds=time.time() - t0, workers=args.workers, scipy=scipy.__version__,
                 date=time.strftime("%Y-%m-%d %H:%M:%S"))
     with open(args.out, "w") as fh:
         json.dump(dict(meta=meta, cells=cells), fh)

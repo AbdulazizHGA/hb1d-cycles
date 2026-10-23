@@ -52,14 +52,16 @@ support), recompute it **exactly** on its support by Gaussian elimination over Q
 B^T y = (*, -1, ..., -1) with `fractions.Fraction`. A node is pruned **only** after this check passes. A full
 order whose system cannot be refuted is solved exactly (rational vertex from the active set) and the cycle is
 re-verified by `check_cycle` with Fractions. Nodes that are neither pruned nor shown feasible exactly are counted
-as `unresolved`; every verdict reported below has `unresolved = 0` and `complete = true`.
+as `unresolved`. Every "no cycle" verdict in the README has `unresolved = 0` and `complete = true` (a search
+that finds a cycle stops at the first one, so its record has `complete = false`).
 
 Every pruned node is stored as (prefix, support of y) in `certificates/<tuning>_K<K>.farkas.gz`.
 `scripts/verify_certificates.py` recomputes y from its support by exact elimination and rechecks every
 certificate, and the coverage of the tree, with the standard library only.
 
 Tag: **[exact]** (rational arithmetic). The tree size grows by a factor of about 3 to 4 per unit of K: Prop. 9.4
-needs 63,362 nodes and 469 s at K = 13 on one core of an M1, and 222,835 nodes at K = 14.
+needs 63,362 nodes at K = 13 (469 s on one M1 core in the first run, `results/logs/log_prop13_exact.txt`; 259 s
+with 3 workers in the stored run) and 222,835 nodes at K = 14 (1,066 s with 3 workers).
 
 ## 3. The mixed condition: a necessary condition in every dimension (`hb1d.mixed`)
 
@@ -108,7 +110,7 @@ b(z) = z^2 - (1 + beta - gamma L) z + beta,
 so -arg M + arg(1 - M) is the angle from -a(z) to b(z), which is Theta(omega) by Pasechnyuk-Vilensky's
 definition. Hence Omega_{K,m} = {Theta(2 pi m/K) <= pi/K}: his single-harmonic region of Theorem 7.1(ii) is exactly
 Fotopoulos et al.'s Omega_aug, as he states. The identity is checked symbolically (SymPy) and numerically on
-26,700 (tuning, K, m) triples.
+2,100 (tuning, K, m) triples in `tests/test_regions.py` (60 random tunings, K = 3..15).
 
 ## 5. Numerical MILP (`hb1d.milp`)
 
@@ -118,14 +120,18 @@ solve: t* > 0 (a strict cycle), t* = 0 (only degenerate cycles), infeasible, or 
 
 Big-M: with x in [0, 1] (x_0 = 0 is the minimum and sum x = 1), |g_k| <= ((1 + beta) + beta + 1)/alpha =
 2(1 + beta)/alpha, so |g_j - g_i| <= 4(1 + beta)/alpha and |x_j - x_i| <= 1; every switched expression plus
-t <= 1 is bounded by M = 4(1 + beta)/alpha + L + 1 (we use 1.01 M; about 4.0 at Prop. 9.4). The order rows need
+t <= 1 is bounded by M = 4(1 + beta)/alpha + L + 1 (about 4.93 at Prop. 9.4; the code uses 1.01 M). The order rows
+need
 M = 2. Tag: **[numerical]**; the MILP is used only as a cross-check (tests/test_exact.py) because the exact
-search is faster at the lengths that matter (HiGHS reaches its 60 s limit at K = 13 for Prop. 9.4).
+search is faster at the lengths that matter (in a one-off test with a 60 s limit, HiGHS did not finish K = 13 at
+Prop. 9.4; the code's default limit is 120 s).
 
 ## 6. Phase diagram (`scripts/phase_diagram.py`)
 
-Grid in Pasechnyuk-Vilensky's unrolled coordinates: rho = rotation number of the tangency point on the boundary of
-Omega_1 (where Lc(c_*) = Lc'(c_*) = 0, c_* = cos(2 pi rho)), delta = distance in alpha L beyond that point at
+Grid in Pasechnyuk-Vilensky's unrolled coordinates (his Figs. 6(d) and 8). Lc is his lag-one quadratic (his
+eq. (6.6); `hb1d.geometry.lag_one`) and Omega_1 = {Lc > 0 on [-1, 1]} the set where his Theorem 7.1(i) proves
+convergence. rho = rotation number of the tangency point on the boundary of Omega_1 (where
+Lc(c_*) = Lc'(c_*) = 0, c_* = cos(2 pi rho)), delta = distance in alpha L beyond that point at
 fixed beta, normalized by the height delta_top(rho) at which the vertical line enters the K- or (K+1)-tongue.
 Heights h = delta/delta_top run over 25 levels below the gap tops (h < 1) and 4 levels above them
 (h = 1.03 ... 1.15, cells in the neighbouring tongues); h = 1 itself is skipped because it is the tongue boundary.

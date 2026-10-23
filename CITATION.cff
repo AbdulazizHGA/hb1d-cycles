@@ -1,15 +1,16 @@
 cff-version: 1.2.0
 message: "If you use this software or its results, please cite it as below."
-title: "hb1d-cycles: exact search for heavy-ball cycles on one-dimensional functions outside the augmented root-of-unity region"
+title: "hb1d-cycles: exact search for heavy-ball cycles on one-dimensional functions at tunings outside the augmented root-of-unity region"
 abstract: >-
-  Exact (rational Farkas certificates, interval arithmetic) search for heavy-ball cycles on one-dimensional
-  L-smooth mu-strongly convex functions at tunings outside the augmented root-of-unity region Omega_aug of
-  Fotopoulos, Helcig, Deck and Alsbach, and in the fan tongues of Pasechnyuk-Vilensky. No counterexample to the
-  one-dimensional consequence of the conjecture Omega_aug = Omega_cyc^(2) is found: at Pasechnyuk-Vilensky's
-  Proposition 9.4 tuning (kappa = 100) there is no 1D cycle of any length K <= 25, and at two new rational tunings in the
-  2/7 and 2/9 fan tongues, which have cycles in R^4, there is no 1D cycle of length K <= 14 (K <= 16 at the
-  second). Every exclusion is stored as a certificate with stand-alone checkers. Includes a 1D phase diagram of
-  the first-level gaps at kappa = 100 and the tongues above them (numerical classification, exact 1D searches).
+  Exact (rational Farkas certificates, interval arithmetic) search for heavy-ball cycles on one-dimensional L-smooth
+  mu-strongly convex functions at tunings outside the augmented root-of-unity region Omega_aug of Fotopoulos,
+  Helcig, Deck and Alsbach, and in the fan tongues of Pasechnyuk-Vilensky. No counterexample to the one-dimensional
+  consequence of the conjecture Omega_aug = Omega_cyc^(2) is found: at Pasechnyuk-Vilensky's Proposition 9.4 tuning
+  (kappa = 100) there is no 1D cycle of any length K <= 25, and at two rational tunings found here in the 2/7 and
+  2/9 fan tongues, which have cycles in R^4, there is no 1D cycle of length K <= 14 (K <= 16 at the second). Every
+  exclusion at the named tunings, and every exact 1D search on the grid, is stored as a certificate with stand-alone
+  checkers. Includes a 1D phase diagram of the first-level gaps I_3, I_4, I_5 at kappa = 100 and the tongues above
+  them (numerical classification, exact 1D searches).
 type: software
 url: "https://github.com/AbdulazizHGA/hb1d-cycles"
 repository-code: "https://github.com/AbdulazizHGA/hb1d-cycles"

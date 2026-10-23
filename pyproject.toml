@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "hb1d"
 version = "0.1.0"
-description = "Exact search for heavy-ball cycles on one-dimensional smooth strongly convex functions outside the augmented root-of-unity region (evidence for the 1D consequence of the Fotopoulos et al. conjecture; Pasechnyuk-Vilensky's fan orbits in dimension one)"
+description = "Exact search for heavy-ball cycles on one-dimensional smooth strongly convex functions at tunings outside the augmented root-of-unity region (evidence for the 1D consequence of the Fotopoulos et al. conjecture; Pasechnyuk-Vilensky's fan orbits in dimension one)"
 readme = "README.md"
 authors = [{ name = "Abdulaziz", email = "abdulaziz787hlal@gmail.com" }]
 license = "Apache-2.0"
