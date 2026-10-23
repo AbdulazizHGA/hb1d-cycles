@@ -1,4 +1,10 @@
-# hb1d-cycles: evidence for the one-dimensional consequence of the Fotopoulos et al. conjecture
+<h1 align="center">hb1d-cycles: evidence for the one-dimensional consequence of the Fotopoulos et al. conjecture</h1>
+
+<p align="center">
+  <a href="https://github.com/AbdulazizHGA/hb1d-cycles/actions/workflows/python.yml"><img src="https://github.com/AbdulazizHGA/hb1d-cycles/actions/workflows/python.yml/badge.svg" alt="Python"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-green" alt="License: Apache-2.0"></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/python-%3E%3D3.11-blue" alt="Python >= 3.11"></a>
+</p>
 
 **Do heavy-ball cycles exist on one-dimensional smooth strongly convex functions at parameters outside the
 augmented root-of-unity region Ω_aug? Can Pasechnyuk-Vilensky's multi-harmonic fan orbits be realized by a
@@ -12,6 +18,13 @@ package verify; every cycle found is stored as rational points that `hb1d.exact.
 re-verify exactly. The phase diagram (§2.3) adds grid evidence whose cell classification is numerical; there,
 exact 1D searches cover only the lengths stated. Nothing here proves the conjecture: one 1D cycle outside Ω_aug
 would refute it, and no number of cases without one can prove it.
+
+<p align="center">
+  <a href="#1-the-question">The question</a> · <a href="#2-results">Results</a> ·
+  <a href="#3-method-in-one-paragraph">Method</a> · <a href="#4-what-this-does-not-show">What this does not show</a> ·
+  <a href="#5-related-work">Related work</a> · <a href="#6-reproduce">Reproduce</a> ·
+  <a href="#7-ملخص-بالعربية">ملخص بالعربية</a> · <a href="#8-citation-and-license">Citation and license</a>
+</p>
 
 ## 1. The question
 
