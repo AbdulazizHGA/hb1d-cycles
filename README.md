@@ -2,8 +2,9 @@
 
 <p align="center">
   <a href="https://github.com/AbdulazizHGA/hb1d-cycles/actions/workflows/python.yml"><img src="https://github.com/AbdulazizHGA/hb1d-cycles/actions/workflows/python.yml/badge.svg" alt="Python"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-green" alt="License: Apache-2.0"></a>
-  <a href="pyproject.toml"><img src="https://img.shields.io/badge/python-%3E%3D3.11-blue" alt="Python >= 3.11"></a>
+  <a href="https://github.com/AbdulazizHGA/hb1d-cycles/releases/latest"><img src="https://img.shields.io/github/v/release/AbdulazizHGA/hb1d-cycles?label=release" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/AbdulazizHGA/hb1d-cycles" alt="License: Apache-2.0"></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2FAbdulazizHGA%2Fhb1d-cycles%2Fmain%2Fpyproject.toml" alt="Python version"></a>
 </p>
 
 **Do heavy-ball cycles exist on one-dimensional smooth strongly convex functions at parameters outside the
